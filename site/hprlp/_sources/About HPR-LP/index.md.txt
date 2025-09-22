@@ -260,7 +260,7 @@ When any criterion is met, the inner loop is restarted at iteration $(r+1)$ with
 
 ### Update rules for $\sigma$
 
-Another important enhancement of HPR methods concerns the update of the penalty parameter \\ $\sigma$.  
+Another important enhancement of HPR methods concerns the update of the penalty parameter  $\sigma$.  
 The update strategy is motivated by the complexity results of the HPR method in Algorithm 1.  At a high level, the goal is to select $\sigma$ at each restart to tighten the complexity bound and thereby reduce the KKT residuals in subsequent iterations. Specifically, the ideal update is defined as the minimizer of the weighted distance to the optimal solution:
 
 ```{math}

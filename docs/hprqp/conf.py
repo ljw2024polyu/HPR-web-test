@@ -37,6 +37,9 @@ source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+# -- Options for HTML output -------------------------------------------------
+
+html_favicon = "../assets/favicon.ico"
 
 
 # html_theme = "furo"

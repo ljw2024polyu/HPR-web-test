@@ -1,6 +1,6 @@
 # About HPR-LP
 
-HPR-LP is a GPU-accelerated solver for linear programming based on the Halpern Peaceman–Rachford method with adaptive restart
+HPR-LP is a GPU-accelerated solver for linear programming based on the Halpern Peaceman–Rachford method with adaptive restart.
 <!-- ```{toctree}
 :maxdepth: 1
 :caption: About HPR-LP

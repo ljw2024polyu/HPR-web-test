@@ -22,8 +22,6 @@
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../_static/back_to_hpr_fab.js?v=b6f6947e"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -53,17 +51,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">About HPR-LP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#problem-statement">Problem statement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hpr-method-for-lp">HPR method for LP</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#base-algorithm">Base algorithm</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#algorithmic-enhancements">Algorithmic enhancements</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#restart-strategy">Restart strategy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#update-rules-for-sigma">Update rules for <span class="math notranslate nohighlight">\(\sigma\)</span></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#gpu-implementation">GPU Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-hpr-lp">What is HPR-LP?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-features">Key features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-it-works-intuition">How it works (intuition)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-at-a-glance">Performance at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cite-us">Cite us</a></li>
 </ul>
 </li>
 </ul>
@@ -132,255 +126,99 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="about-hpr-lp">
 <h1>About HPR-LP</h1>
-<p>HPR-LP is a GPU-accelerated solver for linear programming based on the Halpern Peaceman–Rachford method with adaptive restart.</p>
-<!-- ```{toctree}
-:maxdepth: 1
-:caption: About HPR-LP
-
-Problem statement
-HPR method for LP
-Algorithmic enhancements
-Implementations
-``` -->
-<section id="problem-statement">
-<h2>Problem statement</h2>
-<p>We consider the following general form of LP:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-\min_{x \in \mathbb{R}^n} &amp; \;\; \langle c, x \rangle \\
-\text{s.t.} \;\; &amp; Ax \in \mathcal{K}, \\
-&amp; x \in \mathcal{C},
-\end{aligned}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(c \in \mathbb{R}^n\)</span> is the objective vector, <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{m \times n}\)</span> is the constraint matrix,<br />
-<span class="math notranslate nohighlight">\(\mathcal{K} := \{ s \in \mathbb{R}^m : l_c \leq s \leq u_c \}\)</span> with bounds <span class="math notranslate nohighlight">\(l_c \in (\mathbb{R} \cup \{-\infty\})^m\)</span> and <span class="math notranslate nohighlight">\(u_c \in (\mathbb{R} \cup \{\infty\})^m\)</span>,<br />
-and <span class="math notranslate nohighlight">\(\mathcal{C} := \{ x \in \mathbb{R}^n : l_v \leq x \leq u_v \}\)</span> with bounds <span class="math notranslate nohighlight">\(l_v \in (\mathbb{R} \cup \{-\infty\})^n\)</span> and <span class="math notranslate nohighlight">\(u_v \in (\mathbb{R} \cup \{\infty\})^n\)</span>.</p>
-<p>The corresponding dual problem is:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-\min_{y \in \mathbb{R}^m, \; z \in \mathbb{R}^n} &amp; \;\; \delta_{\mathcal{K}}^*(-y) + \delta_{\mathcal{C}}^*(-z) \\
-\text{s.t.} \;\; &amp; A^* y + z = c,
-\end{aligned}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\delta_S^*(\cdot)\)</span> denotes the convex conjugate of the indicator function <span class="math notranslate nohighlight">\(\delta_S(\cdot)\)</span> associated with a closed convex set <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<div class="tip admonition">
+<p class="admonition-title">TL;DR</p>
+<p><strong>HPR-LP</strong> is a <strong>GPU-accelerated</strong> linear programming solver based on the <strong>Halpern Peaceman–Rachford</strong> (HPR) method with <strong>adaptive restart</strong>—scalable, deterministic, and robust on large sparse LPs.</p>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<hr class="docutils" />
+<section id="what-is-hpr-lp">
+<h2>What is HPR-LP?</h2>
+<p><strong>HPR-LP</strong> implements a preconditioned, accelerated ADMM-like scheme derived from <strong>Halpern-regularized Peaceman–Rachford</strong> splitting. In practice: <em>few primitives per iteration (SpMV, axpy, projections), easy GPU parallelization, and steady progress via restart</em>.</p>
+<div class="admonition-problem-form-lp admonition">
+<p class="admonition-title">Problem form (LP)</p>
+<p>For sparse (A\in\mathbb{R}^{m\times n}),
+[
+\min_{x\in\mathbb{R}^n}\ \langle c,x\rangle
+\quad\text{s.t.}\quad
+Ax\in\mathcal{K},\ \ x\in\mathcal{C},
+]
+where (\mathcal{K}={s:l_c\le s\le u_c}) and (\mathcal{C}={x:l_v\le x\le u_v}).</p>
+</div>
 </section>
-<section id="hpr-method-for-lp">
-<h2>HPR method for LP</h2>
-<p>We introduce a Halpern-Peaceman-Rachford (HPR) method for solving linear programming problems. We first describe the base algorithm and then discuss its convergence guarantees and complexity properties, which motivate subsequent algorithmic enhancements.</p>
-<section id="base-algorithm">
-<h3>Base algorithm</h3>
-<p>For any <span class="math notranslate nohighlight">\((y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span>, the augmented Lagrangian of the dual problem is</p>
-<div class="math notranslate nohighlight">
-\[L_\sigma(y, z; x) := \delta_{\mathcal{K}}^*(-y) + \delta_{\mathcal{C}}^*(-z)
-+ \langle x, A^* y + z - c \rangle
-+ \frac{\sigma}{2} \| A^* y + z - c \|^2,\]</div>
-<p>where <span class="math notranslate nohighlight">\(\sigma &gt; 0\)</span> is a penalty parameter. For notational convenience, let <span class="math notranslate nohighlight">\(w := (y, z, x) \in \mathbb{W} := \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span>. Then, an HPR method with semi-proximal terms for solving the above problems is summarized in Algorithm 1.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{array}{|l|}
-\hline
-\textbf{Algorithm 1: An HPR method with semi-proximal terms} \\ \hline
-\textbf{Input:}\
-\text{Set the penalty parameter }\sigma&gt;0.\ \\
-\text{Let }\mathcal{T}_1:\mathbb{R}^m\to\mathbb{R}^m\ \text{be a self-adjoint positive semidefinite linear operator such that } \\
-\mathcal{T}_1+\sigma A A^*\ \text{is positive definite. } 
-\text{Denote } w=(y,z,x)\ \text{and }\bar{w}=(\bar{y},\bar{z},\bar{x}).\ \\
-\text{Choose an initial point } w^0=(y^0,z^0,x^0)\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n. \\ 
-\textbf{for } k = 0,1,\ldots \ \textbf{do} \\ 
-\quad \text{Step 1: } \ \bar{z}^{k+1} = \arg\min_{z \in \mathbb{R}^n} L_\sigma(y^k, z; x^k); \\ 
-\quad \text{Step 2: } \ \bar{x}^{k+1} = x^k + \sigma(A^* y^k + \bar{z}^{k+1} - c); \\ 
-\quad \text{Step 3: } \ \bar{y}^{k+1} = \arg\min_{y \in \mathbb{R}^m} 
-   \left\{ L_\sigma(y, \bar{z}^{k+1}; \bar{x}^{k+1}) 
-   + \tfrac{\sigma}{2}\|y-y^k\|_{\mathcal{T}_1}^2 \right\}; \\ 
-\quad \text{Step 4: } \ \hat{w}^{k+1} = 2\bar{w}^{k+1} - w^k; \\ 
-\quad \text{Step 5: } \ w^{k+1} = \tfrac{1}{k+2} w^0 + \tfrac{k+1}{k+2} \hat{w}^{k+1}; \\ 
-\textbf{end for} \\ 
-\textbf{Output:} \text{Iteration sequence } \{ \bar{w}^k \}. \\ \hline
-\end{array}\end{split}\]</div>
-<p><strong>Remark</strong> Steps 1–3 correspond to the Douglas–Rachford (DR) method. Adding Step 4 (relaxation) yields the Peaceman–Rachford (PR) method, and Step 5 introduces Halpern iteration with step size <span class="math notranslate nohighlight">\(1/(k+2)\)</span>. Together, Algorithm 1 is an accelerated preconditioned ADMM (pADMM) with parameter <span class="math notranslate nohighlight">\(\alpha = 2\)</span>.</p>
-<p>A pair <span class="math notranslate nohighlight">\((y^*, z^*) \in \mathbb{R}^m \times \mathbb{R}^n\)</span> is an optimal solution to the corresponding dual problem if there exists <span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> such that <span class="math notranslate nohighlight">\((y^*, z^*, x^*)\)</span> satisfies the following KKT system:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-0 &amp;\in A x^* - \partial \delta_{\mathcal{K}}^*(-y^*), \\
-0 &amp;\in x^* - \partial \delta_{\mathcal{C}}^*(-z^*), \\
-&amp;\quad A^* y^* + z^* - c = 0.
-\end{aligned}\end{split}\]</div>
-<p>We make the following assumption:</p>
-<p><strong>Assumption 1</strong> <em>There exists a vector <span class="math notranslate nohighlight">\((y^*, z^*, x^*) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span> satisfying the KKT system above.</em></p>
-<p>Under Assumption 1, solving the primal–dual pair is equivalent to finding a point <span class="math notranslate nohighlight">\(w^* \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span> such that <span class="math notranslate nohighlight">\(0 \in \mathcal{T} w^*\)</span>, where the maximal monotone operator <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is defined as</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\mathcal{T} w =
-\begin{pmatrix}
-- \partial \delta_{\mathcal{K}}^*(-y) + A x \\
-- \partial \delta_{\mathcal{C}}^*(-z) + x \\
-c - A^* y - z
-\end{pmatrix},
-\quad
-\forall w = (y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n.\end{split}\]</div>
-<p>The global convergence of Algorithm 1 is established in the following proposition.</p>
-<p><strong>Proposition 2</strong>. <em>Suppose that Assumption 1 holds.<br />
-Then the sequence <span class="math notranslate nohighlight">\(\{\bar{w}^k\} = \{(\bar{y}^k, \bar{z}^k, \bar{x}^k)\}\)</span> generated by the HPR method with semi-proximal terms in Algorithm 1 converges to a point <span class="math notranslate nohighlight">\(w^* = (y^*, z^*, x^*)\)</span>, where <span class="math notranslate nohighlight">\((y^*, z^*)\)</span> solves the dual problem and <span class="math notranslate nohighlight">\(x^*\)</span> solves the primal problem.</em></p>
-<p>Next, consider the self-adjoint positive semidefinite linear operator <span class="math notranslate nohighlight">\(\mathcal{M} : \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span> defined by</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\mathcal{M} =
-\begin{bmatrix}
-\sigma A A^* + \sigma \mathcal{T}_1 &amp; 0 &amp; A \\
-0 &amp; 0 &amp; 0 \\
-A^* &amp; 0 &amp; \tfrac{1}{\sigma} I_n
-\end{bmatrix},\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(I_n\)</span> denotes the <span class="math notranslate nohighlight">\(n \times n\)</span> identity matrix. To analyze the complexity of the HPR method with semi-proximal terms, we consider the KKT residual and the objective error. The residual mapping associated with the KKT system is given by</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\mathcal{R}(w) =
-\begin{pmatrix}
-A x - \Pi_{\mathcal{K}}(A x - y) \\
-x - \Pi_{\mathcal{C}}(x - z) \\
-c - A^* y - z
-\end{pmatrix},
-\quad
-\forall w = (y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n.\end{split}\]</div>
-<p>Furthermore, let <span class="math notranslate nohighlight">\(\{(\bar{y}^k, \bar{z}^k)\}\)</span> be the sequence generated by Algorithm 1. We define</p>
-<p>the objective error as</p>
-<div class="math notranslate nohighlight">
-\[h(\bar{y}^{k+1}, \bar{z}^{k+1})
-:= \delta_{\mathcal{K}}^*(-\bar{y}^{k+1}) + \delta_{\mathcal{C}}^*(-\bar{z}^{k+1})
-- \delta_{\mathcal{K}}^*(-y^*) - \delta_{\mathcal{C}}^*(-z^*),
-\quad \forall k \geq 0,\]</div>
-<p>where <span class="math notranslate nohighlight">\((y^*, z^*)\)</span> is the limit point of the sequence <span class="math notranslate nohighlight">\(\{(\bar{y}^k, \bar{z}^k)\}\)</span>.<br />
-The complexity of the HPR method with semi-proximal terms is summarized in the following theorem.</p>
-<p><strong>Theorem 3</strong>  <em>Suppose that Assumption 1 holds. Let <span class="math notranslate nohighlight">\(\{w^k\} = \{(y^k, z^k, x^k)\}\)</span> and <span class="math notranslate nohighlight">\(\{\bar{w}^k\} = \{(\bar{y}^k, \bar{z}^k, \bar{x}^k)\}\)</span> be two sequences generated by the HPR method with semi-proximal terms in Algorithm 1, and let <span class="math notranslate nohighlight">\(w^* = (y^*, z^*, x^*)\)</span> be its limit point. Define <span class="math notranslate nohighlight">\(R_0 = \|w^0 - w^*\|_{\mathcal{M}}\)</span>. Then for all <span class="math notranslate nohighlight">\(k \geq 0\)</span>, the following iteration complexity bounds hold:</em></p>
-<div class="math notranslate nohighlight">
-\[\| \bar{w}^k - \hat{w}^{k+1} \|_{\mathcal{M}} \leq \frac{R_0}{k+1},\]</div>
-<div class="math notranslate nohighlight">
-\[\| \mathcal{R}(\bar{w}^{k+1}) \|
-\leq \left( \frac{\sigma(\|A\| + \| \sqrt{\mathcal{T}_1} \|) + 1}{\sqrt{\sigma}} \right) \frac{R_0}{k+1},\]</div>
-<div class="math notranslate nohighlight">
-\[- \frac{1}{\sqrt{\sigma}} \| x^* \| \frac{R_0}{k+1}
-\;\; \leq \;\;
-h(\bar{y}^{k+1}, \bar{z}^{k+1})
-\;\; \leq \;\;
-\left( 3 R_0 + \frac{1}{\sqrt{\sigma}} \| x^* \| \right) \frac{R_0}{k+1}.\]</div>
-<!-- The results above establish that the HPR method enjoys global convergence and an $O(1/k)$ complexity rate in terms of both KKT residuals and objective error. These properties motivate the use of restart strategies and adaptive parameter updates, which will be reviewed in the next subsection. -->
+<hr class="docutils" />
+<section id="key-features">
+<h2>Key features</h2>
+<ul class="simple">
+<li><p><strong>GPU-accelerated</strong>: core ops are SpMV + projections → natural parallelism.</p></li>
+<li><p><strong>Halpern-PR with restart</strong>: complexity-guided (O(1/k)) scheme with anchor resets.</p></li>
+<li><p><strong>Deterministic kernels</strong>: <code class="docutils literal notranslate"><span class="pre">cusparseSpMV(...,</span> <span class="pre">CUSPARSE_SPMV_CSR_ALG2)</span></code> for stable results.</p></li>
+<li><p><strong>Box/interval constraints first-class</strong>: simple, fast projections for (\mathcal{C},\mathcal{K}).</p></li>
+<li><p><strong>Scales with sparsity</strong>: per-iteration cost (O(\mathrm{nnz}(A))).</p></li>
+</ul>
 </section>
+<hr class="docutils" />
+<section id="quick-start">
+<h2>Quick start</h2>
+<p><em>Minimal JuMP example</em>:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># Build a small LP, call HPR-LP via JuMP, and print summary.</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+```{tab-item} Python
+```bash
+pip install hprlp  # if published
+python examples/quickstart.py
+</pre></div>
+</div>
+<p><em>Minimal example</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build CSR A and bounds (lc, uc), (lv, uv), then solver.solve(...)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>See <strong>Interfaces</strong> and <strong>Examples</strong> for more options and parameters.</p>
+</div></blockquote>
 </section>
-<section id="algorithmic-enhancements">
-<h2>Algorithmic enhancements</h2>
-<p>Several enhancements have been proposed to improve the performance of the HPR method for solving LP and CCQP.<br />
-In particular, restart strategies and adaptive updates of the penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span>, motivated by the <span class="math notranslate nohighlight">\(O(1/k)\)</span> complexity results in Theorem 3, have proven effective.<br />
-For completeness, we summarize the HPR-LP framework in Algorithm 2.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{array}{|l|}
-\hline
-\textbf{Algorithm 2  HPR-LP: A Halpern Peaceman-Rachford method} \\ \textbf{for the problem} \\ \hline
-\textbf{Input:} \ \mathcal{T}_1:\mathbb{R}^m\to\mathbb{R}^m\ \text{be a self-adjoint positive semidefinite linear operator such that}\\ \mathcal{T}_1+\sigma AA^* \text{ is positive definite}. \text{ Denote }w=(y,z,x),\ \bar{w}=(\bar{y},\bar{z},\bar{x}).\ \text{Choose an initial point}\\ w^{0,0}=(y^{0,0},z^{0,0},x^{0,0})\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n. \\ 
-\textbf{Initialization:}\ \text{Set the outer loop counter }r=0,\ \text{the total loop counter }k=0,\ \\ \text{and the initial penalty parameter }\sigma_0&gt;0. \\ 
-\textbf{repeat} \\ 
-\quad \text{initialize the inner loop: set inner loop counter }t=0; \\ 
-\quad \textbf{repeat} \\ 
-\quad\quad \bar{z}^{r,t+1}=\arg\min_{z\in\mathbb{R}^n}\{L_{\sigma_r}(y^{r,t},z;x^{r,t})\}; \\ 
-\quad\quad \bar{x}^{r,t+1}=x^{r,t}+\sigma_r(A^*y^{r,t}+\bar{z}^{r,t+1}-c); \\ 
-\quad\quad \bar{y}^{r,t+1}=\arg\min_{y\in\mathbb{R}^m}\{L_{\sigma_r}(y,\bar{z}^{r,t+1};\bar{x}^{r,t+1})+\tfrac{\sigma_r}{2}\|y-y^{r,t}\|_{\mathcal{T}_1}^2\}; \\ 
-\quad\quad \hat{w}^{r,t+1}=2\bar{w}^{r,t+1}-w^{r,t}; \\ 
-\quad\quad w^{r,t+1}=\tfrac{1}{t+2}w^{r,0}+\tfrac{t+1}{t+2}\hat{w}^{r,t+1}; \\ 
-\quad\quad t=t+1,\ k=k+1; \\ 
-\quad \textbf{until}\ \text{one of the restart criteria holds or termination criteria hold} \\ 
-\quad \textbf{restart the inner loop: }\tau_r=t,\ w^{r+1,0}=w^{r,\tau_r}, \\ 
-\quad \sigma_{r+1}=\textbf{SigmaUpdate}(\bar{w}^{r,\tau_r},w^{r,0},\mathcal{T}_1,A),\ r=r+1; \\ 
-\textbf{until}\ \text{termination criteria hold} \\ 
-\textbf{Output:}\ \{\bar{w}^{r,t}\}. \\ \hline
-\end{array}\end{split}\]</div>
-<section id="restart-strategy">
-<h3>Restart strategy</h3>
-<p>Restarting has been recognized as particularly important for Halpern iterations.<br />
-As noted in Theorem 3, the complexity bound depends on the weighted distance <span class="math notranslate nohighlight">\(R_0\)</span> between the initial point and the optimal solution. Consequently, as the iterates approach optimality, continuing to reference a distant initial anchor becomes counterproductive, whereas resetting the anchor to the current iterate helps reduce the bound and refocus the iteration near the solution.</p>
-<p>This observation motivates the merit function</p>
-<div class="math notranslate nohighlight">
-\[R_{r,t} := \| w^{r,t} - w^* \|_{\mathcal{M}}, 
-\quad \forall r \geq 0,\; t \geq 0,\]</div>
-<p>where <span class="math notranslate nohighlight">\(w^*\)</span> is any solution of the KKT system. Since <span class="math notranslate nohighlight">\(w^*\)</span> is unknown, the practical surrogate</p>
-<div class="math notranslate nohighlight">
-\[\tilde{R}_{r,t} := \| w^{r,t} - \hat{w}^{r,t+1} \|_{\mathcal{M}}\]</div>
-<p>is employed in defining restart rules. The following criteria are commonly adopted:</p>
+<hr class="docutils" />
+<section id="how-it-works-intuition">
+<h2>How it works (intuition)</h2>
+<p>Each iteration does three things:</p>
 <ol class="arabic simple">
-<li><p><strong>Sufficient decay:</strong></p></li>
+<li><p><strong>Projection/prox</strong> for box constraints; 2) <strong>SpMV</strong> for coupling; 3) <strong>Halpern step</strong> with <strong>restart</strong> to move the anchor and avoid late-stage drag.<br />
+The penalty (\sigma) is updated at restarts using an observable progress proxy to tighten subsequent residual bounds.</p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[\tilde{R}_{r,t+1} \leq \alpha_1 \tilde{R}_{r,0},\]</div>
-<ol class="arabic simple" start="2">
-<li><p><strong>Necessary decay + no local progress:</strong></p></li>
-</ol>
-<div class="math notranslate nohighlight">
-\[\tilde{R}_{r,t+1} \leq \alpha_2 \tilde{R}_{r,0}, 
-\quad \text{and} \quad
-\tilde{R}_{r,t+1} &gt; \tilde{R}_{r,t};\]</div>
-<ol class="arabic simple" start="3">
-<li><p><strong>Long inner loop:</strong></p></li>
-</ol>
-<div class="math notranslate nohighlight">
-\[t \geq \alpha_3 k;\]</div>
-<p>where <span class="math notranslate nohighlight">\(0 &lt; \alpha_1 &lt; \alpha_2 &lt; 1\)</span> and <span class="math notranslate nohighlight">\(0 &lt; \alpha_3 &lt; 1\)</span>.<br />
-When any criterion is met, the inner loop is restarted at iteration <span class="math notranslate nohighlight">\((r+1)\)</span> with <span class="math notranslate nohighlight">\(w^{r+1,0} = \bar{w}^{r,\tau_r}\)</span> and an updated <span class="math notranslate nohighlight">\(\sigma_{r+1}\)</span>.</p>
 </section>
-<section id="update-rules-for-sigma">
-<h3>Update rules for <span class="math notranslate nohighlight">\(\sigma\)</span></h3>
-<p>Another important enhancement of HPR methods concerns the update of the penalty parameter  <span class="math notranslate nohighlight">\(\sigma\)</span>.<br />
-The update strategy is motivated by the complexity results of the HPR method in Algorithm 1.  At a high level, the goal is to select <span class="math notranslate nohighlight">\(\sigma\)</span> at each restart to tighten the complexity bound and thereby reduce the KKT residuals in subsequent iterations. Specifically, the ideal update is defined as the minimizer of the weighted distance to the optimal solution:</p>
-<div class="math notranslate nohighlight">
-\[\sigma_{r+1} := \arg\min_\sigma \| w^{r+1,0} - w^* \|_{\mathcal{M}}^2,\]</div>
-<p>where <span class="math notranslate nohighlight">\(w^*\)</span> is any solution of the KKT system.<br />
-Substituting the definition of <span class="math notranslate nohighlight">\(\mathcal{M}\)</span> leads to the closed-form expression</p>
-<div class="math notranslate nohighlight">
-\[\sigma_{r+1} =
-\sqrt{
-\frac{\| x^{r+1,0} - x^* \|^2}
-{\| y^{r+1,0} - y^* \|_{\mathcal{T}_1}^2 + \| A^*(y^{r+1,0} - y^*) \|^2}
-}.\]</div>
-<p>Since the optimal solution <span class="math notranslate nohighlight">\((x^*, y^*)\)</span> is unknown, practical implementations approximate these terms using the observed progress within each outer loop:</p>
-<div class="math notranslate nohighlight">
-\[\Delta_x := \| \bar{x}^{r,\tau_r} - x^{r,0} \|, 
-\quad
-\Delta_y := \sqrt{ \| \bar{y}^{r,\tau_r} - y^{r,0} \|_{\mathcal{T}_1}^2 + \| A^*(\bar{y}^{r,\tau_r} - y^{r,0}) \|^2 },\]</div>
-<p>which yields the implementable update rule</p>
-<div class="math notranslate nohighlight">
-\[\sigma_{r+1} = \frac{\Delta_x}{\Delta_y}.\]</div>
-<p>Several special cases of <span class="math notranslate nohighlight">\(\mathcal{T}_1\)</span> are listed below:</p>
-<ol class="arabic">
-<li><p><strong>Case <span class="math notranslate nohighlight">\(\mathcal{T}_1 = 0\)</span>.</strong><br />
-This case occurs when <span class="math notranslate nohighlight">\(l_c = u_c = b\)</span>, which arises in applications with special structure in <span class="math notranslate nohighlight">\(A\)</span>. The <span class="math notranslate nohighlight">\(y\)</span>-update then reduces to solving the linear system</p>
-<div class="math notranslate nohighlight">
-\[A A^* \bar{y}^{r,t+1} = \frac{1}{\sigma_r} \big( b - A(\bar{x}^{r,t+1} + \sigma_r(\bar{z}^{r,t+1} - c)) \big),\]</div>
-<p>which is computationally affordable in practice. In this case, the update rule simplifies to</p>
-<div class="math notranslate nohighlight">
-\[\sigma_{r+1} = \frac{\| \bar{x}^{r,\tau_r} - x^{r,0} \|}{\| A^*(\bar{y}^{r,\tau_r} - y^{r,0}) \|}.\]</div>
-</li>
-<li><p><strong>Case <span class="math notranslate nohighlight">\(\mathcal{T}_1 = \lambda_A I_m - A A^*\)</span> with <span class="math notranslate nohighlight">\(\lambda_A \geq \|A\|_2^2\)</span>.</strong><br />
-This choice applies when <span class="math notranslate nohighlight">\(l_c \neq u_c\)</span> or when solving the equation in case 1 directly is expensive. The <span class="math notranslate nohighlight">\(y\)</span>-update takes the form</p>
-<div class="math notranslate nohighlight">
-\[\bar{y}^{r,t+1} = \frac{1}{\sigma_r \lambda_A} \Big( \Pi_{\mathcal{K}}(R_y) - R_y \Big),\]</div>
-<p>where <span class="math notranslate nohighlight">\(R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}\)</span>. In this setting, the update for <span class="math notranslate nohighlight">\(\sigma\)</span> becomes</p>
-<div class="math notranslate nohighlight">
-\[\sigma_{r+1} = \frac{\| \bar{x}^{r,\tau_r} - x^{r,0} \|}{\sqrt{\lambda_A} \; \| \bar{y}^{r,\tau_r} - y^{r,0} \|}.\]</div>
-</li>
-</ol>
-<p>It is worth noting that the approximations <span class="math notranslate nohighlight">\(\Delta_x\)</span> and <span class="math notranslate nohighlight">\(\Delta_y\)</span> may deviate significantly from the true quantities.</p>
+<hr class="docutils" />
+<section id="performance-at-a-glance">
+<h2>Performance at a glance</h2>
+<ul class="simple">
+<li><p><strong>Throughput</strong>: iteration time dominated by SpMV; ideal for very large sparse LPs.</p></li>
+<li><p><strong>Stability</strong>: Halpern + restart reduces late-stage stagnation.</p></li>
+<li><p><strong>Determinism</strong>: fixed cuSPARSE algorithm → reproducible runs.</p></li>
+</ul>
+<blockquote>
+<div><p>Full benchmarks (datasets, tolerances, hardware) are in <strong>Benchmarks</strong>.</p>
+</div></blockquote>
 </section>
+<hr class="docutils" />
+<section id="faq">
+<h2>FAQ</h2>
+<p><strong>Q1. Why restart?</strong><br />
+A distant anchor slows late stages; restart resets the anchor to the current iterate and tightens the bound (R_0).</p>
+<p><strong>Q2. How is (\sigma) updated?</strong><br />
+A closed-form target is approximated with observable progress ((\Delta_x,\Delta_y)) between restarts.</p>
+<p><strong>Q3. What constraints are supported?</strong><br />
+Box/interval sets are first-class; other sets can be added via projections or prox operators.</p>
 </section>
-<section id="gpu-implementation">
-<h2>GPU Implementation</h2>
-<p>We first present the update formulas for each subproblem in HPR-LP. Specifically, for any <span class="math notranslate nohighlight">\(r\ge 0\)</span> and <span class="math notranslate nohighlight">\(t\ge 0\)</span>, the update of <span class="math notranslate nohighlight">\(z^{r,t+1}\)</span> is:</p>
-<div class="math notranslate nohighlight">
-\[z^{r,t+1}
-= \arg\min_{z\in\mathbb{R}^n}\{L_{\sigma_r}(y^{r,t}, z; x^{r,t})\}
-= \frac{1}{\sigma_r}\!\left(\Pi_{\mathcal{C}}\!\big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big)
- - \big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big)\right).\]</div>
-<p>Next, the update of <span class="math notranslate nohighlight">\(x^{r,t+1}\)</span> is:</p>
-<div class="math notranslate nohighlight">
-\[x^{r,t+1}
-= x^{r,t} + \sigma_r\!\left(A^*y^{r,t} + z^{r,t+1} - c\right)
-= \Pi_{\mathcal{C}}\!\big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big).\]</div>
-<p>For general LP problems, set <span class="math notranslate nohighlight">\(\mathcal{T}_1=\lambda I_m- AA^*\)</span> with <span class="math notranslate nohighlight">\(\lambda \ge \lambda_1(AA^*)\)</span> in HPR-LP. The update for <span class="math notranslate nohighlight">\(y^{r,t+1}\)</span> is:</p>
-<div class="math notranslate nohighlight">
-\[y^{r, t+1} \;=\; \frac{1}{\sigma_r \lambda_A}\Big( \Pi_{\mathcal{K}}(R_y) - R_y \Big),\]</div>
-<p>where <span class="math notranslate nohighlight">\(R_y := A\big(2x^{r, t+1} - x^{r,t}\big) - \sigma_r \lambda_A y^{r,t}.\)</span> By combining these relations, we observe that it is not necessary to compute <span class="math notranslate nohighlight">\(z^{r,t+1}\)</span> at every iteration. Instead, <span class="math notranslate nohighlight">\(z^{r,t+1}\)</span> is only evaluated when checking the termination criteria. Each update mainly involves matrix–vector multiplications, vector additions, and projections. The per-iteration complexity is <span class="math notranslate nohighlight">\(O(\mathrm{nnz}(A))\)</span>, where <span class="math notranslate nohighlight">\(\mathrm{nnz}(A)\)</span> is the number of nonzeros in <span class="math notranslate nohighlight">\(A\)</span>.</p>
-<p>To fully utilize GPUs, we implement custom CUDA kernels for the above updates. For matrix–vector multiplications, we use <strong><code class="docutils literal notranslate"><span class="pre">cusparseSpMV()</span></code></strong> from cuSPARSE, which employs the <strong><code class="docutils literal notranslate"><span class="pre">CUSPARSE_SPMV_CSR_ALG2</span></code></strong> algorithm to ensure deterministic results.</p>
+<hr class="docutils" />
+<section id="cite-us">
+<h2>Cite us</h2>
+<p>If you use HPR-LP in your research, please cite:</p>
+<p><em>Chen, K., Sun, D., Yuan, Y., Zhang, G., Zhao, X. “HPR-LP: An implementation of a Halpern Peaceman–Rachford method for linear programming.” arXiv:2408.12179 (2025).</em></p>
 </section>
 </section>
 

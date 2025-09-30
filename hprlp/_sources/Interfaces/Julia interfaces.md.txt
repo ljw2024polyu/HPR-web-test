@@ -1,11 +1,11 @@
 # Julia interfaces
 
-This page explains how to use the **Julia interface** of HPR-LP, from running the provided demos to building your own problems, adjusting solver settings, and interpreting results.
+This page shows how to use the **Julia interface** of HPR-LP: run demos, build custom problems, adjust solver settings, and interpret results.
 
 ---
 
 
-## Usage 1: Test Instances in MPS Format
+## Usage 1: Run LP instances in MPS format
 
 ### Setting Data and Result Paths
 Before running the scripts, please modify `run_single_file.jl` or `run_dataset.jl` in the scripts directory to specify the data path and result path according to your setup.
@@ -28,7 +28,7 @@ julia --project scripts/run_dataset.jl
 
 ### Example 1: Build and Export an LP Model Using JuMP
 
-This example demonstrates how to construct an LP model using the JuMP modeling language in Julia and export it to MPS format for use with the HPR-LP solver.
+This example shows how to build an LP model in JuMP, export it to MPS format, and solve it with HPR-LP.
 
 ```bash
 julia --project demo/demo_JuMP.jl
@@ -40,7 +40,7 @@ The script:
 - Saves the model as an MPS file.  
 - Uses HPR-LP to solve the LP instance.  
 
-> **Remark:** If the model may be infeasible or unbounded, you can use HiGHS to check it.
+> **Tip:** If the model may be infeasible or unbounded, you can use HiGHS to check it.
 
 ```julia
 using JuMP, HiGHS
@@ -55,7 +55,7 @@ optimize!(model)
 
 ### Example 2: Define LP instance Directly in Julia
 
-This example demonstrates how to construct and solve a linear programming problem directly in Julia without relying on JuMP.
+This example shows how to construct and solve a linear programming problem directly in Julia without relying on JuMP.
 
 ```bash
 julia --project demo/demo_Abc.jl
@@ -75,7 +75,8 @@ The small LP instance demo_Abc is given by
 
 ## Note on First-Time Execution Performance
 
-You may notice that solving a single instance — or the first instance in a dataset — appears slow. This is due to Julia’s Just-In-Time (JIT) compilation, which compiles code on first execution.
+The first run of an instance may feel slow because Julia compiles code on the first execution (JIT compilation).
+
 
 ```{tip}
 **Tip for Better Performance:**  
@@ -99,7 +100,7 @@ If you encounter the error message:
 
 `Error: Error during loading of extension AtomixCUDAExt of Atomix, use Base.retry_load_extensions() to retry`.
 
-Don’t panic — this is usually a transient issue. Simply wait a few moments; the extension typically loads successfully on its own.
+This is usually temporary. Wait a few moments and the extension will load automatically.
 ```
 
 ---

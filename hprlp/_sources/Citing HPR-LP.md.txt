@@ -1,8 +1,8 @@
 # Citing HPR-LP
 
-If you use HPR-LP for published work, we encourage you to put a star on [Github](https://github.com/PolyU-IOR/HPR-LP) and cite the papers.
+If you use HPR-LP in your research, please star the project on [GitHub](https://github.com/PolyU-IOR/HPR-LP) and cite the following papers.
 
-The first paper is a practical work, introducing an efficient GPU-based HPR-LP solver with adaptive restart and penalty updates, validated through large-scale experiments.
+The first paper presents the GPU-based HPR-LP solver with adaptive restart and penalty updates, validated on large-scale benchmarks.
 ```bibtex
 @article{chen2024hpr,
   title={HPR-LP: An implementation of an HPR method for solving linear programming},
@@ -12,7 +12,7 @@ The first paper is a practical work, introducing an efficient GPU-based HPR-LP s
 }
 ```
 
-The second paper is a theoretical study, developing accelerated variants of pADMM and proving o(1/k) and O(1/k) nonergodic convergence rates, supported by preliminary experiments.
+The second paper develops accelerated variants of pADMM and proves $o(1/k)$ and $O(1/k)$ nonergodic convergence rates, supported by preliminary experiments.
 ```bibtex
 @article{sun2025accelerating,
   title={Accelerating preconditioned ADMM via degenerate proximal point mappings},

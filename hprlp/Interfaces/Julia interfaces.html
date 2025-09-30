@@ -60,7 +60,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Interfaces</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Julia interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#usage-1-test-instances-in-mps-format">Usage 1: Test Instances in MPS Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage-1-run-lp-instances-in-mps-format">Usage 1: Run LP instances in MPS format</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#setting-data-and-result-paths">Setting Data and Result Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#running-a-single-instance">Running a Single Instance</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#running-all-instances-in-a-directory">Running All Instances in a Directory</a></li>
@@ -141,10 +141,10 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="julia-interfaces">
 <h1>Julia interfaces</h1>
-<p>This page explains how to use the <strong>Julia interface</strong> of HPR-LP, from running the provided demos to building your own problems, adjusting solver settings, and interpreting results.</p>
+<p>This page shows how to use the <strong>Julia interface</strong> of HPR-LP: run demos, build custom problems, adjust solver settings, and interpret results.</p>
 <hr class="docutils" />
-<section id="usage-1-test-instances-in-mps-format">
-<h2>Usage 1: Test Instances in MPS Format</h2>
+<section id="usage-1-run-lp-instances-in-mps-format">
+<h2>Usage 1: Run LP instances in MPS format</h2>
 <section id="setting-data-and-result-paths">
 <h3>Setting Data and Result Paths</h3>
 <p>Before running the scripts, please modify <code class="docutils literal notranslate"><span class="pre">run_single_file.jl</span></code> or <code class="docutils literal notranslate"><span class="pre">run_dataset.jl</span></code> in the scripts directory to specify the data path and result path according to your setup.</p>
@@ -168,7 +168,7 @@
 <h2>Usage 2: Define Your LP Model in Julia Scripts</h2>
 <section id="example-1-build-and-export-an-lp-model-using-jump">
 <h3>Example 1: Build and Export an LP Model Using JuMP</h3>
-<p>This example demonstrates how to construct an LP model using the JuMP modeling language in Julia and export it to MPS format for use with the HPR-LP solver.</p>
+<p>This example shows how to build an LP model in JuMP, export it to MPS format, and solve it with HPR-LP.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project<span class="w"> </span>demo/demo_JuMP.jl
 </pre></div>
 </div>
@@ -179,7 +179,7 @@
 <li><p>Uses HPR-LP to solve the LP instance.</p></li>
 </ul>
 <blockquote>
-<div><p><strong>Remark:</strong> If the model may be infeasible or unbounded, you can use HiGHS to check it.</p>
+<div><p><strong>Tip:</strong> If the model may be infeasible or unbounded, you can use HiGHS to check it.</p>
 </div></blockquote>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">JuMP</span><span class="p">,</span><span class="w"> </span><span class="n">HiGHS</span>
 <span class="c">## read a model from file (or create in other ways)</span>
@@ -194,7 +194,7 @@
 </section>
 <section id="example-2-define-lp-instance-directly-in-julia">
 <h3>Example 2: Define LP instance Directly in Julia</h3>
-<p>This example demonstrates how to construct and solve a linear programming problem directly in Julia without relying on JuMP.</p>
+<p>This example shows how to construct and solve a linear programming problem directly in Julia without relying on JuMP.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project<span class="w"> </span>demo/demo_Abc.jl
 </pre></div>
 </div>
@@ -211,7 +211,7 @@
 </section>
 <section id="note-on-first-time-execution-performance">
 <h2>Note on First-Time Execution Performance</h2>
-<p>You may notice that solving a single instance — or the first instance in a dataset — appears slow. This is due to Julia’s Just-In-Time (JIT) compilation, which compiles code on first execution.</p>
+<p>The first run of an instance may feel slow because Julia compiles code on the first execution (JIT compilation).</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p><strong>Tip for Better Performance:</strong><br />
@@ -229,7 +229,7 @@ To reduce repeated compilation overhead, it’s recommended to run scripts from 
 <p class="admonition-title">CAUTION</p>
 <p>If you encounter the error message:</p>
 <p><code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">Error</span> <span class="pre">during</span> <span class="pre">loading</span> <span class="pre">of</span> <span class="pre">extension</span> <span class="pre">AtomixCUDAExt</span> <span class="pre">of</span> <span class="pre">Atomix,</span> <span class="pre">use</span> <span class="pre">Base.retry_load_extensions()</span> <span class="pre">to</span> <span class="pre">retry</span></code>.</p>
-<p>Don’t panic — this is usually a transient issue. Simply wait a few moments; the extension typically loads successfully on its own.</p>
+<p>This is usually temporary. Wait a few moments and the extension will load automatically.</p>
 </div>
 </section>
 <hr class="docutils" />

@@ -1,0 +1,13 @@
+# Rebuild local site
+cmd /c build.bat
+
+# Commit to main
+git add -A
+git commit -m "deploy: rebuild site"
+git push origin main
+
+# Publish site/ to gh-pages
+git branch -D gh-pages-tmp 2>$null
+git subtree split --prefix=site HEAD -b gh-pages-tmp
+git push -f origin gh-pages-tmp:gh-pages
+git branch -D gh-pages-tmp

@@ -22,6 +22,8 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="_static/back_to_hpr_fab.js?v=b6f6947e"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -116,8 +118,8 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="citing-hpr-lp">
 <h1>Citing HPR-LP</h1>
-<p>If you use HPR-LP for published work, we encourage you to put a star on <a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP">Github</a> and cite the papers.</p>
-<p>The first paper is a practical work, introducing an efficient GPU-based HPR-LP solver with adaptive restart and penalty updates, validated through large-scale experiments.</p>
+<p>If you use HPR-LP in your research, please star the project on <a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP">GitHub</a> and cite the following papers.</p>
+<p>The first paper presents the GPU-based HPR-LP solver with adaptive restart and penalty updates, validated on large-scale benchmarks.</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">chen2024hpr</span><span class="p">,</span>
 <span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{HPR-LP: An implementation of an HPR method for solving linear programming}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Chen, Kaihuang and Sun, Defeng and Yuan, Yancheng and Zhang, Guojun and Zhao, Xinyuan}</span><span class="p">,</span>
@@ -126,7 +128,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The second paper is a theoretical study, developing accelerated variants of pADMM and proving o(1/k) and O(1/k) nonergodic convergence rates, supported by preliminary experiments.</p>
+<p>The second paper develops accelerated variants of pADMM and proves <span class="math notranslate nohighlight">\(o(1/k)\)</span> and <span class="math notranslate nohighlight">\(O(1/k)\)</span> nonergodic convergence rates, supported by preliminary experiments.</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@article</span><span class="p">{</span><span class="nl">sun2025accelerating</span><span class="p">,</span>
 <span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Accelerating preconditioned ADMM via degenerate proximal point mappings}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Sun, Defeng and Yuan, Yancheng and Zhang, Guojun and Zhao, Xinyuan}</span><span class="p">,</span>

@@ -45,7 +45,7 @@ where $\delta_S^*(\cdot)$ denotes the convex conjugate of the indicator function
 
 ## HPR method for LP
 
-**HPR method.** HPR-LP is based on the Halpern–Peaceman–Rachford (HPR) method for linear programming. The base algorithm appears below, followed by its convergence guarantees and complexity properties, which in turn motivate the algorithmic enhancements described later.
+HPR-LP is based on the Halpern–Peaceman–Rachford (HPR) method for linear programming. The base algorithm appears below, followed by its convergence guarantees and complexity properties, which in turn motivate the algorithmic enhancements described later.
 
 
 ### Base algorithm
@@ -193,7 +193,7 @@ To boost performance on LP (and CCQP), HPR uses two key enhancements: **restart 
 \begin{array}{|l|}
 \hline
 \textbf{Algorithm 2  HPR-LP: A Halpern Peaceman-Rachford method} \\ \textbf{for the problem} \\ \hline
-\textbf{Input:} \ \mathcal{T}_1:\mathbb{R}^m\to\mathbb{R}^m\ \text{be a self-adjoint positive semidefinite linear operator such that}\\ \mathcal{T}_1+\sigma AA^* \text{ is positive definite}. \text{ Denote }w=(y,z,x),\ \bar{w}=(\bar{y},\bar{z},\bar{x}).\ \text{Choose an initial point}\\ w^{0,0}=(y^{0,0},z^{0,0},x^{0,0})\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n. \\ 
+\textbf{Input:} \ \mathcal{T}_1:\mathbb{R}^m\to\mathbb{R}^m\ \text{be a self-adjoint positive semidefinite linear operator such that}\\ \mathcal{T}_1+\sigma AA^* \text{ is positive definite}. \text{ Denote }w=(y,z,x),\ \bar{w}=(\bar{y},\bar{z},\bar{x}).\ \text{Choose an initial}\\ \text{point} w^{0,0}=(y^{0,0},z^{0,0},x^{0,0})\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n. \\ 
 \textbf{Initialization:}\ \text{Set the outer loop counter }r=0,\ \text{the total loop counter }k=0,\ \\ \text{and the initial penalty parameter }\sigma_0>0. \\ 
 \textbf{repeat} \\ 
 \quad \text{initialize the inner loop: set inner loop counter }t=0; \\ 

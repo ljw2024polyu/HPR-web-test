@@ -65,6 +65,7 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Releases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-1-2-2025-09-27">v0.1.2  (2025-09-27)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-1-1-2025-09-09">v0.1.1  (2025-09-09)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-1-0-2025-07-04">v0.1.0  (2025-07-04)</a></li>
 </ul>
@@ -125,6 +126,21 @@
 <h1>Releases</h1>
 <p>This page lists all public releases of <strong>HPR-LP</strong>.</p>
 <hr class="docutils" />
+<section id="v0-1-2-2025-09-27">
+<h2>v0.1.2  (2025-09-27)</h2>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li><p>SpMV rewrites. Add a preprocessing step and buffer preallocation to avoid redundant work between iterations.</p></li>
+<li><p>Kernel rewrites. Several CUDA kernels were refactored to reduce memory traffic and improve occupancy.</p></li>
+<li><p>In terms of SGM10 (1e-8 accuracy), 11% faster for Mittelmann’s LP benchmark set and 7% faster for MIP2017 large-scale LP relaxations (compared to v0.1.1).</p></li>
+</ul>
+<p><strong>Downloads</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/releases/download/v0.1.2/HPR-LP_v012_bug_fixed.zip">HPR-LP_v012_bug_fixed.zip</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.zip">Source code (zip)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.tar.gz">Source code (tar.gz)</a></p></li>
+</ul>
+</section>
 <section id="v0-1-1-2025-09-09">
 <h2>v0.1.1  (2025-09-09)</h2>
 <p><strong>Highlights</strong></p>

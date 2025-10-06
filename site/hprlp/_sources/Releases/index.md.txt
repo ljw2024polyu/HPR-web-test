@@ -5,6 +5,20 @@ This page lists all public releases of **HPR-LP**.
 
 ---
 
+
+## v0.1.2  (2025-09-27)
+
+**Highlights**
+- SpMV rewrites. Add a preprocessing step and buffer preallocation to avoid redundant work between iterations.  
+- Kernel rewrites. Several CUDA kernels were refactored to reduce memory traffic and improve occupancy.
+- In terms of SGM10 (1e-8 accuracy), 11% faster for Mittelmann's LP benchmark set and 7% faster for MIP2017 large-scale LP relaxations (compared to v0.1.1).  
+
+
+**Downloads**
+- [HPR-LP_v012_bug_fixed.zip](https://github.com/PolyU-IOR/HPR-LP/releases/download/v0.1.2/HPR-LP_v012_bug_fixed.zip)
+- [Source code (zip)](https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.zip)  
+- [Source code (tar.gz)](https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.tar.gz)
+
 ## v0.1.1  (2025-09-09)
 
 **Highlights**

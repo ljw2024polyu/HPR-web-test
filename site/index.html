@@ -5,7 +5,7 @@
   <link rel="icon" type="image/png" href="/HPR-web-test/assets/favicon.png">
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>HPR (test version)</title>
+  <title>HPR</title>
   <style>
     /* ===== Base ===== */
     html,body{height:100%;margin:0}
@@ -200,13 +200,17 @@
 
   /* Subtitle under the big HPR title */
   .hero-subtitle{
-    margin-top: 8px;
+    /* slightly smaller than title */
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;            /* same weight as title */
+    letter-spacing: .04em;       /* same tracking */
     text-align: center;
-    font-weight: 500;
-    line-height: 1.25;
-    opacity: .9;
-    font-size: clamp(16px, 2.1vw, 28px);
-    color: #c8d7ff;
+    color: #e9f2ff;              /* same color */
+    text-shadow:
+      0 0 18px rgba(134,168,255,.35),
+      0 0 42px rgba(134,168,255,.18); /* same glow */
+    margin-top: 8px;             /* closer to the title */
+    line-height: 1.1;            /* tighter line height */
   }
   .hero-subtitle span{
     display: block; /* force two lines */

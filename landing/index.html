@@ -198,6 +198,24 @@
   }
   body.light .credits-note{ color:#4a556d; }
 
+  /* Subtitle under the big HPR title */
+  .hero-subtitle{
+    margin-top: 8px;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.25;
+    opacity: .9;
+    font-size: clamp(16px, 2.1vw, 28px);
+    color: #c8d7ff;
+  }
+  .hero-subtitle span{
+    display: block; /* force two lines */
+  }
+  @media (max-width: 480px){
+    .hero-subtitle{ font-size: 15px; }
+  }
+
+
   </style>
 </head>
 <body>
@@ -207,7 +225,9 @@
   <!-- HERO -->
   <header class="hero" id="hero">
     <h1 class="title">HPR</h1>
-
+    <p class="hero-subtitle">
+      <span>Halpern Peaceman–Rachford</span>
+    </p>
     <!-- Typewriter line -->
     <p class="type-line" aria-live="polite">
       <span id="typewriter"></span><span class="cursor" aria-hidden="true"></span>

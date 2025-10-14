@@ -37,7 +37,23 @@
       text-shadow:0 0 20px rgba(120,170,255,.45);
       font-size:clamp(48px, 7vw, 110px); /* half of the big one */
       transition: color .5s ease, text-shadow .5s ease;
+      margin:0;              /* remove default margins */
+      line-height:1;         /* no extra vertical room */
     }
+    /* Second line inside the same <h1> */
+    .title .sub{
+      display:block;                 /* force a new line */
+      font-size:clamp(28px, 4vw, 44px);
+      line-height:1.05;              /* tight line height */
+      margin-top:2px;                /* very close to HPR */
+      font-weight:inherit;           /* same weight as title */
+      letter-spacing:inherit;
+      color:inherit;
+      text-shadow:inherit;           /* same glow */
+    }
+    /* If you want them to be absolutely stuck together, use: */
+    /* .title .sub{ margin-top:0 } or even margin-top:-2px */
+
 
     /* ===== Typewriter line ===== */
     .type-line{
@@ -198,28 +214,6 @@
   }
   body.light .credits-note{ color:#4a556d; }
 
-  /* Subtitle under the big HPR title */
-  .hero-subtitle{
-    /* slightly smaller than title */
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 800;            /* same weight as title */
-    letter-spacing: .04em;       /* same tracking */
-    text-align: center;
-    color: #e9f2ff;              /* same color */
-    text-shadow:
-      0 0 18px rgba(134,168,255,.35),
-      0 0 42px rgba(134,168,255,.18); /* same glow */
-    margin-top: 4px;             /* closer to the title */
-    line-height: 1.1;            /* tighter line height */
-  }
-  .hero-subtitle span{
-    display: block; /* force two lines */
-  }
-  @media (max-width: 480px){
-    .hero-subtitle{ font-size: 15px; }
-  }
-
-
   </style>
 </head>
 <body>
@@ -229,9 +223,7 @@
   <!-- HERO -->
   <header class="hero" id="hero">
     <h1 class="title">HPR</h1>
-    <p class="hero-subtitle">
-      <span>Halpern Peaceman–Rachford</span>
-    </p>
+    <span class="sub">Halpern Peaceman–Rachford</span>
     <!-- Typewriter line -->
     <p class="type-line" aria-live="polite">
       <span id="typewriter"></span><span class="cursor" aria-hidden="true"></span>

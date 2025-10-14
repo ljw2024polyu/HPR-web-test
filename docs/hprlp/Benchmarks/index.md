@@ -13,7 +13,7 @@ Numerical performance of **HPR-LP** and [<u>**cuPDLP.jl**</u>](https://github.co
 | **Solvers** | **SGM10** | **Solved** | **SGM10** | **Solved** | **SGM10** | **Solved** |
 | cuPDLP.jl | 76.9 | 42 | 156.2 | 41 | 277.9 | 40 |
 | HPR-LP (v0.1.0) | 30.2 | 47 | 69.1 | 44 | 103.8 | 43 |
-| HPR-LP (v0.1.1) | 27.9 | 48 | 58.4 | 44 | 90.9 | 44 |
+| HPR-LP (v0.1.2) | 25.7 | 47 | 53.2 | 44 | 82.1 | 44 |
 
 ---
 
@@ -26,7 +26,7 @@ Numerical performance of **HPR-LP** and **cuPDLP.jl** on 18 LP relaxations (>10M
 | **Solvers** | **SGM10** | **Solved** | **SGM10** | **Solved** | **SGM10** | **Solved** |
 | cuPDLP.jl | 129.8 | 16 | 253.3 | 15 | 442.2 | 14 |
 | HPR-LP (v0.1.0) | 117.6 | 17 | 260.7 | 15 | 428.6 | 14 |
-| HPR-LP (v0.1.1) | 65.2 | 17 | 131.6 | 17 | 219.3 | 17 |
+| HPR-LP (v0.1.2) | 60.9 | 17 | 122.5 | 17 | 204.2 | 17 |
 
 ---
 

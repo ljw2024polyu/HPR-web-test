@@ -27,5 +27,4 @@ REM === Ensure .nojekyll so _static/_sources are served on GitHub Pages ===
 type nul > "%SITE%\.nojekyll"
 
 echo Done. Open "%SITE%\index.html"
-pause
 

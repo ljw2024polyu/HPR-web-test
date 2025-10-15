@@ -1,14 +1,14 @@
 # Citing HPR-QP
 
-If you use HPR-LP in your research, please star the project on [GitHub](https://github.com/PolyU-IOR/HPR-LP) and cite the following papers.
+If you use HPR-QP in your research, please star the project on [GitHub](https://github.com/PolyU-IOR/HPR-QP) and cite the following papers.
 
-The first paper presents the GPU-based HPR-LP solver with adaptive restart and penalty updates, validated on large-scale benchmarks.
+The first paper presents HPR-QP, a GPU-based dual Halpern–Peaceman–Rachford solver built on the restricted Wolfe dual with symmetric Gauss–Seidel, range-space updates, and adaptive restart.
 ```bibtex
-@article{chen2024hpr,
-  author  = {Chen, Kaihuang and Sun, Defeng and Yuan, Yancheng and Zhang, Guojun and Zhao, Xinyuan},
-  title   = {HPR-LP: An implementation of an HPR method for solving linear programming},
-  journal = {Mathematical Programming Computation},
-  year    = {2025}
+@article{chen2025hpr,
+  title={HPR-QP: A dual Halpern Peaceman-Rachford method for solving large-scale convex composite quadratic programming},
+  author={Chen, Kaihuang and Sun, Defeng and Yuan, Yancheng and Zhang, Guojun and Zhao, Xinyuan},
+  journal={arXiv preprint arXiv:2507.02470},
+  year={2025}
 }
 
 ```

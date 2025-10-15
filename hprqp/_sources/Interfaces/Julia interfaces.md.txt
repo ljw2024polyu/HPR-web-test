@@ -1,10 +1,10 @@
-# Julia interfaces (HPR-QP)
+# Julia interfaces
 
 This page shows how to use the **Julia interface** of HPR-QP: run demos (MPS / MAT), build custom convex quadratic programs (CQP), and solve QAP/LASSO instances.
 
 ---
 
-## Usage 1: Test Instances in **MPS** (and **MAT** for QAP/LASSO)
+## Usage 1: Test Instances in MPS (and MAT for QAP/LASSO)
 
 ### Setting Data and Result Paths
 Before running the scripts, modify `demo/run_single_file.jl` or `demo/run_dataset.jl` to set your **data path** and **result path**.

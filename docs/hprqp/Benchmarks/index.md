@@ -15,7 +15,7 @@ This page reports numerical results on an **NVIDIA A100-SXM4-80GB** GPU.
 
 ---
 
-## Maros–Mészáros Data Set (137 Instances; tolerances \(10^{-6}\) and \(10^{-8}\))
+## Maros–Mészáros Data Set (137 Instances; tolerances $10^{-6}$ and $10^{-8}$)
 
 | Solver | SGM10 (1e-6) | Solved (1e-6) | SGM10 (1e-8) | Solved (1e-8) |
 |:--|--:|--:|--:|--:|
@@ -27,7 +27,7 @@ This page reports numerical results on an **NVIDIA A100-SXM4-80GB** GPU.
 
 ---
 
-## QAP Relaxations (36 Instances; tolerances \(10^{-6}\) and \(10^{-8}\))
+## QAP Relaxations (36 Instances; tolerances $10^{-6}$ and $10^{-8}$)
 
 | Solver | SGM10 (1e-6) | Solved (1e-6) | SGM10 (1e-8) | Solved (1e-8) |
 |:--|--:|--:|--:|--:|
@@ -39,7 +39,7 @@ This page reports numerical results on an **NVIDIA A100-SXM4-80GB** GPU.
 
 ---
 
-## LASSO Problems (11 Instances; tolerance \(10^{-8}\))
+## LASSO Problems (11 Instances; tolerance $10^{-8}$)
 
 **Abbreviations:** `T` = time-limit, `F` = failure (e.g., unbounded or infeasible).
 

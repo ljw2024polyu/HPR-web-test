@@ -1,229 +1,122 @@
-# Julia interfaces
+# Julia interfaces (HPR-QP)
 
-This page shows how to use the **Julia interface** of HPR-LP: run demos, build custom problems, adjust solver settings, and interpret results.
+This page shows how to use the **Julia interface** of HPR-QP: run demos (MPS / MAT), build custom convex quadratic programs (CQP), and solve QAP/LASSO instances.
 
 ---
 
-
-## Usage 1: Run LP instances in MPS format
+## Usage 1: Test instances in **MPS** (and **MAT** for QAP/LASSO)
 
 ### Setting Data and Result Paths
-Before running the scripts, please modify `run_single_file.jl` or `run_dataset.jl` in the scripts directory to specify the data path and result path according to your setup.
+Before running the scripts, modify `demo/run_single_file.jl` or `demo/run_dataset.jl` to set your **data path** and **result path**.
 
 ### Running a Single Instance
-To test the script on a single instance (`.mps` file):
-
+To test a single instance:
 ```bash
-julia --project scripts/run_single_file.jl
+julia --project demo/run_single_file.jl
 ```
 
 ### Running All Instances in a Directory
-To process all `.mps` files in a directory:
-
+To process all files in a directory:
 ```bash
-julia --project scripts/run_dataset.jl
+julia --project demo/run_dataset.jl
 ```
 
-## Usage 2: Define Your LP Model in Julia Scripts
+### Notes
+- **QAP instances (MAT):** The `.mat` file should contain matrices **A**, **B**, **S**, **T**.  
+  See `HPR-QP_QAP_LASSO/demo/demo_QAP.jl` for how to generate such files. (Also refer to **Section 4.5** of the paper.)
+- **LASSO instances (MAT):** The `.mat` file should contain matrix **A** and vector **b**.
 
-### Example 1: Build and Export an LP Model Using JuMP
+---
 
-This example shows how to build an LP model in JuMP, export it to MPS format, and solve it with HPR-LP.
+## Usage 2: Define your **CQP** model in Julia scripts
 
+### CQP model form
+```{math}
+\begin{aligned}
+\min_{x \in \mathbb{R}^n}\quad & \tfrac{1}{2} x^\top Q x + c^\top x \\
+\text{s.t.}\quad & A x \;\le\; b,\quad G x \;=\; h,\quad \ell \;\le\; x \;\le\; u,
+\end{aligned}
+```
+where \(Q \succeq 0\).
+
+### Example 1: Build & export a CQP with **JuMP**, then solve via HPR-QP
 ```bash
 julia --project demo/demo_JuMP.jl
 ```
-
 The script:
+- Builds a CQP model in **JuMP**  
+- Saves the model as an **MPS** file  
+- Uses **HPR-QP** to solve it
 
-- Builds a linear programming (LP) model.  
-- Saves the model as an MPS file.  
-- Uses HPR-LP to solve the LP instance.  
-
-> **Tip:** If the model may be infeasible or unbounded, you can use HiGHS to check it.
-
+> **Remark (sanity check):** If a model may be infeasible/unbounded, you can check it with **HiGHS** first.
 ```julia
 using JuMP, HiGHS
-## read a model from file (or create in other ways)
-mps_file_path = "xxx" # your file path
+
+# Read a model from file (or create it elsewhere)
+mps_file_path = "xxx"  # your file path
 model = read_from_file(mps_file_path)
-## set HiGHS as the optimizer
+
+# Set HiGHS as the optimizer (for feasibility/boundedness checks)
 set_optimizer(model, HiGHS.Optimizer)
-## solve it
+
+# Solve it
 optimize!(model)
 ```
 
-### Example 2: Define LP instance Directly in Julia
-
-This example shows how to construct and solve a linear programming problem directly in Julia without relying on JuMP.
-
+### Example 2: Define a small **CQP** directly in Julia (no JuMP)
 ```bash
-julia --project demo/demo_Abc.jl
+julia --project demo/demo_QAbc.jl
 ```
+This example constructs a toy CQP in pure Julia and calls HPR-QP directly.
 
-The small LP instance demo_Abc is given by
-
+### Example 3: Generate a random **LASSO** instance in Julia
+```bash
+julia --project demo/demo_LASSO.jl
+```
+LASSO objective (reference):
 ```{math}
-\begin{aligned}
-\min_{x_1, x_2} \quad & -3x_1 - 5x_2 \\
-\text{s.t.} \quad 
-& -x_1 - 2x_2 \;\ge -10, \\
-& -3x_1 - x_2 \;\ge -12, \\
-& x_1 \ge 0, \; x_2 \ge 0.
-\end{aligned}
+\min_{x}\ \tfrac12\|Ax-b\|_2^2 + \lambda \|x\|_{\ell_1}.
 ```
 
-## Note on First-Time Execution Performance
+---
 
-The first run of an instance may feel slow because Julia compiles code on the first execution (JIT compilation).
+## Note on first-time execution performance
 
+The first run of a script (or the first file in a batch) may be slower due to Julia’s **JIT compilation**.
 
 ```{tip}
-**Tip for Better Performance:**  
-To reduce repeated compilation overhead, it’s recommended to run scripts from an **IDE like VS Code** or the **Julia REPL** in the terminal.
+**Tip for better performance:** Run from **VS Code** or the **Julia REPL** to amortize compilation.
 ```
 
-**Start Julia REPL with the project environment**
-
+**Start a Julia REPL in the project:**
 ```bash
 julia --project
 ```
-
-Then, at the Julia REPL, run `demo/demo_Abc.jl` (or other scripts):
-
+Then run any demo inside REPL:
 ```julia
-include("demo/demo_Abc.jl")
+include("demo/demo_QAbc.jl")
 ```
 
 ```{admonition} CAUTION
-If you encounter the error message:
+If you see:
 
-`Error: Error during loading of extension AtomixCUDAExt of Atomix, use Base.retry_load_extensions() to retry`.
+`Error: Error during loading of extension AtomixCUDAExt of Atomix, use Base.retry_load_extensions() to retry.`
 
-This is usually temporary. Wait a few moments and the extension will load automatically.
+This is usually transient. Wait a few moments; the extension typically loads successfully on its own.
 ```
 
 ---
 
-## Parameters
+## Common options (quick reference)
 
-Below is a list of the parameters in HPR-LP along with their default values and usage:
+Typical options shared in demos/configs include:
 
-```{list-table}
-:header-rows: 1
-:widths: 20 20 60
+- `time_limit`: maximum runtime in seconds (e.g., `3600`)
+- `stoptol`: stopping tolerance (e.g., `1e-6`)
+- `max_iter`: maximum iteration cap
+- `check_iter`: residual check interval (e.g., `150`)
+- `use_gpu`: whether to use GPU
+- `device_number`: GPU device id when `use_gpu = true`
+- `print_frequency`: log printing frequency (use `-1` for auto)
 
-* - **Parameter**
-  - **Default Value**
-  - **Description**
-* - `warm_up`
-  - `false`
-  - Determines if a warm-up phase is performed before main execution.
-* - `time_limit`
-  - `3600`
-  - Maximum allowed runtime (seconds) for the algorithm.
-* - `stoptol`
-  - `1e-6`
-  - Stopping tolerance for convergence checks.
-* - `device_number`
-  - `0`
-  - GPU device number (only relevant if `use_gpu` is true).
-* - `max_iter`
-  - `typemax(Int32)`
-  - Maximum number of iterations allowed.
-* - `check_iter`
-  - `150`
-  - Number of iterations to check residuals.
-* - `use_Ruiz_scaling`
-  - `true`
-  - Whether to apply Ruiz scaling.
-* - `use_Pock_Chambolle_scaling`
-  - `true`
-  - Whether to use the Pock-Chambolle scaling.
-* - `use_bc_scaling`
-  - `true`
-  - Whether to use the scaling for b and c.
-* - `use_gpu`
-  - `true`
-  - Whether to use GPU or not.
-* - `print_frequency`
-  - `-1` (auto)
-  - Print the log every `print_frequency` iterations.
-```
----
-
-## Result Explanation
-
-After solving an instance, you can access the result variables as shown below:
-
-```julia
-# Example from /demo/demo_Abc.jl
-println("Objective value: ", result.primal_obj)
-println("x1 = ", result.x[1])
-println("x2 = ", result.x[2])
-```
-
-
-
-```{list-table}
-:header-rows: 1
-:widths: 20 20 60
-
-* - **Category**
-  - **Variable**
-  - **Description**
-
-* - Iteration Counts
-  - `iter`
-  - Total number of iterations performed by the algorithm.
-* - 
-  - `iter_4`
-  - Number of iterations required to achieve an accuracy of `1e-4`.
-* - 
-  - `iter_6`
-  - Number of iterations required to achieve an accuracy of `1e-6`.
-
-* - Time Metrics
-  - `time`
-  - Total time in seconds taken by the algorithm.
-* - 
-  - `time_4`
-  - Time in seconds taken to achieve an accuracy of `1e-4`.
-* - 
-  - `time_6`
-  - Time in seconds taken to achieve an accuracy of `1e-6`.
-* - 
-  - `power_time`
-  - Time in seconds used by the power method.
-
-* - Objective Values
-  - `primal_obj`
-  - The primal objective value obtained.
-* - 
-  - `gap`
-  - The gap between the primal and dual objective values.
-
-* - Residuals
-  - `residuals`
-  - Relative residuals of the primal feasibility, dual feasibility, and duality gap.
-
-* - Algorithm Status
-  - `output_type`
-  - The final status of the algorithm:
-    - `OPTIMAL` : Found optimal solution
-    - `MAX_ITER` : Max iterations reached
-    - `TIME_LIMIT` : Time limit reached
-
-* - Solution Vectors
-  - `x`
-  - The final solution vector **x**.
-* - 
-  - `y`
-  - The final solution vector **y**.
-* - 
-  - `z`
-  - The final solution vector **z**.
-```
-
-
-That’s it! With these steps you can run demos, build your own LPs, tune solver settings, and interpret results in Julia.
+(See demo scripts’ headers for the exact list used by HPR-QP.)

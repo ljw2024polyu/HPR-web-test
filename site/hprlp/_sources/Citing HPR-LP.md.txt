@@ -5,11 +5,12 @@ If you use HPR-LP in your research, please star the project on [GitHub](https://
 The first paper presents the GPU-based HPR-LP solver with adaptive restart and penalty updates, validated on large-scale benchmarks.
 ```bibtex
 @article{chen2024hpr,
-  title={HPR-LP: An implementation of an HPR method for solving linear programming},
-  author={Chen, Kaihuang and Sun, Defeng and Yuan, Yancheng and Zhang, Guojun and Zhao, Xinyuan},
-  journal={arXiv preprint arXiv:2408.12179},
-  year={2024}
+  author  = {Chen, Kaihuang and Sun, Defeng and Yuan, Yancheng and Zhang, Guojun and Zhao, Xinyuan},
+  title   = {HPR-LP: An implementation of an HPR method for solving linear programming},
+  journal = {Mathematical Programming Computation},
+  year    = {2025}
 }
+
 ```
 
 The second paper develops accelerated variants of pADMM and proves $o(1/k)$ and $O(1/k)$ nonergodic convergence rates, supported by preliminary experiments.

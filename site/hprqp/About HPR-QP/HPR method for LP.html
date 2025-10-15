@@ -11,6 +11,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d7493e4f" />
       <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d7493e4f" />
 
   
@@ -19,7 +20,11 @@
       <script src="../_static/documentation_options.js?v=5929fcd5"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/back_to_hpr_fab.js?v=b6f6947e"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -110,17 +115,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="hpr-method-for-qp">
+  <section class="tex2jax_ignore mathjax_ignore" id="hpr-method-for-qp">
 <h1>HPR method for QP</h1>
 <p>In this section, we review HPR-LP, a Halpern-Peaceman-Rachford (HPR) method for solving linear programming problems. We first describe the base algorithm and then discuss its convergence guarntees and complexity properties, which motivate subsequent algorithmic enhancements.</p>
 <section id="base-algorithm">
 <h2>Base algorithm</h2>
-<p>For any $(y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$, the augmented Lagrangian of the dual problem is</p>
+<p>For any <span class="math notranslate nohighlight">\((y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span>, the augmented Lagrangian of the dual problem is</p>
 <div class="math notranslate nohighlight">
 \[L_\sigma(y, z; x) := \delta_{\mathcal{K}}^*(-y) + \delta_{\mathcal{C}}^*(-z)
 + \langle x, A^* y + z - c \rangle
 + \frac{\sigma}{2} \| A^* y + z - c \|^2,\]</div>
-<p>where $\sigma &gt; 0$ is a penalty parameter. For notational convenience, let $w := (y, z, x) \in \mathbb{W} := \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$. Then, an HPR method with semi-proximal terms [40, 5] for solving problems (1.1) and (1.2) is summarized in Algorithm 2.1.</p>
+<p>where <span class="math notranslate nohighlight">\(\sigma &gt; 0\)</span> is a penalty parameter. For notational convenience, let <span class="math notranslate nohighlight">\(w := (y, z, x) \in \mathbb{W} := \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span>. Then, an HPR method with semi-proximal terms [40, 5] for solving problems (1.1) and (1.2) is summarized in Algorithm 2.1.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{|l|}
 \hline
@@ -142,8 +147,8 @@
 \textbf{end for} \\ 
 \textbf{Output:} \text{Iteration sequence } \{ \bar{w}^k \}. \\ \hline
 \end{array}\end{split}\]</div>
-<p><strong>Remark 2.1.</strong> Steps 1–3 correspond to the Douglas–Rachford (DR) method [17, 15]. Adding Step 4 (relaxation) yields the Peaceman–Rachford (PR) method, and Step 5 introduces Halpern iteration with step size $1/(k+2)$ [20, 26]. Together, Algorithm 2.1 is an accelerated preconditioned ADMM (pADMM) with parameter $\alpha = 2$ [40].</p>
-<p>According to [37, Corollary 28.3.1], a pair $(y^<em>, z^</em>) \in \mathbb{R}^m \times \mathbb{R}^n$ is an optimal solution to problem (1.2) if there exists $x^* \in \mathbb{R}^n$ such that $(y^<em>, z^</em>, x^*)$ satisfies the following KKT system:</p>
+<p><strong>Remark 2.1.</strong> Steps 1–3 correspond to the Douglas–Rachford (DR) method [17, 15]. Adding Step 4 (relaxation) yields the Peaceman–Rachford (PR) method, and Step 5 introduces Halpern iteration with step size <span class="math notranslate nohighlight">\(1/(k+2)\)</span> [20, 26]. Together, Algorithm 2.1 is an accelerated preconditioned ADMM (pADMM) with parameter <span class="math notranslate nohighlight">\(\alpha = 2\)</span> [40].</p>
+<p>According to [37, Corollary 28.3.1], a pair <span class="math notranslate nohighlight">\((y^*, z^*) \in \mathbb{R}^m \times \mathbb{R}^n\)</span> is an optimal solution to problem (1.2) if there exists <span class="math notranslate nohighlight">\(x^* \in \mathbb{R}^n\)</span> such that <span class="math notranslate nohighlight">\((y^*, z^*, x^*)\)</span> satisfies the following KKT system:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 0 &amp;\in A x^* - \partial \delta_{\mathcal{K}}^*(-y^*), \\
@@ -151,8 +156,8 @@
 &amp;\quad A^* y^* + z^* - c = 0.
 \end{aligned}\end{split}\]</div>
 <p>We make the following assumption:</p>
-<p><strong>Assumption 2.2.</strong> <em>There exists a vector $(y^</em>, z^<em>, x^</em>) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$ satisfying the KKT system (2.1).*</p>
-<p>Under Assumption 2.2, solving the primal–dual pair (1.1)–(1.2) is equivalent to finding a point $w^* \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$ such that $0 \in \mathcal{T} w^*$, where the maximal monotone operator $\mathcal{T}$ is defined as</p>
+<p><strong>Assumption 2.2.</strong> <em>There exists a vector <span class="math notranslate nohighlight">\((y^*, z^*, x^*) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span> satisfying the KKT system (2.1).</em></p>
+<p>Under Assumption 2.2, solving the primal–dual pair (1.1)–(1.2) is equivalent to finding a point <span class="math notranslate nohighlight">\(w^* \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span> such that <span class="math notranslate nohighlight">\(0 \in \mathcal{T} w^*\)</span>, where the maximal monotone operator <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> is defined as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathcal{T} w =
 \begin{pmatrix}
@@ -164,8 +169,8 @@ c - A^* y - z
 \forall w = (y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n.\end{split}\]</div>
 <p>The global convergence of Algorithm 2.1 is established in the following proposition.</p>
 <p><strong>Proposition 2.3</strong> (Corollary 3.5 in [40]). <em>Suppose that Assumption 2.2 holds.<br />
-Then the sequence ${\bar{w}^k} = {(\bar{y}^k, \bar{z}^k, \bar{x}^k)}$ generated by the HPR method with semi-proximal terms in Algorithm 2.1 converges to a point $w^</em> = (y^<em>, z^</em>, x^<em>)$, where $(y^</em>, z^<em>)$ solves the dual problem (1.2) and $x^</em>$ solves the primal problem (1.1).*</p>
-<p>Next, consider the self-adjoint positive semidefinite linear operator $\mathcal{M} : \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$ defined by</p>
+Then the sequence <span class="math notranslate nohighlight">\(\{\bar{w}^k\} = \{(\bar{y}^k, \bar{z}^k, \bar{x}^k)\}\)</span> generated by the HPR method with semi-proximal terms in Algorithm 2.1 converges to a point <span class="math notranslate nohighlight">\(w^* = (y^*, z^*, x^*)\)</span>, where <span class="math notranslate nohighlight">\((y^*, z^*)\)</span> solves the dual problem (1.2) and <span class="math notranslate nohighlight">\(x^*\)</span> solves the primal problem (1.1).</em></p>
+<p>Next, consider the self-adjoint positive semidefinite linear operator <span class="math notranslate nohighlight">\(\mathcal{M} : \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span> defined by</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathcal{M} =
 \begin{bmatrix}
@@ -173,7 +178,7 @@ Then the sequence ${\bar{w}^k} = {(\bar{y}^k, \bar{z}^k, \bar{x}^k)}$ generated 
 0 &amp; T_2 &amp; I \\
 A^* &amp; I &amp; \tfrac{1}{\sigma} I_n
 \end{bmatrix},\end{split}\]</div>
-<p>where $I_n$ denotes the $n \times n$ identity matrix. To analyze the complexity of the HPR method with semi-proximal terms, we consider the KKT residual and the objective error. The residual mapping associated with the KKT system (2.1), as introduced in [21], is given by</p>
+<p>where <span class="math notranslate nohighlight">\(I_n\)</span> denotes the <span class="math notranslate nohighlight">\(n \times n\)</span> identity matrix. To analyze the complexity of the HPR method with semi-proximal terms, we consider the KKT residual and the objective error. The residual mapping associated with the KKT system (2.1), as introduced in [21], is given by</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathcal{R}(w) =
 \begin{pmatrix}
@@ -183,17 +188,17 @@ c - A^* y - z
 \end{pmatrix},
 \quad
 \forall w = (y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n.\end{split}\]</div>
-<p>Furthermore, let ${(\bar{y}^k, \bar{z}^k)}$ be the sequence generated by Algorithm 2.1. We define</p>
+<p>Furthermore, let <span class="math notranslate nohighlight">\(\{(\bar{y}^k, \bar{z}^k)\}\)</span> be the sequence generated by Algorithm 2.1. We define</p>
 <p>the objective error as</p>
 <div class="math notranslate nohighlight">
 \[h(\bar{y}^{k+1}, \bar{z}^{k+1})
 := \delta_{\mathcal{K}}^*(-\bar{y}^{k+1}) + \delta_{\mathcal{C}}^*(-\bar{z}^{k+1})
 - \delta_{\mathcal{K}}^*(-y^*) - \delta_{\mathcal{C}}^*(-z^*),
 \quad \forall k \geq 0,\]</div>
-<p>where $(y^<em>, z^</em>)$ is the limit point of the sequence ${(\bar{y}^k, \bar{z}^k)}$.<br />
+<p>where <span class="math notranslate nohighlight">\((y^*, z^*)\)</span> is the limit point of the sequence <span class="math notranslate nohighlight">\(\{(\bar{y}^k, \bar{z}^k)\}\)</span>.<br />
 The complexity of the HPR method with semi-proximal terms is summarized in Theorem 2.4.</p>
 <p><strong>Theorem 2.4</strong> (Proposition 2.9 and Theorem 3.7 in [40]).<br />
-<em>Suppose that Assumption 2.2 holds. Let ${w^k} = {(y^k, z^k, x^k)}$ and ${\bar{w}^k} = {(\bar{y}^k, \bar{z}^k, \bar{x}^k)}$ be two sequences generated by the HPR method with semi-proximal terms in Algorithm 2.1, and let $w^</em> = (y^<em>, z^</em>, x^<em>)$ be its limit point. Define $R_0 = |w^0 - w^</em>|_{\mathcal{M}}$. Then for all $k \geq 0$, the following iteration complexity bounds hold:*</p>
+<em>Suppose that Assumption 2.2 holds. Let <span class="math notranslate nohighlight">\(\{w^k\} = \{(y^k, z^k, x^k)\}\)</span> and <span class="math notranslate nohighlight">\(\{\bar{w}^k\} = \{(\bar{y}^k, \bar{z}^k, \bar{x}^k)\}\)</span> be two sequences generated by the HPR method with semi-proximal terms in Algorithm 2.1, and let <span class="math notranslate nohighlight">\(w^* = (y^*, z^*, x^*)\)</span> be its limit point. Define <span class="math notranslate nohighlight">\(R_0 = \|w^0 - w^*\|_{\mathcal{M}}\)</span>. Then for all <span class="math notranslate nohighlight">\(k \geq 0\)</span>, the following iteration complexity bounds hold:</em></p>
 <div class="math notranslate nohighlight">
 \[\| w^k - \hat{w}^{k+1} \|_{\mathcal{M}} \leq \frac{R_0}{k+1},\]</div>
 <div class="math notranslate nohighlight">
@@ -206,7 +211,7 @@ h(\bar{y}^{k+1}, \bar{z}^{k+1})
 \;\; \leq \;\;
 \left( 3 R_0 + \frac{1}{\sqrt{\sigma}} \| x^* \| \right) \frac{R_0}{k+1}.\]</div>
 <p><strong>Remark 2.5.</strong> <em>existing complexity results for LP</em></p>
-<p>The results above establish that the HPR method enjoys global convergence and an $O(1/k)$ complexity rate in terms of both KKT residuals and objective error. These properties motivate the use of restart strategies and adaptive parameter updates, which will be reviewed in the next subsection.</p>
+<p>The results above establish that the HPR method enjoys global convergence and an <span class="math notranslate nohighlight">\(O(1/k)\)</span> complexity rate in terms of both KKT residuals and objective error. These properties motivate the use of restart strategies and adaptive parameter updates, which will be reviewed in the next subsection.</p>
 </section>
 </section>
 

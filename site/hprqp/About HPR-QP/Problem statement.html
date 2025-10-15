@@ -11,6 +11,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d7493e4f" />
       <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d7493e4f" />
 
   
@@ -19,6 +20,11 @@
       <script src="../_static/documentation_options.js?v=5929fcd5"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/back_to_hpr_fab.js?v=b6f6947e"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -109,29 +115,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="problem-statement">
+  <section class="tex2jax_ignore mathjax_ignore" id="problem-statement">
 <h1>Problem statement</h1>
 <section id="general-linear-programming-lp-formulation">
 <h2>General Linear Programming (LP) Formulation</h2>
 <p>Linear programming (LP) is one of the most fundamental problems in mathematical optimization, with applications ranging from operations research and machine learning to economics and engineering. Specifically, we consider the following general form of LP:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{aligned}
-\min_{x \in \mathbb{R}^n} &amp; ;; \langle c, x \rangle \
-\text{s.t.} ;; &amp; Ax \in \mathcal{K}, \
+\min_{x \in \mathbb{R}^n} &amp; \;\; \langle c, x \rangle \\
+\text{s.t.} \;\; &amp; Ax \in \mathcal{K}, \\
 &amp; x \in \mathcal{C},
-\end{aligned}</p>
-<p>$$</p>
-<p>where $c \in \mathbb{R}^n$ is the objective vector, $A \in \mathbb{R}^{m \times n}$ is the constraint matrix,<br />
-$\mathcal{K} := { s \in \mathbb{R}^m : l_c \leq s \leq u_c }$ with bounds $l_c \in (\mathbb{R} \cup {-\infty})^m$ and $u_c \in (\mathbb{R} \cup {\infty})^m$,<br />
-and $\mathcal{C} := { x \in \mathbb{R}^n : l_v \leq x \leq u_v }$ with bounds $l_v \in (\mathbb{R} \cup {-\infty})^n$ and $u_v \in (\mathbb{R} \cup {\infty})^n$.</p>
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c \in \mathbb{R}^n\)</span> is the objective vector, <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{m \times n}\)</span> is the constraint matrix,<br />
+<span class="math notranslate nohighlight">\(\mathcal{K} := \{ s \in \mathbb{R}^m : l_c \leq s \leq u_c \}\)</span> with bounds <span class="math notranslate nohighlight">\(l_c \in (\mathbb{R} \cup \{-\infty\})^m\)</span> and <span class="math notranslate nohighlight">\(u_c \in (\mathbb{R} \cup \{\infty\})^m\)</span>,<br />
+and <span class="math notranslate nohighlight">\(\mathcal{C} := \{ x \in \mathbb{R}^n : l_v \leq x \leq u_v \}\)</span> with bounds <span class="math notranslate nohighlight">\(l_v \in (\mathbb{R} \cup \{-\infty\})^n\)</span> and <span class="math notranslate nohighlight">\(u_v \in (\mathbb{R} \cup \{\infty\})^n\)</span>.</p>
 <p>The corresponding dual problem is:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \begin{aligned}
-\min_{y \in \mathbb{R}^m, ; z \in \mathbb{R}^n} &amp; ;; \delta_{\mathcal{K}}^<em>(-y) + \delta_{\mathcal{C}}^</em>(-z) \
-\text{s.t.} ;; &amp; A^* y + z = c,
-\end{aligned}</p>
-<p>$$</p>
-<p>where $\delta_S^*(\cdot)$ denotes the convex conjugate of the indicator function $\delta_S(\cdot)$ associated with a closed convex set $S$.</p>
+\min_{y \in \mathbb{R}^m, \; z \in \mathbb{R}^n} &amp; \;\; \delta_{\mathcal{K}}^*(-y) + \delta_{\mathcal{C}}^*(-z) \\
+\text{s.t.} \;\; &amp; A^* y + z = c,
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta_S^*(\cdot)\)</span> denotes the convex conjugate of the indicator function <span class="math notranslate nohighlight">\(\delta_S(\cdot)\)</span> associated with a closed convex set <span class="math notranslate nohighlight">\(S\)</span>.</p>
 </section>
 <section id="from-simplex-and-interior-point-to-gpu-challenges">
 <h2>From simplex and interior-point to GPU challenges</h2>
@@ -140,7 +146,7 @@ and $\mathcal{C} := { x \in \mathbb{R}^n : l_v \leq x \leq u_v }$ with bounds $l
 <section id="the-rise-of-first-order-methods">
 <h2>The rise of first-order methods</h2>
 <p>In contrast, first-order methods (FOMs) have emerged as a promising alternative for large-scale LPs due to their low per-iteration cost and high degree of parallelism. Representative LP solvers include <strong>PDLP</strong> [1, 2], <strong>ECLIPSE</strong> [3], <strong>ABIP</strong> [27, 12] and <strong>HPR-LP</strong> [5]. Beyond LP, FOM-based algorithms have also been developed for more general convex quadratic optimization, such as <strong>SCS</strong> [36, 35], <strong>OSQP</strong> [39], <strong>PDQP</strong> [29], <strong>PDHCG</strong> [22], and <strong>PDCS</strong> [28], <strong>HPR-QP</strong> [6]. A landmark development was <strong>PDLP</strong> [1], which is based on the primal–dual hybrid gradient (PDHG) method [45] and incorporates practical enhancements such as restarts, adaptive penalty updates, and line search. Its GPU implementations (<strong>cuPDLP.jl</strong> [31], <strong>cuPDLP-c</strong> [33], and <strong>cuOpt</strong> [?]) have demonstrated competitive performance against commercial solvers on large-scale instances. Notably, PDLP won the 2024 Beale–Orchard–Hays Prize for Excellence in Computational Mathematical Programming.</p>
-<p>Theoretically, ergodic sequences of semi-proximal ADMM (sPADMM)—which include PDHG [4, 13, 14]—achieve an $O(1/k)$ complexity in terms of objective error and feasibility violation [9]. However, whether such ergodic averages guarantee an $O(1/k)$ rate for the KKT residual in LP remains an open question; existing results [38, 34] suggest only an $O(1/\sqrt{k})$ rate in general.</p>
+<p>Theoretically, ergodic sequences of semi-proximal ADMM (sPADMM)—which include PDHG [4, 13, 14]—achieve an <span class="math notranslate nohighlight">\(O(1/k)\)</span> complexity in terms of objective error and feasibility violation [9]. However, whether such ergodic averages guarantee an <span class="math notranslate nohighlight">\(O(1/k)\)</span> rate for the KKT residual in LP remains an open question; existing results [38, 34] suggest only an <span class="math notranslate nohighlight">\(O(1/\sqrt{k})\)</span> rate in general.</p>
 </section>
 </section>
 

@@ -22,7 +22,7 @@ extensions = [
     "myst_parser",
     "sphinx.ext.autodoc", "sphinx.ext.autosummary",
     "sphinx.ext.napoleon", "sphinx.ext.viewcode",
-    "sphinx.ext.mathjax",
+    "sphinx.ext.mathjax", "sphinxcontrib.pseudocode",
 ]
 autosummary_generate = True
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -31,7 +31,18 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_permalinks = False
 
-extensions = ["myst_parser"]
+# extensions = ["myst_parser", "sphinx.ext.mathjax"]
+myst_enable_extensions = [
+    "dollarmath",
+    "amsmath",
+]
+mathjax3_config = {
+    "tex": {
+        "inlineMath": [["$", "$"], ["\\(", "\\)"]],
+        "displayMath": [["$$", "$$"], ["\\[", "\\]"]],
+    }
+}
+
 
 source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
 
@@ -49,9 +60,10 @@ html_theme = "renku" #  like OSQP
 #html_theme = "press"
 
 
-
+html_show_sourcelink = False
 
 html_static_path = ["_static"]
+html_js_files = ['back_to_hpr_fab.js']
 html_css_files = [
     "custom.css",
 ]

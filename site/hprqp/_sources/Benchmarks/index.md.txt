@@ -7,10 +7,10 @@ This page reports numerical results on an **NVIDIA A100-SXM4-80GB** GPU.
 ## Numerical Results
 
 - **HPR-QP** is implemented in Julia and leverages CUDA for GPU acceleration.  
-- (**PDQP**)[https://github.com/jinwen-yang/PDQP.jl] (GPU, downloaded in April 2025).  
-- (**SCS**)[https://github.com/jump-dev/SCS.jl] (GPU, v2.1.0)is written in C/C++ with a Julia interface. GPU acceleration is enabled via its indirect solver, which performs all matrix operations on the GPU.  
-- (**CuClarabel**)[https://github.com/oxfordcontrol/Clarabel.jl/tree/CuClarabel] (GPU, v0.10.0).  
-- (**Gurobi**)[https://www.gurobi.com/] (CPU, version 12.0.2, academic license) is executed on CPU using the barrier method.  
+- [**PDQP**](https://github.com/jinwen-yang/PDQP.jl) (GPU, downloaded in April 2025).  
+- [**SCS**](https://github.com/jump-dev/SCS.jl) (GPU, v2.1.0)is written in C/C++ with a Julia interface. GPU acceleration is enabled via its indirect solver, which performs all matrix operations on the GPU.  
+- [**CuClarabel**](https://github.com/oxfordcontrol/Clarabel.jl/tree/CuClarabel) (GPU, v0.10.0).  
+- [**Gurobi**](https://www.gurobi.com/) (CPU, version 12.0.2, academic license) is executed on CPU using the barrier method.  
 - All benchmarks were conducted on a SuperServer SYS-420GP-TNR with an NVIDIA A100-SXM4-80GB GPU, Intel Xeon Platinum 8338C CPU @ 2.60 GHz, and 256 GB RAM
 
 ---

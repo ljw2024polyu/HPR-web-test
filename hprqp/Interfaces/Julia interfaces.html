@@ -22,8 +22,6 @@
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../_static/back_to_hpr_fab.js?v=b6f6947e"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -60,22 +58,20 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Interfaces</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Julia interfaces (HPR-QP)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#usage-1-test-instances-in-mps-and-mat-for-qap-lasso">Usage 1: Test instances in <strong>MPS</strong> (and <strong>MAT</strong> for QAP/LASSO)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage-1-test-instances-in-mps-and-mat-for-qap-lasso">Usage 1: Test Instances in <strong>MPS</strong> (and <strong>MAT</strong> for QAP/LASSO)</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#setting-data-and-result-paths">Setting Data and Result Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#running-a-single-instance">Running a Single Instance</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#running-all-instances-in-a-directory">Running All Instances in a Directory</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#usage-2-define-your-cqp-model-in-julia-scripts">Usage 2: Define your <strong>CQP</strong> model in Julia scripts</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#cqp-model-form">CQP model form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-2-define-your-cqp-model-in-julia-scripts">Usage 2: Define your CQP Model in Julia Scripts</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#example-1-build-export-a-cqp-with-jump-then-solve-via-hpr-qp">Example 1: Build &amp; export a CQP with <strong>JuMP</strong>, then solve via HPR-QP</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-2-define-a-small-cqp-directly-in-julia-no-jump">Example 2: Define a small <strong>CQP</strong> directly in Julia (no JuMP)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-3-generate-a-random-lasso-instance-in-julia">Example 3: Generate a random <strong>LASSO</strong> instance in Julia</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-2-define-a-small-cqp-directly-in-julia-no-jump">Example 2: Define a small CQP directly in Julia (no JuMP)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-3-generate-a-random-lasso-instance-in-julia">Example 3: Generate a random LASSO instance in Julia</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#note-on-first-time-execution-performance">Note on first-time execution performance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#common-options-quick-reference">Common options (quick reference)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#note-on-first-time-execution-performance">Note on First-Time Execution Performance</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="C%20interfaces.html">C interfaces</a></li>
@@ -146,7 +142,7 @@
 <p>This page shows how to use the <strong>Julia interface</strong> of HPR-QP: run demos (MPS / MAT), build custom convex quadratic programs (CQP), and solve QAP/LASSO instances.</p>
 <hr class="docutils" />
 <section id="usage-1-test-instances-in-mps-and-mat-for-qap-lasso">
-<h2>Usage 1: Test instances in <strong>MPS</strong> (and <strong>MAT</strong> for QAP/LASSO)</h2>
+<h2>Usage 1: Test Instances in <strong>MPS</strong> (and <strong>MAT</strong> for QAP/LASSO)</h2>
 <section id="setting-data-and-result-paths">
 <h3>Setting Data and Result Paths</h3>
 <p>Before running the scripts, modify <code class="docutils literal notranslate"><span class="pre">demo/run_single_file.jl</span></code> or <code class="docutils literal notranslate"><span class="pre">demo/run_dataset.jl</span></code> to set your <strong>data path</strong> and <strong>result path</strong>.</p>
@@ -168,7 +164,7 @@
 <section id="notes">
 <h3>Notes</h3>
 <ul class="simple">
-<li><p><strong>QAP instances (MAT):</strong> The <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file should contain matrices <strong>A</strong>, <strong>B</strong>, <strong>S</strong>, <strong>T</strong>.<br />
+<li><p><strong>QAP instances (MAT):</strong> The <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file should include the matrices <strong>A</strong>, <strong>B</strong>, <strong>S</strong>, <strong>T</strong>.<br />
 See <code class="docutils literal notranslate"><span class="pre">HPR-QP_QAP_LASSO/demo/demo_QAP.jl</span></code> for how to generate such files. (Also refer to <strong>Section 4.5</strong> of the paper.)</p></li>
 <li><p><strong>LASSO instances (MAT):</strong> The <code class="docutils literal notranslate"><span class="pre">.mat</span></code> file should contain matrix <strong>A</strong> and vector <strong>b</strong>.</p></li>
 </ul>
@@ -176,37 +172,27 @@ See <code class="docutils literal notranslate"><span class="pre">HPR-QP_QAP_LASS
 </section>
 <hr class="docutils" />
 <section id="usage-2-define-your-cqp-model-in-julia-scripts">
-<h2>Usage 2: Define your <strong>CQP</strong> model in Julia scripts</h2>
-<section id="cqp-model-form">
-<h3>CQP model form</h3>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\min_{x \in \mathbb{R}^n}\quad &amp; \tfrac{1}{2} x^\top Q x + c^\top x \\
-\text{s.t.}\quad &amp; A x \;\le\; b,\quad G x \;=\; h,\quad \ell \;\le\; x \;\le\; u,
-\end{aligned}\end{split}\]</div>
-<p>where (Q \succeq 0).</p>
-</section>
+<h2>Usage 2: Define your CQP Model in Julia Scripts</h2>
 <section id="example-1-build-export-a-cqp-with-jump-then-solve-via-hpr-qp">
 <h3>Example 1: Build &amp; export a CQP with <strong>JuMP</strong>, then solve via HPR-QP</h3>
+<p>This example demonstrates how to construct a CQP model using the JuMP modeling language in Julia and export it to MPS format for use with the HPR-QP solver.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project<span class="w"> </span>demo/demo_JuMP.jl
 </pre></div>
 </div>
 <p>The script:</p>
 <ul class="simple">
-<li><p>Builds a CQP model in <strong>JuMP</strong></p></li>
+<li><p>Builds a CQP model.</p></li>
 <li><p>Saves the model as an <strong>MPS</strong> file</p></li>
-<li><p>Uses <strong>HPR-QP</strong> to solve it</p></li>
+<li><p>Uses <strong>HPR-QP</strong> to solve the CQP instance</p></li>
 </ul>
-<blockquote>
-<div><p><strong>Remark (sanity check):</strong> If a model may be infeasible/unbounded, you can check it with <strong>HiGHS</strong> first.</p>
-</div></blockquote>
+<p><strong>Remark:</strong> If a model may be infeasible/unbounded, you can check it with HiGHS.</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">JuMP</span><span class="p">,</span><span class="w"> </span><span class="n">HiGHS</span>
 
 <span class="c"># Read a model from file (or create it elsewhere)</span>
 <span class="n">mps_file_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;xxx&quot;</span><span class="w">  </span><span class="c"># your file path</span>
 <span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_from_file</span><span class="p">(</span><span class="n">mps_file_path</span><span class="p">)</span>
 
-<span class="c"># Set HiGHS as the optimizer (for feasibility/boundedness checks)</span>
+<span class="c"># Set HiGHS as the optimizer</span>
 <span class="n">set_optimizer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">HiGHS</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">)</span>
 
 <span class="c"># Solve it</span>
@@ -215,59 +201,47 @@ See <code class="docutils literal notranslate"><span class="pre">HPR-QP_QAP_LASS
 </div>
 </section>
 <section id="example-2-define-a-small-cqp-directly-in-julia-no-jump">
-<h3>Example 2: Define a small <strong>CQP</strong> directly in Julia (no JuMP)</h3>
+<h3>Example 2: Define a small CQP directly in Julia (no JuMP)</h3>
+<p>This example demonstrates how to construct and solve a CQP problem directly in Julia without relying on JuMP.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project<span class="w"> </span>demo/demo_QAbc.jl
 </pre></div>
 </div>
-<p>This example constructs a toy CQP in pure Julia and calls HPR-QP directly.</p>
 </section>
 <section id="example-3-generate-a-random-lasso-instance-in-julia">
-<h3>Example 3: Generate a random <strong>LASSO</strong> instance in Julia</h3>
+<h3>Example 3: Generate a random LASSO instance in Julia</h3>
+<p>This example demonstrates how to construct and solve a random LASSO instance.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project<span class="w"> </span>demo/demo_LASSO.jl
 </pre></div>
 </div>
-<p>LASSO objective (reference):</p>
-<div class="math notranslate nohighlight">
-\[\min_{x}\ \tfrac12\|Ax-b\|_2^2 + \lambda \|x\|_{\ell_1}.\]</div>
 </section>
 </section>
 <hr class="docutils" />
 <section id="note-on-first-time-execution-performance">
-<h2>Note on first-time execution performance</h2>
-<p>The first run of a script (or the first file in a batch) may be slower due to Julia’s <strong>JIT compilation</strong>.</p>
+<h2>Note on First-Time Execution Performance</h2>
+<p>You may notice that solving a single instance — or the first instance in a dataset — appears slow. This is due to Julia’s <strong>Just-In-Time (JIT) compilation</strong>, which compiles code on first execution.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><strong>Tip for better performance:</strong> Run from <strong>VS Code</strong> or the <strong>Julia REPL</strong> to amortize compilation.</p>
+<p><strong>Tip for Better Performance:</strong><br />
+To reduce repeated compilation overhead, it’s recommended to run scripts from an <strong>IDE like VS Code</strong> or the <strong>Julia REPL</strong> in the terminal.</p>
 </div>
-<p><strong>Start a Julia REPL in the project:</strong></p>
+<p><strong>Start Julia REPL with the project environment:</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project
 </pre></div>
 </div>
-<p>Then run any demo inside REPL:</p>
+<p><strong>Then, at the Julia REPL, run <code class="docutils literal notranslate"><span class="pre">demo/demo_QAbc.jl</span></code> (or other scripts):</strong></p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">include</span><span class="p">(</span><span class="s">&quot;demo/demo_QAbc.jl&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition-caution admonition">
 <p class="admonition-title">CAUTION</p>
-<p>If you see:</p>
-<p><code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">Error</span> <span class="pre">during</span> <span class="pre">loading</span> <span class="pre">of</span> <span class="pre">extension</span> <span class="pre">AtomixCUDAExt</span> <span class="pre">of</span> <span class="pre">Atomix,</span> <span class="pre">use</span> <span class="pre">Base.retry_load_extensions()</span> <span class="pre">to</span> <span class="pre">retry.</span></code></p>
-<p>This is usually transient. Wait a few moments; the extension typically loads successfully on its own.</p>
+<p>If you encounter the error message:</p>
 </div>
-</section>
+<p>Error: Error during loading of extension AtomixCUDAExt of Atomix, use Base.retry_load_extensions() to retry.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">This</span> <span class="ow">is</span> <span class="n">usually</span> <span class="n">transient</span><span class="o">.</span> <span class="n">Wait</span> <span class="n">a</span> <span class="n">few</span> <span class="n">moments</span><span class="p">;</span> <span class="n">the</span> <span class="n">extension</span> <span class="n">typically</span> <span class="n">loads</span> <span class="n">successfully</span> <span class="n">on</span> <span class="n">its</span> <span class="n">own</span><span class="o">.</span>
+</pre></div>
+</div>
 <hr class="docutils" />
-<section id="common-options-quick-reference">
-<h2>Common options (quick reference)</h2>
-<p>Typical options shared in demos/configs include:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">time_limit</span></code>: maximum runtime in seconds (e.g., <code class="docutils literal notranslate"><span class="pre">3600</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">stoptol</span></code>: stopping tolerance (e.g., <code class="docutils literal notranslate"><span class="pre">1e-6</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: maximum iteration cap</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">check_iter</span></code>: residual check interval (e.g., <code class="docutils literal notranslate"><span class="pre">150</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">use_gpu</span></code>: whether to use GPU</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">device_number</span></code>: GPU device id when <code class="docutils literal notranslate"><span class="pre">use_gpu</span> <span class="pre">=</span> <span class="pre">true</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">print_frequency</span></code>: log printing frequency (use <code class="docutils literal notranslate"><span class="pre">-1</span></code> for auto)</p></li>
-</ul>
-<p>(See demo scripts’ headers for the exact list used by HPR-QP.)</p>
 </section>
 </section>
 

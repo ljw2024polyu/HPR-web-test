@@ -4,7 +4,7 @@ This page shows how to use the **Julia interface** of HPR-QP: run demos (MPS / M
 
 ---
 
-## Usage 1: Test instances in **MPS** (and **MAT** for QAP/LASSO)
+## Usage 1: Test Instances in **MPS** (and **MAT** for QAP/LASSO)
 
 ### Setting Data and Result Paths
 Before running the scripts, modify `demo/run_single_file.jl` or `demo/run_dataset.jl` to set your **data path** and **result path**.
@@ -22,33 +22,27 @@ julia --project demo/run_dataset.jl
 ```
 
 ### Notes
-- **QAP instances (MAT):** The `.mat` file should contain matrices **A**, **B**, **S**, **T**.  
+- **QAP instances (MAT):** The `.mat` file should include the matrices **A**, **B**, **S**, **T**.  
   See `HPR-QP_QAP_LASSO/demo/demo_QAP.jl` for how to generate such files. (Also refer to **Section 4.5** of the paper.)
 - **LASSO instances (MAT):** The `.mat` file should contain matrix **A** and vector **b**.
 
 ---
 
-## Usage 2: Define your **CQP** model in Julia scripts
-
-### CQP model form
-```{math}
-\begin{aligned}
-\min_{x \in \mathbb{R}^n}\quad & \tfrac{1}{2} x^\top Q x + c^\top x \\
-\text{s.t.}\quad & A x \;\le\; b,\quad G x \;=\; h,\quad \ell \;\le\; x \;\le\; u,
-\end{aligned}
-```
-where \(Q \succeq 0\).
+## Usage 2: Define your CQP Model in Julia Scripts
 
 ### Example 1: Build & export a CQP with **JuMP**, then solve via HPR-QP
+
+This example demonstrates how to construct a CQP model using the JuMP modeling language in Julia and export it to MPS format for use with the HPR-QP solver.
+
 ```bash
 julia --project demo/demo_JuMP.jl
 ```
 The script:
-- Builds a CQP model in **JuMP**  
+- Builds a CQP model.  
 - Saves the model as an **MPS** file  
-- Uses **HPR-QP** to solve it
+- Uses **HPR-QP** to solve the CQP instance
 
-> **Remark (sanity check):** If a model may be infeasible/unbounded, you can check it with **HiGHS** first.
+**Remark:** If a model may be infeasible/unbounded, you can check it with HiGHS.
 ```julia
 using JuMP, HiGHS
 
@@ -56,67 +50,55 @@ using JuMP, HiGHS
 mps_file_path = "xxx"  # your file path
 model = read_from_file(mps_file_path)
 
-# Set HiGHS as the optimizer (for feasibility/boundedness checks)
+# Set HiGHS as the optimizer
 set_optimizer(model, HiGHS.Optimizer)
 
 # Solve it
 optimize!(model)
 ```
 
-### Example 2: Define a small **CQP** directly in Julia (no JuMP)
+### Example 2: Define a small CQP directly in Julia (no JuMP)
+This example demonstrates how to construct and solve a CQP problem directly in Julia without relying on JuMP.
+
 ```bash
 julia --project demo/demo_QAbc.jl
 ```
-This example constructs a toy CQP in pure Julia and calls HPR-QP directly.
 
-### Example 3: Generate a random **LASSO** instance in Julia
+### Example 3: Generate a random LASSO instance in Julia
+This example demonstrates how to construct and solve a random LASSO instance.
 ```bash
 julia --project demo/demo_LASSO.jl
-```
-LASSO objective (reference):
-```{math}
-\min_{x}\ \tfrac12\|Ax-b\|_2^2 + \lambda \|x\|_{\ell_1}.
 ```
 
 ---
 
-## Note on first-time execution performance
+## Note on First-Time Execution Performance
 
-The first run of a script (or the first file in a batch) may be slower due to Julia’s **JIT compilation**.
+You may notice that solving a single instance — or the first instance in a dataset — appears slow. This is due to Julia’s **Just-In-Time (JIT) compilation**, which compiles code on first execution.
 
 ```{tip}
-**Tip for better performance:** Run from **VS Code** or the **Julia REPL** to amortize compilation.
+**Tip for Better Performance:**  
+To reduce repeated compilation overhead, it’s recommended to run scripts from an **IDE like VS Code** or the **Julia REPL** in the terminal.
 ```
 
-**Start a Julia REPL in the project:**
+**Start Julia REPL with the project environment:**
 ```bash
 julia --project
 ```
-Then run any demo inside REPL:
+
+**Then, at the Julia REPL, run `demo/demo_QAbc.jl` (or other scripts):**
 ```julia
 include("demo/demo_QAbc.jl")
 ```
 
 ```{admonition} CAUTION
-If you see:
+If you encounter the error message:
 
-`Error: Error during loading of extension AtomixCUDAExt of Atomix, use Base.retry_load_extensions() to retry.`
+```
+Error: Error during loading of extension AtomixCUDAExt of Atomix, use Base.retry_load_extensions() to retry.
+```
 
 This is usually transient. Wait a few moments; the extension typically loads successfully on its own.
 ```
 
 ---
-
-## Common options (quick reference)
-
-Typical options shared in demos/configs include:
-
-- `time_limit`: maximum runtime in seconds (e.g., `3600`)
-- `stoptol`: stopping tolerance (e.g., `1e-6`)
-- `max_iter`: maximum iteration cap
-- `check_iter`: residual check interval (e.g., `150`)
-- `use_gpu`: whether to use GPU
-- `device_number`: GPU device id when `use_gpu = true`
-- `print_frequency`: log printing frequency (use `-1` for auto)
-
-(See demo scripts’ headers for the exact list used by HPR-QP.)

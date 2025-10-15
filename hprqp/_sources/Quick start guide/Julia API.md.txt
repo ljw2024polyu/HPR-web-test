@@ -1,6 +1,6 @@
 # Julia API
 
-This page explains how to install the **Julia version** of HPR-LP.
+This page explains how to install the **Julia version** of HPR-QP.
 
 ---
 
@@ -18,11 +18,17 @@ CUDA.versioninfo()
 
 ---
 
-## 2. Clone the Repository
-
+## 2. Pick the Right Solver and Clone the Repository
+If you need to solve a LASSO problem (with an $l_1$ regularizer) or a QAP instance where the matrix form of $Q$ is unavailable, please refer to the HPR-QP_QAP_LASSO module.
 ```bash
-git clone https://github.com/PolyU-IOR/HPR-LP.git
-cd HPR-LP
+git clone https://github.com/PolyU-IOR/HPRQLP.git
+cd HPR-QP_QAP_LASSO
+```
+
+otherwise, for convex QP (COP) problems where the matrix form of $Q$ is available, please refer to the HPR-QP module.
+```bash
+git clone https://github.com/PolyU-IOR/HPRQLP.git
+cd HPR-QP
 ```
 
 Or download and extract the ZIP file from GitHub.
@@ -38,21 +44,7 @@ julia --project -e 'using Pkg; Pkg.instantiate()'
 
 This will install all required Julia dependencies (including CUDA.jl).
 
----
 
-## 4. Verify Installation
-
-Start Julia in project mode:
-```bash
-julia --project
-```
-
-and test whether the environment loads without errors:
-```julia
-using HPRLP
-```
-
-If no error appears, the installation is successful.
 
 ---
 

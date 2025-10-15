@@ -52,9 +52,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Quick start guide</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Julia API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#prerequisites">1. Prerequisites</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#clone-the-repository">2. Clone the Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pick-the-right-solver-and-clone-the-repository">2. Pick the Right Solver and Clone the Repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#install-dependencies">3. Install Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#verify-installation">4. Verify Installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
@@ -126,7 +125,7 @@
              
   <section id="julia-api">
 <h1>Julia API</h1>
-<p>This page explains how to install the <strong>Julia version</strong> of HPR-LP.</p>
+<p>This page explains how to install the <strong>Julia version</strong> of HPR-QP.</p>
 <hr class="docutils" />
 <section id="prerequisites">
 <h2>1. Prerequisites</h2>
@@ -142,10 +141,16 @@
 </div>
 </section>
 <hr class="docutils" />
-<section id="clone-the-repository">
-<h2>2. Clone the Repository</h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/PolyU-IOR/HPR-LP.git
-<span class="nb">cd</span><span class="w"> </span>HPR-LP
+<section id="pick-the-right-solver-and-clone-the-repository">
+<h2>2. Pick the Right Solver and Clone the Repository</h2>
+<p>If you need to solve a LASSO problem (with an $l_1$ regularizer) or a QAP instance where the matrix form of $Q$ is unavailable, please refer to the HPR-QP_QAP_LASSO module.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/PolyU-IOR/HPRQLP.git
+<span class="nb">cd</span><span class="w"> </span>HPR-QP_QAP_LASSO
+</pre></div>
+</div>
+<p>otherwise, for convex QP (COP) problems where the matrix form of $Q$ is available, please refer to the HPR-QP module.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/PolyU-IOR/HPRQLP.git
+<span class="nb">cd</span><span class="w"> </span>HPR-QP
 </pre></div>
 </div>
 <p>Or download and extract the ZIP file from GitHub.</p>
@@ -158,19 +163,6 @@
 </pre></div>
 </div>
 <p>This will install all required Julia dependencies (including CUDA.jl).</p>
-</section>
-<hr class="docutils" />
-<section id="verify-installation">
-<h2>4. Verify Installation</h2>
-<p>Start Julia in project mode:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project
-</pre></div>
-</div>
-<p>and test whether the environment loads without errors:</p>
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">HPRLP</span>
-</pre></div>
-</div>
-<p>If no error appears, the installation is successful.</p>
 </section>
 <hr class="docutils" />
 <section id="next-steps">

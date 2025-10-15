@@ -60,8 +60,10 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Benchmarks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mittelmann-lp-benchmark-set">1) Mittelmann LP benchmark set</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#miplib-2017-lp-relaxations">2) MIPLIB 2017 LP relaxations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#numerical-results">Numerical Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#marosmeszaros-data-set-137-instances-tolerances-10-6-and-10-8">Maros–Mészáros Data Set (137 Instances; tolerances (10^{-6}) and (10^{-8}))</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qap-relaxations-36-instances-tolerances-10-6-and-10-8">QAP Relaxations (36 Instances; tolerances (10^{-6}) and (10^{-8}))</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lasso-problems-11-instances-tolerance-10-8">LASSO Problems (11 Instances; tolerance (10^{-8}))</a></li>
 </ul>
 </li>
 </ul>
@@ -123,107 +125,210 @@
 <h1>Benchmarks</h1>
 <p>This page reports numerical results on an <strong>NVIDIA A100-SXM4-80GB</strong> GPU.</p>
 <hr class="docutils" />
-<section id="mittelmann-lp-benchmark-set">
-<h2>1) Mittelmann LP benchmark set</h2>
-<p>Numerical performance of <strong>HPR-LP</strong> and <a class="reference external" href="https://github.com/jinwen-yang/cuPDLP.jl"><u><strong>cuPDLP.jl</strong></u></a> (downloaded on July 24th, 2024) on 49 instances of <a class="reference external" href="https://plato.asu.edu/ftp/lpfeas.html"><u>Mittelmann’s LP benchmark set</u></a> without Gurobi’s presolve. Time limit <strong>15,000 seconds</strong>.</p>
+<section id="numerical-results">
+<h2>Numerical Results</h2>
+<ul class="simple">
+<li><p><strong>HPR-QP</strong> is implemented in Julia and leverages CUDA for GPU acceleration.</p></li>
+<li><p>(<strong>PDQP</strong>)[https://github.com/jinwen-yang/PDQP.jl] (GPU, downloaded in April 2025).</p></li>
+<li><p>(<strong>SCS</strong>)[https://github.com/jump-dev/SCS.jl] (GPU, v2.1.0)is written in C/C++ with a Julia interface. GPU acceleration is enabled via its indirect solver, which performs all matrix operations on the GPU.</p></li>
+<li><p>(<strong>CuClarabel</strong>)[https://github.com/oxfordcontrol/Clarabel.jl/tree/CuClarabel] (GPU, v0.10.0).</p></li>
+<li><p>(<strong>Gurobi</strong>)[https://www.gurobi.com/] (CPU, version 12.0.2, academic license) is executed on CPU using the barrier method.</p></li>
+<li><p>All benchmarks were conducted on a SuperServer SYS-420GP-TNR with an NVIDIA A100-SXM4-80GB GPU, Intel Xeon Platinum 8338C CPU &#64; 2.60 GHz, and 256 GB RAM</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="marosmeszaros-data-set-137-instances-tolerances-10-6-and-10-8">
+<h2>Maros–Mészáros Data Set (137 Instances; tolerances (10^{-6}) and (10^{-8}))</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head text-left"><p>Tolerance</p></th>
-<th class="head text-center"><p>1e-4</p></th>
-<th class="head text-center"><p>1e-4</p></th>
-<th class="head text-center"><p>1e-6</p></th>
-<th class="head text-center"><p>1e-6</p></th>
-<th class="head text-center"><p>1e-8</p></th>
-<th class="head text-center"><p>1e-8</p></th>
+<tr class="row-odd"><th class="head text-left"><p>Solver</p></th>
+<th class="head text-right"><p>SGM10 (1e-6)</p></th>
+<th class="head text-right"><p>Solved (1e-6)</p></th>
+<th class="head text-right"><p>SGM10 (1e-8)</p></th>
+<th class="head text-right"><p>Solved (1e-8)</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><strong>Solvers</strong></p></td>
-<td class="text-center"><p><strong>SGM10</strong></p></td>
-<td class="text-center"><p><strong>Solved</strong></p></td>
-<td class="text-center"><p><strong>SGM10</strong></p></td>
-<td class="text-center"><p><strong>Solved</strong></p></td>
-<td class="text-center"><p><strong>SGM10</strong></p></td>
-<td class="text-center"><p><strong>Solved</strong></p></td>
+<tr class="row-even"><td class="text-left"><p><strong>HPR-QP</strong></p></td>
+<td class="text-right"><p>10.5</p></td>
+<td class="text-right"><p>129</p></td>
+<td class="text-right"><p>12.6</p></td>
+<td class="text-right"><p>128</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p>cuPDLP.jl</p></td>
-<td class="text-center"><p>76.9</p></td>
-<td class="text-center"><p>42</p></td>
-<td class="text-center"><p>156.2</p></td>
-<td class="text-center"><p>41</p></td>
-<td class="text-center"><p>277.9</p></td>
-<td class="text-center"><p>40</p></td>
+<tr class="row-odd"><td class="text-left"><p><strong>PDQP</strong></p></td>
+<td class="text-right"><p>33.1</p></td>
+<td class="text-right"><p>125</p></td>
+<td class="text-right"><p>42.5</p></td>
+<td class="text-right"><p>124</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p>HPR-LP (v0.1.0)</p></td>
-<td class="text-center"><p>30.2</p></td>
-<td class="text-center"><p>47</p></td>
-<td class="text-center"><p>69.1</p></td>
-<td class="text-center"><p>44</p></td>
-<td class="text-center"><p>103.8</p></td>
-<td class="text-center"><p>43</p></td>
+<tr class="row-even"><td class="text-left"><p><strong>SCS</strong></p></td>
+<td class="text-right"><p>126.0</p></td>
+<td class="text-right"><p>103</p></td>
+<td class="text-right"><p>165.0</p></td>
+<td class="text-right"><p>93</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p>HPR-LP (v0.1.2)</p></td>
-<td class="text-center"><p>25.7</p></td>
-<td class="text-center"><p>47</p></td>
-<td class="text-center"><p>53.2</p></td>
-<td class="text-center"><p>44</p></td>
-<td class="text-center"><p>82.1</p></td>
-<td class="text-center"><p>44</p></td>
+<tr class="row-odd"><td class="text-left"><p><strong>CuClarabel</strong></p></td>
+<td class="text-right"><p>3.7</p></td>
+<td class="text-right"><p>130</p></td>
+<td class="text-right"><p>7.8</p></td>
+<td class="text-right"><p>124</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Gurobi</strong></p></td>
+<td class="text-right"><p>0.4</p></td>
+<td class="text-right"><p>137</p></td>
+<td class="text-right"><p>1.2</p></td>
+<td class="text-right"><p>135</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <hr class="docutils" />
-<section id="miplib-2017-lp-relaxations">
-<h2>2) MIPLIB 2017 LP relaxations</h2>
-<p>Numerical performance of <strong>HPR-LP</strong> and <strong>cuPDLP.jl</strong> on 18 LP relaxations (&gt;10M nonzeros in <code class="docutils literal notranslate"><span class="pre">A</span></code>) from <a class="reference external" href="https://miplib.zib.de/"><u>MIPLIB 2017</u></a> without Gurobi’s presolve. Time limit <strong>18,000 seconds</strong>.</p>
+<section id="qap-relaxations-36-instances-tolerances-10-6-and-10-8">
+<h2>QAP Relaxations (36 Instances; tolerances (10^{-6}) and (10^{-8}))</h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head text-left"><p>Tolerance</p></th>
-<th class="head text-center"><p>1e-4</p></th>
-<th class="head text-center"><p>1e-4</p></th>
-<th class="head text-center"><p>1e-6</p></th>
-<th class="head text-center"><p>1e-6</p></th>
-<th class="head text-center"><p>1e-8</p></th>
-<th class="head text-center"><p>1e-8</p></th>
+<tr class="row-odd"><th class="head text-left"><p>Solver</p></th>
+<th class="head text-right"><p>SGM10 (1e-6)</p></th>
+<th class="head text-right"><p>Solved (1e-6)</p></th>
+<th class="head text-right"><p>SGM10 (1e-8)</p></th>
+<th class="head text-right"><p>Solved (1e-8)</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><strong>Solvers</strong></p></td>
-<td class="text-center"><p><strong>SGM10</strong></p></td>
-<td class="text-center"><p><strong>Solved</strong></p></td>
-<td class="text-center"><p><strong>SGM10</strong></p></td>
-<td class="text-center"><p><strong>Solved</strong></p></td>
-<td class="text-center"><p><strong>SGM10</strong></p></td>
-<td class="text-center"><p><strong>Solved</strong></p></td>
+<tr class="row-even"><td class="text-left"><p><strong>HPR-QP</strong></p></td>
+<td class="text-right"><p>1.8</p></td>
+<td class="text-right"><p>36</p></td>
+<td class="text-right"><p>4.7</p></td>
+<td class="text-right"><p>36</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p>cuPDLP.jl</p></td>
-<td class="text-center"><p>129.8</p></td>
-<td class="text-center"><p>16</p></td>
-<td class="text-center"><p>253.3</p></td>
-<td class="text-center"><p>15</p></td>
-<td class="text-center"><p>442.2</p></td>
-<td class="text-center"><p>14</p></td>
+<tr class="row-odd"><td class="text-left"><p><strong>PDQP</strong></p></td>
+<td class="text-right"><p>124.1</p></td>
+<td class="text-right"><p>23</p></td>
+<td class="text-right"><p>149.4</p></td>
+<td class="text-right"><p>23</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p>HPR-LP (v0.1.0)</p></td>
-<td class="text-center"><p>117.6</p></td>
-<td class="text-center"><p>17</p></td>
-<td class="text-center"><p>260.7</p></td>
-<td class="text-center"><p>15</p></td>
-<td class="text-center"><p>428.6</p></td>
-<td class="text-center"><p>14</p></td>
+<tr class="row-even"><td class="text-left"><p><strong>SCS</strong></p></td>
+<td class="text-right"><p>11.3</p></td>
+<td class="text-right"><p>36</p></td>
+<td class="text-right"><p>86.0</p></td>
+<td class="text-right"><p>36</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p>HPR-LP (v0.1.2)</p></td>
-<td class="text-center"><p>60.9</p></td>
-<td class="text-center"><p>17</p></td>
-<td class="text-center"><p>122.5</p></td>
-<td class="text-center"><p>17</p></td>
-<td class="text-center"><p>204.2</p></td>
-<td class="text-center"><p>17</p></td>
+<tr class="row-odd"><td class="text-left"><p><strong>CuClarabel</strong></p></td>
+<td class="text-right"><p>13.6</p></td>
+<td class="text-right"><p>33</p></td>
+<td class="text-right"><p>114.9</p></td>
+<td class="text-right"><p>22</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Gurobi</strong></p></td>
+<td class="text-right"><p>24.8</p></td>
+<td class="text-right"><p>36</p></td>
+<td class="text-right"><p>26.8</p></td>
+<td class="text-right"><p>36</p></td>
 </tr>
 </tbody>
 </table>
+</section>
 <hr class="docutils" />
+<section id="lasso-problems-11-instances-tolerance-10-8">
+<h2>LASSO Problems (11 Instances; tolerance (10^{-8}))</h2>
+<p><strong>Abbreviations:</strong> <code class="docutils literal notranslate"><span class="pre">T</span></code> = time-limit, <code class="docutils literal notranslate"><span class="pre">F</span></code> = failure (e.g., unbounded or infeasible).</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Instance</p></th>
+<th class="head text-right"><p>HPR-QP</p></th>
+<th class="head text-right"><p>PDQP</p></th>
+<th class="head text-right"><p>SCS</p></th>
+<th class="head text-right"><p>CuClarabel</p></th>
+<th class="head text-right"><p>Gurobi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>abalone7</p></td>
+<td class="text-right"><p>10.5</p></td>
+<td class="text-right"><p>372.5</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>24.4</p></td>
+<td class="text-right"><p>127.3</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>bodyfat7</p></td>
+<td class="text-right"><p>1.2</p></td>
+<td class="text-right"><p>33.3</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>2.2</p></td>
+<td class="text-right"><p>30.8</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>E2006.test</p></td>
+<td class="text-right"><p>0.2</p></td>
+<td class="text-right"><p>1.3</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>15.4</p></td>
+<td class="text-right"><p>9.0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>E2006.train</p></td>
+<td class="text-right"><p>0.7</p></td>
+<td class="text-right"><p>1.9</p></td>
+<td class="text-right"><p>F</p></td>
+<td class="text-right"><p>116.0</p></td>
+<td class="text-right"><p>277.8</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>housing7</p></td>
+<td class="text-right"><p>22.6</p></td>
+<td class="text-right"><p>123.3</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>5.7</p></td>
+<td class="text-right"><p>125.9</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>log1p.E2006.test</p></td>
+<td class="text-right"><p>7.0</p></td>
+<td class="text-right"><p>1416.9</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>196.0</p></td>
+<td class="text-right"><p>137.0</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>log1p.E2006.train</p></td>
+<td class="text-right"><p>17.3</p></td>
+<td class="text-right"><p>2983.2</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>361.0</p></td>
+<td class="text-right"><p>878.8</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>mpg7</p></td>
+<td class="text-right"><p>0.6</p></td>
+<td class="text-right"><p>18.1</p></td>
+<td class="text-right"><p>2000.0</p></td>
+<td class="text-right"><p>0.3</p></td>
+<td class="text-right"><p>1.2</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>pyrim5</p></td>
+<td class="text-right"><p>49.1</p></td>
+<td class="text-right"><p>410.6</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>3.5</p></td>
+<td class="text-right"><p>35.9</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>space_ga9</p></td>
+<td class="text-right"><p>0.6</p></td>
+<td class="text-right"><p>62.7</p></td>
+<td class="text-right"><p>1210.0</p></td>
+<td class="text-right"><p>6.7</p></td>
+<td class="text-right"><p>38.1</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>triazines4</p></td>
+<td class="text-right"><p>401.3</p></td>
+<td class="text-right"><p>3533.3</p></td>
+<td class="text-right"><p>T</p></td>
+<td class="text-right"><p>26.0</p></td>
+<td class="text-right"><p>843.1</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>SGM10 (time)</strong></p></td>
+<td class="text-right"><p><strong>13.2</strong></p></td>
+<td class="text-right"><p><strong>161.8</strong></p></td>
+<td class="text-right"><p><strong>3091.0</strong></p></td>
+<td class="text-right"><p><strong>26.1</strong></p></td>
+<td class="text-right"><p><strong>91.2</strong></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 

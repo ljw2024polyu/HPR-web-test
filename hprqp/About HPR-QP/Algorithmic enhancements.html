@@ -11,6 +11,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d7493e4f" />
       <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d7493e4f" />
 
   
@@ -19,7 +20,11 @@
       <script src="../_static/documentation_options.js?v=5929fcd5"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/back_to_hpr_fab.js?v=b6f6947e"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -110,10 +115,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="algorithmic-enhancements">
+  <section class="tex2jax_ignore mathjax_ignore" id="algorithmic-enhancements">
 <h1>Algorithmic enhancements</h1>
 <p>Several enhancements have been proposed to improve the performance of the HPR method for solving LP [5] and CCQP [6].<br />
-In particular, restart strategies and adaptive updates of the penalty parameter $\sigma$, motivated by the $O(1/k)$ complexity results in Theorem 2.4, have proven effective.<br />
+In particular, restart strategies and adaptive updates of the penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span>, motivated by the <span class="math notranslate nohighlight">\(O(1/k)\)</span> complexity results in Theorem 2.4, have proven effective.<br />
 For completeness, we summarize the HPR-LP framework in Algorithm 2.2.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{|l|}
@@ -139,12 +144,12 @@ For completeness, we summarize the HPR-LP framework in Algorithm 2.2.</p>
 <section id="restart-strategy">
 <h2>Restart strategy</h2>
 <p>Restarting has been recognized as particularly important for Halpern iterations.<br />
-As noted in Theorem 2.4, the complexity bound depends on the weighted distance $R_0$ between the initial point and the optimal solution. Consequently, as the iterates approach optimality, continuing to reference a distant initial anchor becomes counterproductive, whereas resetting the anchor to the current iterate helps reduce the bound and refocus the iteration near the solution.</p>
+As noted in Theorem 2.4, the complexity bound depends on the weighted distance <span class="math notranslate nohighlight">\(R_0\)</span> between the initial point and the optimal solution. Consequently, as the iterates approach optimality, continuing to reference a distant initial anchor becomes counterproductive, whereas resetting the anchor to the current iterate helps reduce the bound and refocus the iteration near the solution.</p>
 <p>This observation motivates the merit function</p>
 <div class="math notranslate nohighlight">
 \[R_{r,t} := \| w^{r,t} - w^* \|_{\mathcal{M}}, 
 \quad \forall r \geq 0,\; t \geq 0,\]</div>
-<p>where $w^<em>$ is any solution of the KKT system (2.1). Since $w^</em>$ is unknown, the practical surrogate</p>
+<p>where <span class="math notranslate nohighlight">\(w^*\)</span> is any solution of the KKT system (2.1). Since <span class="math notranslate nohighlight">\(w^*\)</span> is unknown, the practical surrogate</p>
 <div class="math notranslate nohighlight">
 \[\tilde{R}_{r,t} := \| w^{r,t} - \hat{w}^{r,t+1} \|_{\mathcal{M}}\]</div>
 <p>is employed in defining restart rules. The following criteria are commonly adopted:</p>
@@ -165,27 +170,27 @@ As noted in Theorem 2.4, the complexity bound depends on the weighted distance $
 </ol>
 <div class="math notranslate nohighlight">
 \[t \geq \alpha_3 k;\]</div>
-<p>where $0 &lt; \alpha_1 &lt; \alpha_2 &lt; 1$ and $0 &lt; \alpha_3 &lt; 1$.<br />
-When any criterion is met, the inner loop is restarted at iteration $(r+1)$ with $w^{r+1,0} = \bar{w}^{r,\tau_r}$ and an updated $\sigma_{r+1}$.</p>
+<p>where <span class="math notranslate nohighlight">\(0 &lt; \alpha_1 &lt; \alpha_2 &lt; 1\)</span> and <span class="math notranslate nohighlight">\(0 &lt; \alpha_3 &lt; 1\)</span>.<br />
+When any criterion is met, the inner loop is restarted at iteration <span class="math notranslate nohighlight">\((r+1)\)</span> with <span class="math notranslate nohighlight">\(w^{r+1,0} = \bar{w}^{r,\tau_r}\)</span> and an updated <span class="math notranslate nohighlight">\(\sigma_{r+1}\)</span>.</p>
 <p><strong>Remark 2.6.</strong> Restart strategies are commonly used in first-order methods for LP [1, 31, 33, 32].<br />
 For instance, PDLP adopts a normalized duality gap as the merit function [1], while subsequent works by Lu et al. [31, 33] introduced variants based on weighted KKT residuals.</p>
 </section>
 <section id="update-rules-for-sigma">
-<h2>Update rules for $\sigma$</h2>
-<p>Another important enhancement of HPR methods concerns the update of the penalty parameter $\sigma$.<br />
+<h2>Update rules for <span class="math notranslate nohighlight">\(\sigma\)</span></h2>
+<p>Another important enhancement of HPR methods concerns the update of the penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span>.<br />
 The update strategy is motivated by the complexity results of the HPR method in Algorithm 2.1 (see Theorem 2.4).<br />
-At a high level, the goal is to select $\sigma$ at each restart to tighten the complexity bound and thereby reduce the KKT residuals in subsequent iterations. Specifically, the ideal update is defined as the minimizer of the weighted distance to the optimal solution:</p>
+At a high level, the goal is to select <span class="math notranslate nohighlight">\(\sigma\)</span> at each restart to tighten the complexity bound and thereby reduce the KKT residuals in subsequent iterations. Specifically, the ideal update is defined as the minimizer of the weighted distance to the optimal solution:</p>
 <div class="math notranslate nohighlight">
 \[\sigma_{r+1} := \arg\min_\sigma \| w^{r+1,0} - w^* \|_{\mathcal{M}}^2,\]</div>
-<p>where $w^*$ is any solution of the KKT system (2.1).<br />
-Substituting the definition of $\mathcal{M}$ from (2.3) leads to the closed-form expression</p>
+<p>where <span class="math notranslate nohighlight">\(w^*\)</span> is any solution of the KKT system (2.1).<br />
+Substituting the definition of <span class="math notranslate nohighlight">\(\mathcal{M}\)</span> from (2.3) leads to the closed-form expression</p>
 <div class="math notranslate nohighlight">
 \[\sigma_{r+1} =
 \sqrt{
 \frac{\| x^{r+1,0} - x^* \|^2}
 {\| y^{r+1,0} - y^* \|_{T_1}^2 + \| A^*(y^{r+1,0} - y^*) \|^2}
 }.\]</div>
-<p>Since the optimal solution $(x^<em>, y^</em>)$ is unknown, practical implementations approximate these terms using the observed progress within each outer loop:</p>
+<p>Since the optimal solution <span class="math notranslate nohighlight">\((x^*, y^*)\)</span> is unknown, practical implementations approximate these terms using the observed progress within each outer loop:</p>
 <div class="math notranslate nohighlight">
 \[\Delta_x := \| \bar{x}^{r,\tau_r} - x^{r,0} \|, 
 \quad
@@ -194,11 +199,11 @@ Substituting the definition of $\mathcal{M}$ from (2.3) leads to the closed-form
 <div class="math notranslate nohighlight">
 \[\sigma_{r+1} = \frac{\Delta_x}{\Delta_y}.\]</div>
 <hr class="docutils" />
-<p>Several special cases of $T_1$ have been investigated in the literature [5]:</p>
+<p>Several special cases of <span class="math notranslate nohighlight">\(T_1\)</span> have been investigated in the literature [5]:</p>
 <ol class="arabic">
-<li><p><strong>Case $T_1 = 0$.</strong><br />
-This case occurs when $l_c = u_c$, which arises in applications with special structure in $A$, such as optimal transport [43] and Wasserstein barycenter problem [44].<br />
-The $y$-update then reduces to solving the linear system</p>
+<li><p><strong>Case <span class="math notranslate nohighlight">\(T_1 = 0\)</span>.</strong><br />
+This case occurs when <span class="math notranslate nohighlight">\(l_c = u_c\)</span>, which arises in applications with special structure in <span class="math notranslate nohighlight">\(A\)</span>, such as optimal transport [43] and Wasserstein barycenter problem [44].<br />
+The <span class="math notranslate nohighlight">\(y\)</span>-update then reduces to solving the linear system</p>
 <div class="math notranslate nohighlight">
 \[A A^* \bar{y}^{r,t+1} = \frac{1}{\sigma_r} \big( b - A(\bar{x}^{r,t+1} + \sigma_r(\bar{z}^{r,t+1} - c)) \big),\]</div>
 <p>which is computationally affordable in practice.<br />
@@ -206,19 +211,19 @@ In this case, the update rule (2.12) simplifies to</p>
 <div class="math notranslate nohighlight">
 \[\sigma_{r+1} = \frac{\| \bar{x}^{r,\tau_r} - x^{r,0} \|}{\| A^*(\bar{y}^{r,\tau_r} - y^{r,0}) \|}.\]</div>
 </li>
-<li><p><strong>Case $T_1 = \lambda_A I_m - A A^*$ with $\lambda_A \geq |A|_2^2$.</strong><br />
-Proposed in [13, 4, 42], this choice applies when $l_c \neq u_c$ or when solving (2.13) directly is expensive.<br />
-The $y$-update takes the form</p>
+<li><p><strong>Case <span class="math notranslate nohighlight">\(T_1 = \lambda_A I_m - A A^*\)</span> with <span class="math notranslate nohighlight">\(\lambda_A \geq \|A\|_2^2\)</span>.</strong><br />
+Proposed in [13, 4, 42], this choice applies when <span class="math notranslate nohighlight">\(l_c \neq u_c\)</span> or when solving (2.13) directly is expensive.<br />
+The <span class="math notranslate nohighlight">\(y\)</span>-update takes the form</p>
 <div class="math notranslate nohighlight">
 \[\bar{y}^{r,t+1} = \frac{1}{\sigma_r \lambda_A} \Big( \Pi_{\mathcal{K}}(R_y) - R_y \Big),\]</div>
-<p>where $R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}$.<br />
-In this setting, the update for $\sigma$ becomes</p>
+<p>where <span class="math notranslate nohighlight">\(R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}\)</span>.<br />
+In this setting, the update for <span class="math notranslate nohighlight">\(\sigma\)</span> becomes</p>
 <div class="math notranslate nohighlight">
 \[\sigma_{r+1} = \frac{\| \bar{x}^{r,\tau_r} - x^{r,0} \|}{\sqrt{\lambda_A} \; \| \bar{y}^{r,\tau_r} - y^{r,0} \|}.\]</div>
 </li>
 </ol>
-<p><strong>Remark 2.7.</strong> The update formula above is closely related to the primal weight update in PDLP [1, Algorithm 3], differing mainly by the presence of the factor $\lambda_A$.</p>
-<p>It is worth noting that the approximations $\Delta_x$ and $\Delta_y$ may deviate significantly from the true quantities.<br />
+<p><strong>Remark 2.7.</strong> The update formula above is closely related to the primal weight update in PDLP [1, Algorithm 3], differing mainly by the presence of the factor <span class="math notranslate nohighlight">\(\lambda_A\)</span>.</p>
+<p>It is worth noting that the approximations <span class="math notranslate nohighlight">\(\Delta_x\)</span> and <span class="math notranslate nohighlight">\(\Delta_y\)</span> may deviate significantly from the true quantities.<br />
 To address this, various smoothing schemes [1, 31, 33, 6] and safeguards [5] have been proposed to stabilize the update.<br />
 Moreover, the rule (2.12) is not specific to LP; it extends directly to the HPR method for more general convex optimization problems [40], including CCQP [6].</p>
 </section>

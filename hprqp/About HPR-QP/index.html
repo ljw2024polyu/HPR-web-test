@@ -132,25 +132,15 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="about-hpr-qp">
 <h1>About HPR-QP</h1>
-<p>HPR-LP is a GPU-accelerated solver for large-scale linear programming (LP). It is based on the Halpern Peaceman–Rachford (HPR) method with an adaptive restart strategy for stability and speed.</p>
-<!-- ```{toctree}
-:maxdepth: 1
-:caption: About HPR-LP
-
-Problem statement
-HPR method for LP
-Algorithmic enhancements
-Implementations
-``` -->
+<p>HPR-QP is a GPU-accelerated solver for large-scale convex composite quadratic programming (CCQP). It is a GPU-based dual Halpern–Peaceman–Rachford solver built on the restricted Wolfe dual with symmetric Gauss–Seidel, range-space updates, and adaptive restart.</p>
 <section id="problem-statement">
 <h2>Problem statement</h2>
-<p><strong>Problem form.</strong> The general LP solved by HPR-LP is:</p>
+<p><strong>Problem form.</strong> The CCQP solved by HPR-QP is:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-\min_{x \in \mathbb{R}^n} &amp; \;\; \langle c, x \rangle \\
-\text{s.t.} \;\; &amp; Ax \in \mathcal{K}, \\
-&amp; x \in \mathcal{C},
+\[\begin{split}\begin{aligned}
+\min_{x \in \mathbb{R}^n}\quad &amp; \tfrac12\langle x, Qx\rangle + \langle c, x \rangle \\
+\text{s.t.}\quad &amp; Ax \in \mathcal{K}, \\
+&amp; x \in \mathcal{C}.
 \end{aligned}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(c \in \mathbb{R}^n\)</span> is the objective vector, <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{m \times n}\)</span> is the constraint matrix,<br />
 <span class="math notranslate nohighlight">\(\mathcal{K} := \{ s \in \mathbb{R}^m : l_c \leq s \leq u_c \}\)</span> with bounds <span class="math notranslate nohighlight">\(l_c \in (\mathbb{R} \cup \{-\infty\})^m\)</span> and <span class="math notranslate nohighlight">\(u_c \in (\mathbb{R} \cup \{\infty\})^m\)</span>,<br />

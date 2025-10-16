@@ -1,29 +1,19 @@
 # About HPR-QP
 
-HPR-LP is a GPU-accelerated solver for large-scale linear programming (LP). It is based on the Halpern Peaceman–Rachford (HPR) method with an adaptive restart strategy for stability and speed.
-<!-- ```{toctree}
-:maxdepth: 1
-:caption: About HPR-LP
-
-Problem statement
-HPR method for LP
-Algorithmic enhancements
-Implementations
-``` -->
+HPR-QP is a GPU-accelerated solver for large-scale convex composite quadratic programming (CCQP). It is a GPU-based dual Halpern–Peaceman–Rachford solver built on the restricted Wolfe dual with symmetric Gauss–Seidel, range-space updates, and adaptive restart.
 
 ## Problem statement
 
 
-**Problem form.** The general LP solved by HPR-LP is:
+**Problem form.** The CCQP solved by HPR-QP is:
 
-$$
+```{math}
 \begin{aligned}
-\min_{x \in \mathbb{R}^n} & \;\; \langle c, x \rangle \\
-\text{s.t.} \;\; & Ax \in \mathcal{K}, \\
-& x \in \mathcal{C},
+\min_{x \in \mathbb{R}^n}\quad & \tfrac12\langle x, Qx\rangle + \langle c, x \rangle \\
+\text{s.t.}\quad & Ax \in \mathcal{K}, \\
+& x \in \mathcal{C}.
 \end{aligned}
-
-$$
+```
 
 where $c \in \mathbb{R}^n$ is the objective vector, $A \in \mathbb{R}^{m \times n}$ is the constraint matrix,  
 $\mathcal{K} := \{ s \in \mathbb{R}^m : l_c \leq s \leq u_c \}$ with bounds $l_c \in (\mathbb{R} \cup \{-\infty\})^m$ and $u_c \in (\mathbb{R} \cup \{\infty\})^m$,  

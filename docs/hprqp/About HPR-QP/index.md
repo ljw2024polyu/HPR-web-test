@@ -182,36 +182,8 @@ h(\bar{y}^{k+1}, \bar{w}_Q^{k+1}, \bar{z}^{k+1})
 ```
 
 
-## Algorithmic enhancements
-
-
-To boost performance on LP (and CCQP), HPR uses two key enhancements: **restart strategies** and **adaptive updates of the penalty $\sigma$**. These are motivated by the $O(1/k)$ bounds in Theorem&nbsp;3. For completeness, Algorithm 2 shows the full HPR-LP framework.
-
-
 
 ```{math}
-\begin{array}{|l|}
-\hline
-\textbf{Algorithm 2  HPR-LP: A Halpern Peaceman-Rachford method} \\ \textbf{for the problem} \\ \hline
-\textbf{Input:} \ \mathcal{T}_1:\mathbb{R}^m\to\mathbb{R}^m\ \text{be a self-adjoint positive semidefinite linear operator such that}\\ \mathcal{T}_1+\sigma AA^* \text{ is positive definite}. \text{ Denote }w=(y,z,x),\ \bar{w}=(\bar{y},\bar{z},\bar{x}).\ \text{Choose an initial}\\ \text{point } w^{0,0}=(y^{0,0},z^{0,0},x^{0,0})\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n. \\ 
-\textbf{Initialization:}\ \text{Set the outer loop counter }r=0,\ \text{the total loop counter }k=0,\ \\ \text{and the initial penalty parameter }\sigma_0>0. \\ 
-\textbf{repeat} \\ 
-\quad \text{initialize the inner loop: set inner loop counter }t=0; \\ 
-\quad \textbf{repeat} \\ 
-\quad\quad \bar{z}^{r,t+1}=\arg\min_{z\in\mathbb{R}^n}\{L_{\sigma_r}(y^{r,t},z;x^{r,t})\}; \\ 
-\quad\quad \bar{x}^{r,t+1}=x^{r,t}+\sigma_r(A^*y^{r,t}+\bar{z}^{r,t+1}-c); \\ 
-\quad\quad \bar{y}^{r,t+1}=\arg\min_{y\in\mathbb{R}^m}\{L_{\sigma_r}(y,\bar{z}^{r,t+1};\bar{x}^{r,t+1})+\tfrac{\sigma_r}{2}\|y-y^{r,t}\|_{\mathcal{T}_1}^2\}; \\ 
-\quad\quad \hat{w}^{r,t+1}=2\bar{w}^{r,t+1}-w^{r,t}; \\ 
-\quad\quad w^{r,t+1}=\tfrac{1}{t+2}w^{r,0}+\tfrac{t+1}{t+2}\hat{w}^{r,t+1}; \\ 
-\quad\quad t=t+1,\ k=k+1; \\ 
-\quad \textbf{until}\ \text{one of the restart criteria holds or termination criteria hold} \\ 
-\quad \textbf{restart the inner loop: }\tau_r=t,\ w^{r+1,0}=w^{r,\tau_r}, \\ 
-\quad \sigma_{r+1}=\textbf{SigmaUpdate}(\bar{w}^{r,\tau_r},w^{r,0},\mathcal{T}_1,A),\ r=r+1; \\ 
-\textbf{until}\ \text{termination criteria hold} \\ 
-\textbf{Output:}\ \{\bar{w}^{r,t}\}. \\ \hline
-\end{array}
-```
-
 \begin{array}{|l|}
 \hline
 \textbf{Algorithm 3: HPR-QP — A dual HPR method for the CCQP problem} \ \hline
@@ -240,7 +212,7 @@ To boost performance on LP (and CCQP), HPR uses two key enhancements: **restart 
 \textbf{until termination criteria are met;} \
 \textbf{Output:}\ { \bar{u}_Q^{r,t} }. \ \hline
 \end{array}
-
+```
 
 
 

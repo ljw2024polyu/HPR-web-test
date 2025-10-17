@@ -212,6 +212,34 @@ To boost performance on LP (and CCQP), HPR uses two key enhancements: **restart 
 \end{array}
 ```
 
+\begin{array}{|l|}
+\hline
+\textbf{Algorithm 3: HPR-QP — A dual HPR method for the CCQP problem} \ \hline
+\textbf{Input:}\
+\text{Let } \mathcal{S}_w \text{ be defined as in (2.8), and let } \mathcal{S}_y \text{ be a self-adjoint positive semidefinite linear operator on } \mathbb{R}^m\
+\text{such that } \mathcal{S}_y + A A^* \text{ is positive definite. Let } u_Q = (y, w_Q, z, x),\ \bar{u}_Q = (\bar{y}, \bar{w}*Q, \bar{z}, \bar{x}),\
+\text{and initial point } u_Q^{0,0} = (y^{0,0}, w_Q^{0,0}, z^{0,0}, x^{0,0}) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n \times \mathbb{R}^n.\
+\textbf{Initialization:}\
+\text{Set outer loop counter } r=0,\ \text{total iteration counter } k=0,\ \text{and initial penalty parameter } \sigma_0 > 0.\
+\textbf{repeat} \
+\quad \text{Initialize inner loop: set inner counter } t = 0; \
+\quad \textbf{repeat} \
+\quad\quad \bar{z}*Q^{r,t+1} = \arg\min*{z\in\mathbb{R}^n} L*{\sigma_r}(y^{r,t}, w_Q^{r,t}, z; x^{r,t}); \
+\quad\quad \bar{x}^{r,t+1} = x^{r,t} + \sigma_r(-Q w_Q^{r,t} + A^* y^{r,t} + \bar{z}_Q^{r,t+1} - c); \
+\quad\quad \bar{w}*Q^{r,t+\frac{1}{2}} = \frac{1}{1 + \sigma_r \lambda_Q} \Big( \sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1} + \sigma_r(-Q w_Q^{r,t} + A^* y^{r,t} + \bar{z}*Q^{r,t+1} - c) \Big); \
+\quad\quad \bar{y}^{r,t+1} = \arg\min*{y \in \mathbb{R}^m} \Big{ L*{\sigma_r}(y, \bar{w}_Q^{r,t+\frac{1}{2}}, \bar{z}*Q^{r,t+1}; \bar{x}^{r,t+1}) + \tfrac{\sigma_r}{2}|y - y^{r,t}|*{\mathcal{S}_y}^2 \Big}; \
+\quad\quad \bar{w}_Q^{r,t+1} = \frac{1}{1 + \sigma_r \lambda_Q} \Big( \sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1} + \sigma_r(-Q w_Q^{r,t} + A^* \bar{y}^{r,t+1} + \bar{z}_Q^{r,t+1} - c) \Big); \
+\quad\quad \hat{u}_Q^{r,t+1} = 2\bar{u}_Q^{r,t+1} - u_Q^{r,t}; \
+\quad\quad u_Q^{r,t+1} = \tfrac{1}{t+2} u_Q^{r,0} + \tfrac{t+1}{t+2} \hat{u}_Q^{r,t+1}; \
+\quad\quad t = t + 1,\ k = k + 1; \
+\quad \textbf{until restart or termination criteria are met;} \
+\quad \textbf{Restart:}\
+\text{Set } \tau_r = t,\ u_Q^{r+1,0} = \bar{u}*Q^{r,\tau_r}; \
+\quad \sigma*{r+1} = \textbf{SigmaUpdate}(\bar{u}_Q^{r,\tau_r}, u_Q^{r,0}, \mathcal{S}_y, \mathcal{S}_w, A, Q); \
+\quad r = r + 1; \
+\textbf{until termination criteria are met;} \
+\textbf{Output:}\ { \bar{u}_Q^{r,t} }. \ \hline
+\end{array}
 
 
 

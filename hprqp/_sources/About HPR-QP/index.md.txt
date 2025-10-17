@@ -9,15 +9,41 @@ HPR-QP is a GPU-accelerated solver for large-scale convex composite quadratic pr
 
 ```{math}
 \begin{aligned}
-\min_{x \in \mathbb{R}^n}\quad & \tfrac12\langle x, Qx\rangle + \langle c, x \rangle \\
+\min_{x \in \mathbb{R}^n}\quad & \tfrac12\langle x, Qx\rangle + \langle c, x \rangle + \phi(x) \\
 \text{s.t.}\quad & Ax \in \mathcal{K}, \\
-& x \in \mathcal{C}.
 \end{aligned}
 ```
 
-where $c \in \mathbb{R}^n$ is the objective vector, $A \in \mathbb{R}^{m \times n}$ is the constraint matrix,  
-$\mathcal{K} := \{ s \in \mathbb{R}^m : l_c \leq s \leq u_c \}$ with bounds $l_c \in (\mathbb{R} \cup \{-\infty\})^m$ and $u_c \in (\mathbb{R} \cup \{\infty\})^m$,  
-and $\mathcal{C} := \{ x \in \mathbb{R}^n : l_v \leq x \leq u_v \}$ with bounds $l_v \in (\mathbb{R} \cup \{-\infty\})^n$ and $u_v \in (\mathbb{R} \cup \{\infty\})^n$.  
+where \(Q : \mathbb{R}^n \to \mathbb{R}^n\) is a self-adjoint positive semidefinite linear operator,  
+\(c \in \mathbb{R}^n\) is a given vector, and \(\phi : \mathbb{R}^n \to (-\infty,+\infty]\) is a proper, closed, and convex function.  
+Here, \(A : \mathbb{R}^n \to \mathbb{R}^m\) is a linear operator, and \(\mathcal{K}\) is a simple polyhedral set:
+
+```{math}
+\mathcal{K} := \{\, y \in \mathbb{R}^m \mid -\infty \le l_i \le y_i \le u_i \le +\infty,\; 1 \le i \le m \,\}.
+```
+
+A key feature of our approach is that it does not require an explicit matrix representation of \(Q\),  
+which makes the proposed method particularly suitable for **large-scale or matrix-free settings**—e.g., when \(Q\) is defined implicitly via Kronecker products or structured operators [1].
+
+In particular, **CCQP** includes the **classical convex QP (CQP)** as an important special case:
+
+```{math}
+\min_{x \in \mathbb{R}^n}
+\left\{
+\tfrac{1}{2}\langle x, Qx\rangle + \langle c, x\rangle + \delta_{\mathcal{C}}(x)
+\;\middle|\;
+A x \in \mathcal{K}
+\right\}.
+```
+
+Here, \(\delta_{\mathcal{C}}(\cdot)\) is the **indicator function** of the box constraint set \(\mathcal{C}\):
+
+```{math}
+\mathcal{C} := \{\, x \in \mathbb{R}^n \mid L \le x \le U \,\},
+\qquad
+L \in (\mathbb{R} \cup \{-\infty\})^n,\quad
+U \in (\mathbb{R} \cup \{+\infty\})^n.
+```
 
 **Dual form.** The corresponding dual problem is:
 

@@ -54,7 +54,7 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">About HPR-QP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#problem-statement">Problem statement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hpr-method-for-lp">HPR method for LP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dual-hpr-method-for-solving-ccqp">Dual HPR method for Solving CCQP</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#base-algorithm">Base algorithm</a></li>
 </ul>
 </li>
@@ -173,17 +173,21 @@ U \in (\mathbb{R} \cup \{+\infty\})^n.\]</div>
 \end{aligned}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{W}:=Range(Q)\)</span>, the range space of <span class="math notranslate nohighlight">\(Q\)</span>.</p>
 </section>
-<section id="hpr-method-for-lp">
-<h2>HPR method for LP</h2>
-<p>HPR-LP is based on the Halpern–Peaceman–Rachford (HPR) method for linear programming. The base algorithm appears below, followed by its convergence guarantees and complexity properties, which in turn motivate the algorithmic enhancements described later.</p>
+<section id="dual-hpr-method-for-solving-ccqp">
+<h2>Dual HPR method for Solving CCQP</h2>
+<p>HPR-QP is based on the Halpern–Peaceman–Rachford (HPR) method for convex composite quadratic programming (CCQP). Its a general HPR framework with semi-proximal terms for solving the restricted Wolfe dual problem. The base algorithm appears below, followed by its convergence guarantees and complexity properties, which in turn motivate the algorithmic enhancements described later.</p>
 <section id="base-algorithm">
 <h3>Base algorithm</h3>
-<p>For any <span class="math notranslate nohighlight">\((y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span>, the augmented Lagrangian of the dual problem is</p>
+<p>Let <span class="math notranslate nohighlight">\(\sigma &gt; 0\)</span> be a given penalty parameter.<br />
+Define the augmented Lagrangian function <span class="math notranslate nohighlight">\(L_{\sigma}(y,w,z; x)\)</span> associated with problem (1.5) for any<br />
+<span class="math notranslate nohighlight">\((y,w,z,x) \in \mathbb{R}^m \times \mathcal{W} \times \mathbb{R}^n \times \mathbb{R}^n\)</span> as follows:</p>
 <div class="math notranslate nohighlight">
-\[L_\sigma(y, z; x) := \delta_{\mathcal{K}}^*(-y) + \delta_{\mathcal{C}}^*(-z)
-+ \langle x, A^* y + z - c \rangle
-+ \frac{\sigma}{2} \| A^* y + z - c \|^2,\]</div>
-<p>where <span class="math notranslate nohighlight">\(\sigma &gt; 0\)</span> is a penalty parameter. For notational convenience, let <span class="math notranslate nohighlight">\(w := (y, z, x) \in \mathbb{W} := \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n\)</span>. Then, an HPR method with semi-proximal terms for solving the above problems is summarized in Algorithm 1.</p>
+\[L_{\sigma}(y,w,z; x)
+= \tfrac{1}{2}\langle w, Qw\rangle
+  + \delta_{\mathcal{K}}^*(-y)
+  + \phi^*(-z)
+  + \langle x, -Qw + A^*y + z - c\rangle
+  + \tfrac{\sigma}{2}\| -Qw + A^*y + z - c \|^2.\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{|l|}
 \hline

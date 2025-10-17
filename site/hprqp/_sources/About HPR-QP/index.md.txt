@@ -63,22 +63,26 @@ where $\mathcal{W}:=Range(Q)$, the range space of $Q$.
 
 
 
-## HPR method for LP
+## Dual HPR method for Solving CCQP
 
-HPR-LP is based on the Halpern–Peaceman–Rachford (HPR) method for linear programming. The base algorithm appears below, followed by its convergence guarantees and complexity properties, which in turn motivate the algorithmic enhancements described later.
+HPR-QP is based on the Halpern–Peaceman–Rachford (HPR) method for convex composite quadratic programming (CCQP). Its a general HPR framework with semi-proximal terms for solving the restricted Wolfe dual problem. The base algorithm appears below, followed by its convergence guarantees and complexity properties, which in turn motivate the algorithmic enhancements described later.
 
 
 ### Base algorithm
 
-For any $(y, z, x) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$, the augmented Lagrangian of the dual problem is
+Let $\sigma > 0$ be a given penalty parameter.  
+Define the augmented Lagrangian function $L_{\sigma}(y,w,z; x)$ associated with problem (1.5) for any  
+$(y,w,z,x) \in \mathbb{R}^m \times \mathcal{W} \times \mathbb{R}^n \times \mathbb{R}^n$ as follows:
 
 ```{math}
-L_\sigma(y, z; x) := \delta_{\mathcal{K}}^*(-y) + \delta_{\mathcal{C}}^*(-z)
-+ \langle x, A^* y + z - c \rangle
-+ \frac{\sigma}{2} \| A^* y + z - c \|^2,
+L_{\sigma}(y,w,z; x)
+= \tfrac{1}{2}\langle w, Qw\rangle
+  + \delta_{\mathcal{K}}^*(-y)
+  + \phi^*(-z)
+  + \langle x, -Qw + A^*y + z - c\rangle
+  + \tfrac{\sigma}{2}\| -Qw + A^*y + z - c \|^2.
 ```
 
-where $\sigma > 0$ is a penalty parameter. For notational convenience, let $w := (y, z, x) \in \mathbb{W} := \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$. Then, an HPR method with semi-proximal terms for solving the above problems is summarized in Algorithm 1.
 
 ```{math}
 \begin{array}{|l|}

@@ -83,29 +83,40 @@ L_{\sigma}(y,w,z; x)
   + \tfrac{\sigma}{2}\| -Qw + A^*y + z - c \|^2.
 ```
 
+We make the following assumption:
+**Assumption 1** *There exists a vector $(y^*, w^*, z^*, x^*) \in \mathbb{R}^m \times \mathcal{W} \times \mathbb{R}^n \times \mathbb{R}^n$ satisfying the KKT system.*
+
 
 ```{math}
 \begin{array}{|l|}
 \hline
-\textbf{Algorithm 1: An HPR method with semi-proximal terms} \\ \hline
-\textbf{Input:}\
-\text{Set the penalty parameter }\sigma>0.\ \\
-\text{Let }\mathcal{T}_1:\mathbb{R}^m\to\mathbb{R}^m\ \text{be a self-adjoint positive semidefinite linear operator such that } \\
-\mathcal{T}_1+\sigma A A^*\ \text{is positive definite. } 
-\text{Denote } w=(y,z,x)\ \text{and }\bar{w}=(\bar{y},\bar{z},\bar{x}).\ \\
-\text{Choose an initial point } w^0=(y^0,z^0,x^0)\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n. \\ 
-\textbf{for } k = 0,1,\ldots \ \textbf{do} \\ 
-\quad \text{Step 1: } \ \bar{z}^{k+1} = \arg\min_{z \in \mathbb{R}^n} L_\sigma(y^k, z; x^k); \\ 
-\quad \text{Step 2: } \ \bar{x}^{k+1} = x^k + \sigma(A^* y^k + \bar{z}^{k+1} - c); \\ 
-\quad \text{Step 3: } \ \bar{y}^{k+1} = \arg\min_{y \in \mathbb{R}^m} 
-   \left\{ L_\sigma(y, \bar{z}^{k+1}; \bar{x}^{k+1}) 
-   + \tfrac{\sigma}{2}\|y-y^k\|_{\mathcal{T}_1}^2 \right\}; \\ 
-\quad \text{Step 4: } \ \hat{w}^{k+1} = 2\bar{w}^{k+1} - w^k; \\ 
-\quad \text{Step 5: } \ w^{k+1} = \tfrac{1}{k+2} w^0 + \tfrac{k+1}{k+2} \hat{w}^{k+1}; \\ 
+\textbf{Algorithm 1: A dual HPR method for solving the restricted-Wolfe dual problem (1.5)} \\ \hline
+\textbf{Input:}\ 
+\text{Let } \mathcal{S}_y \text{ and } \mathcal{S}_w \text{ be self-adjoint positive semidefinite linear operators on } \mathbb{R}^m \text{ and } \mathcal{W}, \\
+\text{respectively, such that } \mathcal{S}_y + A A^* \text{ is positive definite. Denote } u = (y, w, z, x), \ \bar{u} = (\bar{y}, \bar{w}, \bar{z}, \bar{x}). \\
+\text{Let } u^0 = (y^0, w^0, z^0, x^0) \in \mathcal{U}, \ \text{and set } \sigma > 0. \\ 
+\textbf{for } k = 0,1,2,\ldots \ \textbf{do} \\ 
+\quad \text{Step 1: } \ \bar{z}^{k+1} = \arg\min_{z \in \mathbb{R}^n} \{ L_\sigma(y^k, w^k, z; x^k) \}; \\[3pt]
+\quad \text{Step 2: } \ \bar{x}^{k+1} = x^k + \sigma(-Qw^k + A^*y^k + \bar{z}^{k+1} - c); \\[3pt]
+\quad \text{Step 3-1: } \ \bar{w}^{k+\frac{1}{2}} = \arg\min_{w \in \mathcal{W}} 
+   \{ L_\sigma(y^k, w, \bar{z}^{k+1}; \bar{x}^{k+1}) + \tfrac{\sigma}{2}\| w - w^k \|_{\mathcal{S}_w}^2 \}; \\[3pt]
+\quad \text{Step 3-2: } \ \bar{y}^{k+1} = \arg\min_{y \in \mathbb{R}^m}
+   \{ L_\sigma(y, \bar{w}^{k+\frac{1}{2}}, \bar{z}^{k+1}; \bar{x}^{k+1}) + \tfrac{\sigma}{2}\| y - y^k \|_{\mathcal{S}_y}^2 \}; \\[3pt]
+\quad \text{Step 3-3: } \ \bar{w}^{k+1} = \arg\min_{w \in \mathcal{W}}
+   \{ L_\sigma(\bar{y}^{k+1}, w, \bar{z}^{k+1}; \bar{x}^{k+1}) + \tfrac{\sigma}{2}\| w - w^k \|_{\mathcal{S}_w}^2 \}; \\[3pt]
+\quad \text{Step 4: } \ \hat{u}^{k+1} = 2\bar{u}^{k+1} - u^k; \\[3pt]
+\quad \text{Step 5: } \ u^{k+1} = \tfrac{1}{k+2}u^0 + \tfrac{k+1}{k+2}\hat{u}^{k+1}; \\ 
 \textbf{end for} \\ 
-\textbf{Output:} \text{Iteration sequence } \{ \bar{w}^k \}. \\ \hline
+\textbf{Output:}\ \text{Iteration sequence } \{ \bar{u}^k \}. \\ \hline
 \end{array}
 ```
+**Remark** *In Algorithm 1, the updates for $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ for $k \ge 0$ are restricted to the subspace $\mathcal{W} = \mathrm{Range}(Q)$.  
+Although it may seem more straightforward to update $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ in the full space $\mathbb{R}^n$, doing so—particularly under a linearized ADMM framework—necessitates a proximal operator with a larger spectral norm, such as  
+$\mathcal{S}_w = \lambda_1(Q^2 + Q/\sigma)I_n - (Q^2 + Q/\sigma)$, to ensure convergence.  
+A proximal operator with a large spectral norm typically results in slower convergence.  
+By contrast, restricting the update to $\mathcal{W}$ allows HPR-QP to employ a proximal operator with a smaller spectral norm, namely  
+$\mathcal{S}_w = Q(\lambda_1(Q)I_n - Q)$, which accelerates convergence while preserving theoretical guarantees.*
+
 
 
 

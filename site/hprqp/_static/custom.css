@@ -190,3 +190,17 @@ html, body { font-size: 16px; }
   font-size: 1rem;
   line-height: 1.65;
 }
+
+/* ---- widen content area (fix overflow into gray gutter) ---- */
+.wy-nav-content {
+  max-width: none !important;   /* or: 1200px */
+  width: 90% !important;        /* keep centered but wider */
+  margin: 0 auto !important;
+}
+
+/* Optional: keep long equations / code from spilling */
+.rst-content .math, .rst-content pre, .rst-content code {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

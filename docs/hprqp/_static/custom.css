@@ -191,27 +191,31 @@ html, body { font-size: 16px; }
   line-height: 1.65;
 }
 
-/* ---- Widen main content a bit (not centered) ---- */
+/* —— 内容区：略微加宽，不居中，左边距更小 —— */
 .wy-nav-content {
-  max-width: 1100px !important;  
+  max-width: 1100px !important;   /* 比默认800px更宽，按需调 1000~1200 */
   width: auto !important;
-  margin: 0 24px !important;     
+  margin: 0 16px !important;      /* 左右窄一点的外边距 */
+  padding-left: 8px !important;   /* 减小左内边距 → 贴近侧栏 */
+}
 
-
-.rst-content pre,
-.rst-content code,
+/* —— 去掉公式/代码块的滚动条，允许正常换行展示 —— */
 .rst-content .math,
 .MathJax,
-.MathJax_Display {
-  overflow-x: auto !important;
-  white-space: normal;            
+.MathJax_Display,
+.rst-content pre,
+.rst-content code {
+  overflow: visible !important;    /* 不要滚动条 */
+  white-space: normal !important;  /* 允许换行 */
   word-break: break-word;
 }
 
-
+/* 小屏保持流式布局 */
 @media (max-width: 1024px) {
   .wy-nav-content {
     max-width: none !important;
-    margin: 0 12px !important;
+    margin: 0 10px !important;
+    padding-left: 6px !important;
   }
 }
+

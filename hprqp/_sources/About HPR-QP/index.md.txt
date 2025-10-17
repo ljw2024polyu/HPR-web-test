@@ -14,9 +14,10 @@ HPR-QP is a GPU-accelerated solver for large-scale convex composite quadratic pr
 \end{aligned}
 ```
 
-where \(Q : \mathbb{R}^n \to \mathbb{R}^n\) is a self-adjoint positive semidefinite linear operator,  
-\(c \in \mathbb{R}^n\) is a given vector, and \(\phi : \mathbb{R}^n \to (-\infty,+\infty]\) is a proper, closed, and convex function.  
-Here, \(A : \mathbb{R}^n \to \mathbb{R}^m\) is a linear operator, and \(\mathcal{K}\) is a simple polyhedral set:
+where $Q:\mathbb{R}^n\to\mathbb{R}^n$ is a self-adjoint positive semidefinite linear operator, 
+$c\in\mathbb{R}^n$ is a given vector, and $\phi:\mathbb{R}^n\to(-\infty,+\infty]$ is a proper, closed, and convex function.  
+Here, $A:\mathbb{R}^n\to\mathbb{R}^m$ is a linear operator, and $\mathcal{K}$ is a simple polyhedral set:
+
 
 ```{math}
 \mathcal{K} := \{\, y \in \mathbb{R}^m \mid -\infty \le l_i \le y_i \le u_i \le +\infty,\; 1 \le i \le m \,\}.
@@ -27,13 +28,12 @@ which makes the proposed method particularly suitable for **large-scale or matri
 
 In particular, **CCQP** includes the **classical convex QP (CQP)** as an important special case:
 
+
 ```{math}
-\min_{x \in \mathbb{R}^n}
-\left\{
-\tfrac{1}{2}\langle x, Qx\rangle + \langle c, x\rangle + \delta_{\mathcal{C}}(x)
-\;\middle|\;
-A x \in \mathcal{K}
-\right\}.
+\begin{aligned}
+\min_{x \in \mathbb{R}^n}\quad & \tfrac12\langle x, Qx\rangle + \langle c, x \rangle + \delta_{\mathcal{C}}(x) \\
+\text{s.t.}\quad & Ax \in \mathcal{K}, \\
+\end{aligned}
 ```
 
 Here, \(\delta_{\mathcal{C}}(\cdot)\) is the **indicator function** of the box constraint set \(\mathcal{C}\):

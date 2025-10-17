@@ -191,16 +191,30 @@ html, body { font-size: 16px; }
   line-height: 1.65;
 }
 
-/* ---- widen content area (fix overflow into gray gutter) ---- */
+/* ---- Expand the main content area (fix overflow into gray gutter) ---- */
 .wy-nav-content {
-  max-width: none !important;   /* or: 1200px */
-  width: 90% !important;        /* keep centered but wider */
-  margin: 0 auto !important;
+  max-width: none !important;   /* Allow full-width layout instead of fixed 800px */
+  width: 90% !important;        /* Keep the content centered but make it wider */
+  margin: 0 auto !important;    /* Center the content horizontally */
 }
 
-/* Optional: keep long equations / code from spilling */
-.rst-content .math, .rst-content pre, .rst-content code {
-  overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+/* ---- Prevent inline scrollbars; allow line wrapping for long text/code ---- */
+.rst-content pre,
+.rst-content code {
+  overflow: visible !important;     /* Disable horizontal scrolling */
+  white-space: pre-wrap !important; /* Allow text to wrap onto the next line */
+  word-break: break-word;           /* Break long words if necessary */
+  overflow-wrap: anywhere;          /* Force wrap when needed (for long tokens) */
+}
+
+/* ---- Fix MathJax blocks (prevent hidden or scrollable math equations) ---- */
+.rst-content .math,
+.MathJax,
+.MathJax_Display {
+  overflow: visible !important;     /* Show full math expressions, no scrollbar */
+}
+
+/* ---- Optional: prevent horizontal scrollbars for the entire page ---- */
+html, body {
+  overflow-x: hidden;               /* Disable horizontal scrolling globally */
 }

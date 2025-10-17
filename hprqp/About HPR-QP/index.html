@@ -9,10 +9,10 @@
   <title>About HPR-QP &mdash; HPR-QP</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d5e69c0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2c7864de" />
       <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d5e69c0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2c7864de" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -295,6 +295,34 @@ h(\bar{y}^{k+1}, \bar{w}_Q^{k+1}, \bar{z}^{k+1})
 \textbf{until}\ \text{termination criteria hold} \\ 
 \textbf{Output:}\ \{\bar{w}^{r,t}\}. \\ \hline
 \end{array}\end{split}\]</div>
+<p>\begin{array}{|l|}
+\hline
+\textbf{Algorithm 3: HPR-QP — A dual HPR method for the CCQP problem} \ \hline
+\textbf{Input:}<br />
+\text{Let } \mathcal{S}_w \text{ be defined as in (2.8), and let } \mathcal{S}_y \text{ be a self-adjoint positive semidefinite linear operator on } \mathbb{R}^m<br />
+\text{such that } \mathcal{S}_y + A A^* \text{ is positive definite. Let } u_Q = (y, w_Q, z, x),\ \bar{u}_Q = (\bar{y}, \bar{w}<em>Q, \bar{z}, \bar{x}),<br />
+\text{and initial point } u_Q^{0,0} = (y^{0,0}, w_Q^{0,0}, z^{0,0}, x^{0,0}) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n \times \mathbb{R}^n.<br />
+\textbf{Initialization:}<br />
+\text{Set outer loop counter } r=0,\ \text{total iteration counter } k=0,\ \text{and initial penalty parameter } \sigma_0 &gt; 0.<br />
+\textbf{repeat} <br />
+\quad \text{Initialize inner loop: set inner counter } t = 0; <br />
+\quad \textbf{repeat} <br />
+\quad\quad \bar{z}<em>Q^{r,t+1} = \arg\min</em>{z\in\mathbb{R}^n} L</em>{\sigma_r}(y^{r,t}, w_Q^{r,t}, z; x^{r,t}); <br />
+\quad\quad \bar{x}^{r,t+1} = x^{r,t} + \sigma_r(-Q w_Q^{r,t} + A^* y^{r,t} + \bar{z}_Q^{r,t+1} - c); <br />
+\quad\quad \bar{w}<em>Q^{r,t+\frac{1}{2}} = \frac{1}{1 + \sigma_r \lambda_Q} \Big( \sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1} + \sigma_r(-Q w_Q^{r,t} + A^</em> y^{r,t} + \bar{z}<em>Q^{r,t+1} - c) \Big); <br />
+\quad\quad \bar{y}^{r,t+1} = \arg\min</em>{y \in \mathbb{R}^m} \Big{ L*{\sigma_r}(y, \bar{w}_Q^{r,t+\frac{1}{2}}, \bar{z}<em>Q^{r,t+1}; \bar{x}^{r,t+1}) + \tfrac{\sigma_r}{2}|y - y^{r,t}|</em>{\mathcal{S}_y}^2 \Big}; <br />
+\quad\quad \bar{w}_Q^{r,t+1} = \frac{1}{1 + \sigma_r \lambda_Q} \Big( \sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1} + \sigma_r(-Q w_Q^{r,t} + A^* \bar{y}^{r,t+1} + \bar{z}_Q^{r,t+1} - c) \Big); <br />
+\quad\quad \hat{u}_Q^{r,t+1} = 2\bar{u}_Q^{r,t+1} - u_Q^{r,t}; <br />
+\quad\quad u_Q^{r,t+1} = \tfrac{1}{t+2} u_Q^{r,0} + \tfrac{t+1}{t+2} \hat{u}_Q^{r,t+1}; <br />
+\quad\quad t = t + 1,\ k = k + 1; <br />
+\quad \textbf{until restart or termination criteria are met;} <br />
+\quad \textbf{Restart:}<br />
+\text{Set } \tau_r = t,\ u_Q^{r+1,0} = \bar{u}<em>Q^{r,\tau_r}; <br />
+\quad \sigma</em>{r+1} = \textbf{SigmaUpdate}(\bar{u}_Q^{r,\tau_r}, u_Q^{r,0}, \mathcal{S}_y, \mathcal{S}_w, A, Q); <br />
+\quad r = r + 1; <br />
+\textbf{until termination criteria are met;} <br />
+\textbf{Output:}\ { \bar{u}_Q^{r,t} }. \ \hline
+\end{array}</p>
 <section id="restart-strategy">
 <h3>Restart strategy</h3>
 <p>Restarting plays a central role in Halpern iterations. The complexity bound depends on the initial anchor distance <span class="math notranslate nohighlight">\(R_0\)</span>. As the iterates move closer to the solution, keeping a far-away anchor becomes inefficient. Resetting the anchor to the current iterate tightens the bound and improves late-stage progress.</p>

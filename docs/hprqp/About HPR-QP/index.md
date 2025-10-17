@@ -23,10 +23,10 @@ Here, $A:\mathbb{R}^n\to\mathbb{R}^m$ is a linear operator, and $\mathcal{K}$ is
 \mathcal{K} := \{\, y \in \mathbb{R}^m \mid -\infty \le l_i \le y_i \le u_i \le +\infty,\; 1 \le i \le m \,\}.
 ```
 
-A key feature of our approach is that it does not require an explicit matrix representation of \(Q\),  
-which makes the proposed method particularly suitable for **large-scale or matrix-free settings**—e.g., when \(Q\) is defined implicitly via Kronecker products or structured operators [1].
+A key feature of our approach is that it does not require an explicit matrix representation of $Q$,  
+which makes the proposed method particularly suitable for **large-scale or matrix-free settings**—e.g., when $Q$ is defined implicitly via Kronecker products or structured operators.
 
-In particular, **CCQP** includes the **classical convex QP (CQP)** as an important special case:
+In particular, **CCQP** includes the classical **convex QP (CQP)** as an important special case:
 
 
 ```{math}
@@ -36,7 +36,7 @@ In particular, **CCQP** includes the **classical convex QP (CQP)** as an importa
 \end{aligned}
 ```
 
-Here, \(\delta_{\mathcal{C}}(\cdot)\) is the **indicator function** of the box constraint set \(\mathcal{C}\):
+Here, $\(\delta_{\mathcal{C}}(\cdot)\)$ is the **indicator function** of the box constraint set $\(\mathcal{C}\)$:
 
 ```{math}
 \mathcal{C} := \{\, x \in \mathbb{R}^n \mid L \le x \le U \,\},
@@ -45,17 +45,21 @@ L \in (\mathbb{R} \cup \{-\infty\})^n,\quad
 U \in (\mathbb{R} \cup \{+\infty\})^n.
 ```
 
-**Dual form.** The corresponding dual problem is:
+**Dual form.** The novel restricted Wolfe dual problem is:
 
-$$
+```{math}
 \begin{aligned}
-\min_{y \in \mathbb{R}^m, \; z \in \mathbb{R}^n} & \;\; \delta_{\mathcal{K}}^*(-y) + \delta_{\mathcal{C}}^*(-z) \\
-\text{s.t.} \;\; & A^* y + z = c,
+\min_{(y,w,z) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n} \quad
+& \tfrac{1}{2}\langle w, Qw\rangle
+  + \delta_{\mathcal{K}}^*(-y)
+  + \phi^*(-z) \\
+\text{s.t.} \quad
+& -Qw + A^*y + z = c, \\
+& w \in \mathcal{W}.
 \end{aligned}
+```
 
-$$
-
-where $\delta_S^*(\cdot)$ denotes the convex conjugate of the indicator function $\delta_S(\cdot)$ associated with a closed convex set $S$.
+where $W:=Range(Q)$, the range space of $Q$.
 
 
 

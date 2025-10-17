@@ -90,9 +90,9 @@ We make the following assumption:
 ```{math}
 \begin{array}{|l|}
 \hline
-\textbf{Algorithm 1: A dual HPR method for solving the restricted-Wolfe dual problem (1.5)} \\ \hline
+\textbf{Algorithm 1: A dual HPR method for solving the restricted-Wolfe dual problem} \\ \hline
 \textbf{Input:}\ 
-\text{Let } \mathcal{S}_y \text{ and } \mathcal{S}_w \text{ be self-adjoint positive semidefinite linear operators on } \mathbb{R}^m \text{ and } \mathcal{W}, \\
+\text{Let } \mathcal{S}_y \text{ and } \mathcal{S}_w \text{ be two self-adjoint positive semidefinite linear operators on } \mathbb{R}^m \text{ and } \mathcal{W}, \\
 \text{respectively, such that } \mathcal{S}_y + A A^* \text{ is positive definite. Denote } u = (y, w, z, x), \ \bar{u} = (\bar{y}, \bar{w}, \bar{z}, \bar{x}). \\
 \text{Let } u^0 = (y^0, w^0, z^0, x^0) \in \mathcal{U}, \ \text{and set } \sigma > 0. \\ 
 \textbf{for } k = 0,1,2,\ldots \ \textbf{do} \\ 
@@ -110,31 +110,58 @@ We make the following assumption:
 \textbf{Output:}\ \text{Iteration sequence } \{ \bar{u}^k \}. \\ \hline
 \end{array}
 ```
-**Remark** *In Algorithm 1, the updates for $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ for $k \ge 0$ are restricted to the subspace $\mathcal{W} = \mathrm{Range}(Q)$.  
-Although it may seem more straightforward to update $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ in the full space $\mathbb{R}^n$, doing so—particularly under a linearized ADMM framework—necessitates a proximal operator with a larger spectral norm, such as  
+**Remark** In Algorithm 1, the updates for $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ for $k \ge 0$ are restricted to the subspace $\mathcal{W} = \mathrm{Range}(Q)$. Although it may seem more straightforward to update $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ in the full space $\mathbb{R}^n$, doing so—particularly under a linearized ADMM framework—necessitates a proximal operator with a larger spectral norm, such as  
 $\mathcal{S}_w = \lambda_1(Q^2 + Q/\sigma)I_n - (Q^2 + Q/\sigma)$, to ensure convergence.  
 A proximal operator with a large spectral norm typically results in slower convergence.  
-By contrast, restricting the update to $\mathcal{W}$ allows HPR-QP to employ a proximal operator with a smaller spectral norm, namely  
-$\mathcal{S}_w = Q(\lambda_1(Q)I_n - Q)$, which accelerates convergence while preserving theoretical guarantees.*
+By contrast, restricting the update to $\mathcal{W}$ allows *HPR-QP* to employ a proximal operator with a smaller spectral norm, namely  
+$\mathcal{S}_w = Q(\lambda_1(Q)I_n - Q)$, which accelerates convergence while preserving theoretical guarantees.
 
 
+### An Easy-to-Implement Dual HPR Method
 
-
-
-
-**Remark.** Steps 1–3 match the Douglas–Rachford (DR) updates. Step 4 applies the Peaceman–Rachford (PR) relaxation, and Step 5 adds a Halpern step with step size $1/(k+2)$. Together, Algorithm 1 behaves like an accelerated, preconditioned ADMM-type method (pADMM) with $\alpha=2$.
-
-
-
-An optimal dual pair $(y^*,z^*)$ exists if there is $x^*\in\mathbb{R}^n$ such that $(y^*,z^*,x^*)$ satisfies the following KKT system:
-
+While computing $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ within $\mathrm{Range}(Q)$ may seem costly, these updates can be implemented efficiently **without explicit projection**.  
+For small-scale or structured cases, one may simply set $\mathcal{S}_w = 0$ and use direct or preconditioned conjugate gradient solvers.  
+For large-scale general CCQP problems, HPR-QP adopts the proximal operator
+```{math}
+\mathcal{S}_w = Q(\lambda_Q I_n - Q),
+```
+where $\lambda_Q > 0$ satisfies $\lambda_Q \ge \lambda_1(Q)$.  
+Then, for $k \ge 0$, the range-restricted updates become
 ```{math}
 \begin{aligned}
-0 &\in A x^* - \partial \delta_{\mathcal{K}}^*(-y^*), \\
-0 &\in x^* - \partial \delta_{\mathcal{C}}^*(-z^*), \\
-&\quad A^* y^* + z^* - c = 0.
+Q\bar{w}^{k+\frac{1}{2}} &= \frac{1}{1+\sigma\lambda_Q}
+  Q\big(\sigma\lambda_Q w^k + \bar{x}^{k+1} + \sigma(-Qw^k + A^*y^k + \bar{z}^{k+1} - c)\big),\\[3pt]
+Q\bar{w}^{k+1} &= \frac{1}{1+\sigma\lambda_Q}
+  Q\big(\sigma\lambda_Q w^k + \bar{x}^{k+1} + \sigma(-Qw^k + A^*\bar{y}^{k+1} + \bar{z}^{k+1} - c)\big).
 \end{aligned}
 ```
+This design allows efficient updates via a **shadow sequence**, avoiding explicit projection onto $\mathrm{Range}(Q)$ and reducing computational overhead.
+
+```{math}
+\begin{array}{|l|}
+\hline
+\textbf{Algorithm 3: An easy-to-implement dual HPR method for the restricted-Wolfe dual problem (1.5)} \\ \hline
+\textbf{Input:}\ 
+\text{Let } \mathcal{S}_w = Q(\lambda_Q I_n - Q) \text{ with } \lambda_Q \ge \lambda_1(Q), \text{ and let } \mathcal{S}_y \succeq 0 \text{ such that } \mathcal{S}_y + A A^* \succ 0. \\ 
+\text{Denote } u_Q = (y, w_Q, z, x),\ \bar{u}_Q = (\bar{y}, \bar{w}_Q, \bar{z}, \bar{x}).\ \text{Let } u_Q^0 = (y^0, w_Q^0, z^0, x^0) \text{ and set } \sigma > 0. \\ 
+\textbf{for } k = 0,1,2,\ldots \ \textbf{do} \\ 
+\quad \text{Step 1: } \ \bar{z}^{k+1} = \arg\min_{z \in \mathbb{R}^n} \{ L_\sigma(y^k, w_Q^k, z; x^k) \}; \\[3pt]
+\quad \text{Step 2: } \ \bar{x}^{k+1} = x^k + \sigma(-Qw_Q^k + A^*y^k + \bar{z}^{k+1} - c); \\[3pt]
+\quad \text{Step 3-1: } \ Q\bar{w}_Q^{k+\frac{1}{2}} = \tfrac{1}{1+\sigma\lambda_Q}
+  Q(\sigma\lambda_Q w_Q^k + \bar{x}^{k+1} + \sigma(-Qw_Q^k + A^*y^k + \bar{z}^{k+1} - c)); \\[3pt]
+\quad \text{Step 3-2: } \ \bar{y}^{k+1} = \arg\min_{y \in \mathbb{R}^m}
+  \{ L_\sigma(y, \bar{w}_Q^{k+\frac{1}{2}}, \bar{z}^{k+1}; \bar{x}^{k+1}) + \tfrac{\sigma}{2}\|y - y^k\|_{\mathcal{S}_y}^2 \}; \\[3pt]
+\quad \text{Step 3-3: } \ Q\bar{w}_Q^{k+1} = \tfrac{1}{1+\sigma\lambda_Q}
+  Q(\sigma\lambda_Q w_Q^k + \bar{x}^{k+1} + \sigma(-Qw_Q^k + A^*\bar{y}^{k+1} + \bar{z}^{k+1} - c)); \\[3pt]
+\quad \text{Step 4: } \ \hat{u}_Q^{k+1} = 2\bar{u}_Q^{k+1} - u_Q^k; \\[3pt]
+\quad \text{Step 5: } \ u_Q^{k+1} = \tfrac{1}{k+2}u_Q^0 + \tfrac{k+1}{k+2}\hat{u}_Q^{k+1}; \\ 
+\textbf{end for} \\ 
+\textbf{Output:}\ \text{Iteration sequence } \{ \bar{u}_Q^k \}. \\ \hline
+\end{array}
+```
+
+
+
 
 **Assumption 1** *There exists a vector $(y^*, z^*, x^*) \in \mathbb{R}^m \times \mathbb{R}^n \times \mathbb{R}^n$ satisfying the KKT system above.*
 

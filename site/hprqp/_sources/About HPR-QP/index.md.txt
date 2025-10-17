@@ -24,9 +24,9 @@ Here, $A:\mathbb{R}^n\to\mathbb{R}^m$ is a linear operator, and $\mathcal{K}$ is
 ```
 
 A key feature of our approach is that it does not require an explicit matrix representation of $Q$,  
-which makes the proposed method particularly suitable for **large-scale or matrix-free settings**—e.g., when $Q$ is defined implicitly via Kronecker products or structured operators.
+which makes the proposed method particularly suitable for large-scale or matrix-free settings—e.g., when $Q$ is defined implicitly via Kronecker products or structured operators.
 
-In particular, **CCQP** includes the classical **convex QP (CQP)** as an important special case:
+In particular, CCQP includes the classical convex QP (CQP) as an important special case:
 
 
 ```{math}
@@ -36,7 +36,7 @@ In particular, **CCQP** includes the classical **convex QP (CQP)** as an importa
 \end{aligned}
 ```
 
-Here, $\(\delta_{\mathcal{C}}(\cdot)\)$ is the **indicator function** of the box constraint set $\(\mathcal{C}\)$:
+Here, $\(\delta_{\mathcal{C}}(\cdot)\)$ is the indicator function of the box constraint set $\mathcal{C}$:
 
 ```{math}
 \mathcal{C} := \{\, x \in \mathbb{R}^n \mid L \le x \le U \,\},
@@ -59,7 +59,7 @@ U \in (\mathbb{R} \cup \{+\infty\})^n.
 \end{aligned}
 ```
 
-where $W:=Range(Q)$, the range space of $Q$.
+where $\mathcal{W}:=Range(Q)$, the range space of $Q$.
 
 
 

@@ -84,6 +84,7 @@ L_{\sigma}(y,w,z; x)
 ```
 
 We make the following assumption:
+
 **Assumption 1** *There exists a vector $(y^*, w^*, z^*, x^*) \in \mathbb{R}^m \times \mathcal{W} \times \mathbb{R}^n \times \mathbb{R}^n$ satisfying the KKT system.*
 
 
@@ -119,20 +120,17 @@ $\mathcal{S}_w = Q(\lambda_1(Q)I_n - Q)$, which accelerates convergence while pr
 
 ### An Easy-to-Implement Dual HPR Method
 
-While computing $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ within $\mathrm{Range}(Q)$ may seem costly, these updates can be implemented efficiently **without explicit projection**.  
-For small-scale or structured cases, one may simply set $\mathcal{S}_w = 0$ and use direct or preconditioned conjugate gradient solvers.  
-For large-scale general CCQP problems, HPR-QP adopts the proximal operator
+While computing $\bar{w}^{k+\frac{1}{2}}$ and $\bar{w}^{k+1}$ within $\mathrm{Range}(Q)$ may seem costly, these updates can be implemented efficiently **without explicit projection**. For small-scale or structured cases, one may simply set $\mathcal{S}_w = 0$ and use direct or preconditioned conjugate gradient solvers.  For large-scale general CCQP problems, HPR-QP adopts the proximal operator
 ```{math}
 \mathcal{S}_w = Q(\lambda_Q I_n - Q),
 ```
-where $\lambda_Q > 0$ satisfies $\lambda_Q \ge \lambda_1(Q)$.  
-Then, for $k \ge 0$, the range-restricted updates become
+where $\lambda_Q > 0$ satisfies $\lambda_Q \ge \lambda_1(Q)$. Then, for $k \ge 0$, the updates of $$ become
 ```{math}
 \begin{aligned}
 Q\bar{w}^{k+\frac{1}{2}} &= \frac{1}{1+\sigma\lambda_Q}
-  Q\big(\sigma\lambda_Q w^k + \bar{x}^{k+1} + \sigma(-Qw^k + A^*y^k + \bar{z}^{k+1} - c)\big),\\[3pt]
+  Q\big(\sigma\lambda_Q w^k + \bar{x}^{k+1} + \sigma(-Qw^k + A^*y^k + \bar{z}^{k+1} - c)\big),\\[3pt], \bar{w}^{k+\frac{1}{2}}\in \mathcal{W}.
 Q\bar{w}^{k+1} &= \frac{1}{1+\sigma\lambda_Q}
-  Q\big(\sigma\lambda_Q w^k + \bar{x}^{k+1} + \sigma(-Qw^k + A^*\bar{y}^{k+1} + \bar{z}^{k+1} - c)\big).
+  Q\big(\sigma\lambda_Q w^k + \bar{x}^{k+1} + \sigma(-Qw^k + A^*\bar{y}^{k+1} + \bar{z}^{k+1} - c)\big), \bar{w}^{k+1}\in \mathcal{W}.
 \end{aligned}
 ```
 This design allows efficient updates via a **shadow sequence**, avoiding explicit projection onto $\mathrm{Range}(Q)$ and reducing computational overhead.
@@ -140,7 +138,7 @@ This design allows efficient updates via a **shadow sequence**, avoiding explici
 ```{math}
 \begin{array}{|l|}
 \hline
-\textbf{Algorithm 3: An easy-to-implement dual HPR method for the restricted-Wolfe dual problem (1.5)} \\ \hline
+\textbf{Algorithm 3: An easy-to-implement dual HPR method}\\ \textbf{for the restricted-Wolfe dual problem} \\ \hline
 \textbf{Input:}\ 
 \text{Let } \mathcal{S}_w = Q(\lambda_Q I_n - Q) \text{ with } \lambda_Q \ge \lambda_1(Q), \text{ and let } \mathcal{S}_y \succeq 0 \text{ such that } \mathcal{S}_y + A A^* \succ 0. \\ 
 \text{Denote } u_Q = (y, w_Q, z, x),\ \bar{u}_Q = (\bar{y}, \bar{w}_Q, \bar{z}, \bar{x}).\ \text{Let } u_Q^0 = (y^0, w_Q^0, z^0, x^0) \text{ and set } \sigma > 0. \\ 

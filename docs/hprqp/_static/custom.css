@@ -192,7 +192,7 @@ html, body { font-size: 16px; }
 }
 
 /* widen main reading column on sphinx_rtd_theme */
-.wy-nav-content{max-width:1200px !important;}
+.wy-nav-content{max-width:1000px !important;}
 @media (min-width:1440px){
-  .wy-nav-content{max-width:1320px !important;}
+  .wy-nav-content{max-width:1120px !important;}
 }

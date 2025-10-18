@@ -9,10 +9,10 @@
   <title>About HPR-QP &mdash; HPR-QP</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2283e44f" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=efd90ad8" />
       <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2283e44f" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=efd90ad8" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -58,7 +58,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#base-algorithm">Base algorithm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#an-easy-to-implement-dual-hpr-method">An Easy-to-Implement Dual HPR Method</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#restart-strategy">Restart strategy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#update-strategy-for-the-penalty-parameter-sigma">Update strategy for the penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-strategy-for-sigma">Update strategy for <span class="math notranslate nohighlight">\(\sigma\)</span></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#gpu-implementation">GPU Implementation</a></li>
@@ -307,19 +307,15 @@ h(\bar{y}^{k+1}, \bar{w}_Q^{k+1}, \bar{z}^{k+1})
 </section>
 <section id="restart-strategy">
 <h3>Restart strategy</h3>
-<p>Inspired by the restart strategy proposed in PDLP, the HPR-QP method adopts an <strong>adaptive restart mechanism</strong> grounded in the <span class="math notranslate nohighlight">\(O(1/k)\)</span> iteration complexity of the Halpern–Peaceman–Rachford (HPR) method.<br />
-This strategy has shown strong empirical performance on large-scale convex problems.<br />
-Motivated by this success, we extend the adaptive restart mechanism to the CCQP problem by defining a merit function consistent with the theoretical complexity bound.</p>
-<p>Specifically, we define the following <em>idealized merit function</em>:</p>
+<p>HPR-QP method adopts an adaptive restart mechanism strategy grounded in the <span class="math notranslate nohighlight">\(O(1/k)\)</span> iteration complexity of the HPR method. This strategy has shown strong empirical performance on large-scale convex problems.<br />
+Motivated by this success, we extend the adaptive restart strategy to the CCQP problem by defining a merit function consistent with the theoretical complexity bound. Specifically, we define the following idealized merit function:</p>
 <div class="math notranslate nohighlight">
 \[R_{r,t} := \| u_Q^{r,t} - u^* \|_{\mathcal{M}}, 
 \qquad \forall\, r \ge 0,\ t \ge 0,\]</div>
-<p>where <span class="math notranslate nohighlight">\(u^*\)</span> denotes any solution to the KKT system.<br />
-Note that <span class="math notranslate nohighlight">\(R_{r,0}\)</span> corresponds to the upper bound implied by the complexity result at the beginning of the <span class="math notranslate nohighlight">\(r\)</span>-th outer iteration.<br />
-Since <span class="math notranslate nohighlight">\(u^*\)</span> is unknown in practice, we use the following <em>computable surrogate</em>:</p>
+<p>where <span class="math notranslate nohighlight">\(u^*\)</span> denotes any solution to the KKT system. Note that <span class="math notranslate nohighlight">\(R_{r,0}\)</span> corresponds to the upper bound implied by the complexity result at the beginning of the <span class="math notranslate nohighlight">\(r\)</span>-th outer iteration. Since <span class="math notranslate nohighlight">\(u^*\)</span> is unknown in practice, we use the following computable surrogate:</p>
 <div class="math notranslate nohighlight">
 \[\tilde{R}_{r,t} := \| u_Q^{r,t} - \hat{u}_Q^{r,t+1} \|_{\mathcal{M}}.\]</div>
-<p>Based on this surrogate merit function, we introduce the following <strong>adaptive restart criteria</strong> for HPR-QP:</p>
+<p>Based on this surrogate merit function, we introduce the following adaptive restart criteria for HPR-QP method:</p>
 <ol class="arabic simple">
 <li><p><strong>Sufficient decay:</strong></p></li>
 </ol>
@@ -337,12 +333,10 @@ Since <span class="math notranslate nohighlight">\(u^*\)</span> is unknown in pr
 </ol>
 <div class="math notranslate nohighlight">
 \[t \ge \alpha_3\, k;\]</div>
-<p>where <span class="math notranslate nohighlight">\(\alpha_1 \in (0, \alpha_2)\)</span>, <span class="math notranslate nohighlight">\(\alpha_2 \in (0,1)\)</span>, and <span class="math notranslate nohighlight">\(\alpha_3 \in (0,1)\)</span> are user-defined parameters.<br />
-Whenever any of the above conditions is satisfied, the current inner loop is terminated, and a new outer iteration is started by setting<br />
-<span class="math notranslate nohighlight">\(u_Q^{r+1,0} = \bar{u}_Q^{r,\tau_r}\)</span> and updating the penalty parameter <span class="math notranslate nohighlight">\(\sigma_{r+1}\)</span> accordingly.</p>
+<p>where <span class="math notranslate nohighlight">\(\alpha_1 \in (0, \alpha_2)\)</span>, <span class="math notranslate nohighlight">\(\alpha_2 \in (0,1)\)</span>, and <span class="math notranslate nohighlight">\(\alpha_3 \in (0,1)\)</span> are user-defined parameters. Whenever any of the above conditions is satisfied, the current inner loop is terminated, and a new outer iteration is started by setting <span class="math notranslate nohighlight">\(u^{r+1,0} = \bar{u}^{r,\tau_r}\)</span> and updating the penalty parameter <span class="math notranslate nohighlight">\(\sigma_{r+1}\)</span> accordingly.</p>
 </section>
-<section id="update-strategy-for-the-penalty-parameter-sigma">
-<h3>Update strategy for the penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span></h3>
+<section id="update-strategy-for-sigma">
+<h3>Update strategy for <span class="math notranslate nohighlight">\(\sigma\)</span></h3>
 <p>The penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span> is dynamically updated at each restart to improve convergence stability and reduce the residual of the KKT system.<br />
 At the beginning of the <span class="math notranslate nohighlight">\((r+1)\)</span>-th outer iteration, the ideal update rule is defined by</p>
 <div class="math notranslate nohighlight">

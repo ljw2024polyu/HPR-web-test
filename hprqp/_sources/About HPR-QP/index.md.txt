@@ -328,32 +328,78 @@ This adaptive update balances theoretical consistency and empirical stability, e
 
 ## GPU Implementation
 
-We first present the update formulas for each subproblem in HPR-LP. Specifically, for any $r\ge 0$ and $t\ge 0$, the update of $z^{r,t+1}$ is:
+We now present the GPU-oriented update formulas for each subproblem in **HPR-QP**.  
+For any $r \ge 0$ and $t \ge 0$, the update of $\bar{z}_Q^{r,t+1}$ is:
 
 ```{math}
-z^{r,t+1}
-= \arg\min_{z\in\mathbb{R}^n}\{L_{\sigma_r}(y^{r,t}, z; x^{r,t})\}
-= \frac{1}{\sigma_r}\!\left(\Pi_{\mathcal{C}}\!\big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big)
- - \big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big)\right).
+\bar{z}_Q^{r,t+1}
+= \frac{1}{\sigma_r}
+\Big(
+  \operatorname{Prox}_{\sigma_r \phi}(r_{z}^{r,t})
+  - r_{z}^{r,t}
+\Big),
+\qquad
+r_{z}^{r,t} = x^{r,t} + \sigma_r(-Qw_Q^{r,t} + A^*y^{r,t} - c).
 ```
 
-The update of $x^{r,t+1}$ is:
-
+The corresponding update of $\bar{x}^{r,t+1}$ is then given by:
 
 ```{math}
-x^{r,t+1}
-= x^{r,t} + \sigma_r\!\left(A^*y^{r,t} + z^{r,t+1} - c\right)
-= \Pi_{\mathcal{C}}\!\big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big).
+\bar{x}^{r,t+1}
+= x^{r,t}
++ \sigma_r(-Qw_Q^{r,t} + A^*y^{r,t} + \bar{z}_Q^{r,t+1} - c)
+= \operatorname{Prox}_{\sigma_r \phi}(r_{z}^{r,t}).
 ```
 
-For general LP problems, set $\mathcal{T}_1=\lambda I_m- AA^*$ with $\lambda \ge \lambda_1(AA^*)$ in HPR-LP. The update for $y^{r,t+1}$ is:
+Next, the updates of $\bar{w}_Q^{r,t+\frac{1}{2}}$ and $\bar{w}_Q^{r,t+1}$ can be simplified as
 
 ```{math}
-y^{r, t+1} \;=\; \frac{1}{\sigma_r \lambda_A}\Big( \Pi_{\mathcal{K}}(R_y) - R_y \Big),
+\begin{aligned}
+\bar{w}_Q^{r,t+\frac{1}{2}}
+&= \frac{1}{1+\sigma_r \lambda_Q}
+\Big(
+  \sigma_r \lambda_Q w_Q^{r,t}
+  + \bar{x}^{r,t+1}
+  + \sigma_r(-Qw_Q^{r,t} + A^*y^{r,t} + \bar{z}_Q^{r,t+1} - c)
+\Big),\\[4pt]
+\bar{w}_Q^{r,t+1}
+&= \frac{1}{1+\sigma_r \lambda_Q}
+\Big(
+  \sigma_r \lambda_Q w_Q^{r,t}
+  + \bar{x}^{r,t+1}
+  + \sigma_r(-Qw_Q^{r,t} + A^*\bar{y}^{r,t+1} + \bar{z}_Q^{r,t+1} - c)
+\Big)\\[4pt]
+&= \bar{w}_Q^{r,t+\frac{1}{2}}
+  + \frac{\sigma_r}{1+\sigma_r \lambda_Q}
+    A^*(\bar{y}^{r,t+1} - y^{r,t}).
+\end{aligned}
 ```
 
-where $R_y := A\big(2x^{r, t+1} - x^{r,t}\big) - \sigma_r \lambda_A y^{r,t}.$ Combining these relations shows $z^{r,t+1}$ need not be computed at every step; it is only required when checking termination. Each step reduces to SpMV, vector operations, and simple projections, with per-iteration cost $O(\mathrm{nnz}(A))$.
+To simplify the subproblem with respect to $y$, we adopt the proximal operator
 
-On GPUs, these operations are mapped to custom CUDA kernels. Matrix–vector products use **`cusparseSpMV()`** with **`CUSPARSE_SPMV_CSR_ALG2`** for deterministic results.
+```{math}
+\mathcal{S}_y = \lambda_A I_m - A A^*,
+\qquad
+\lambda_A \ge \|A\|_2^2.
+```
+
+With this choice, the $y$-update reduces to the projection
+
+```{math}
+\bar{y}^{r,t+1}
+= \frac{1}{\sigma_r \lambda_A}
+\Big(
+  \Pi_{\mathcal{K}}(R_y) - R_y
+\Big),
+\qquad
+R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}.
+```
+
+Each step thus consists only of **sparse matrix–vector products (SpMV)**, vector additions, and simple proximal/projection operations, giving a per-iteration complexity of  
+$O(\mathrm{nnz}(A))$.  
+
+On GPUs, these operations are fused into custom CUDA kernels.  
+Matrix–vector multiplications are implemented with **`cusparseSpMV()`** under the **`CUSPARSE_SPMV_CSR_ALG2`** algorithm for deterministic and high-throughput performance.
+
 
 

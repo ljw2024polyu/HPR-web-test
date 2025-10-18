@@ -9,10 +9,10 @@
   <title>About HPR-QP &mdash; HPR-QP</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2489919b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2283e44f" />
       <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2489919b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2283e44f" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -380,22 +380,62 @@ This adaptive update balances theoretical consistency and empirical stability, e
 </section>
 <section id="gpu-implementation">
 <h2>GPU Implementation</h2>
-<p>We first present the update formulas for each subproblem in HPR-LP. Specifically, for any <span class="math notranslate nohighlight">\(r\ge 0\)</span> and <span class="math notranslate nohighlight">\(t\ge 0\)</span>, the update of <span class="math notranslate nohighlight">\(z^{r,t+1}\)</span> is:</p>
+<p>We now present the GPU-oriented update formulas for each subproblem in <strong>HPR-QP</strong>.<br />
+For any <span class="math notranslate nohighlight">\(r \ge 0\)</span> and <span class="math notranslate nohighlight">\(t \ge 0\)</span>, the update of <span class="math notranslate nohighlight">\(\bar{z}_Q^{r,t+1}\)</span> is:</p>
 <div class="math notranslate nohighlight">
-\[z^{r,t+1}
-= \arg\min_{z\in\mathbb{R}^n}\{L_{\sigma_r}(y^{r,t}, z; x^{r,t})\}
-= \frac{1}{\sigma_r}\!\left(\Pi_{\mathcal{C}}\!\big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big)
- - \big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big)\right).\]</div>
-<p>The update of <span class="math notranslate nohighlight">\(x^{r,t+1}\)</span> is:</p>
+\[\bar{z}_Q^{r,t+1}
+= \frac{1}{\sigma_r}
+\Big(
+  \operatorname{Prox}_{\sigma_r \phi}(r_{z}^{r,t})
+  - r_{z}^{r,t}
+\Big),
+\qquad
+r_{z}^{r,t} = x^{r,t} + \sigma_r(-Qw_Q^{r,t} + A^*y^{r,t} - c).\]</div>
+<p>The corresponding update of <span class="math notranslate nohighlight">\(\bar{x}^{r,t+1}\)</span> is then given by:</p>
 <div class="math notranslate nohighlight">
-\[x^{r,t+1}
-= x^{r,t} + \sigma_r\!\left(A^*y^{r,t} + z^{r,t+1} - c\right)
-= \Pi_{\mathcal{C}}\!\big(x^{r,t}+\sigma_r(A^*y^{r,t}-c)\big).\]</div>
-<p>For general LP problems, set <span class="math notranslate nohighlight">\(\mathcal{T}_1=\lambda I_m- AA^*\)</span> with <span class="math notranslate nohighlight">\(\lambda \ge \lambda_1(AA^*)\)</span> in HPR-LP. The update for <span class="math notranslate nohighlight">\(y^{r,t+1}\)</span> is:</p>
+\[\bar{x}^{r,t+1}
+= x^{r,t}
++ \sigma_r(-Qw_Q^{r,t} + A^*y^{r,t} + \bar{z}_Q^{r,t+1} - c)
+= \operatorname{Prox}_{\sigma_r \phi}(r_{z}^{r,t}).\]</div>
+<p>Next, the updates of <span class="math notranslate nohighlight">\(\bar{w}_Q^{r,t+\frac{1}{2}}\)</span> and <span class="math notranslate nohighlight">\(\bar{w}_Q^{r,t+1}\)</span> can be simplified as</p>
 <div class="math notranslate nohighlight">
-\[y^{r, t+1} \;=\; \frac{1}{\sigma_r \lambda_A}\Big( \Pi_{\mathcal{K}}(R_y) - R_y \Big),\]</div>
-<p>where <span class="math notranslate nohighlight">\(R_y := A\big(2x^{r, t+1} - x^{r,t}\big) - \sigma_r \lambda_A y^{r,t}.\)</span> Combining these relations shows <span class="math notranslate nohighlight">\(z^{r,t+1}\)</span> need not be computed at every step; it is only required when checking termination. Each step reduces to SpMV, vector operations, and simple projections, with per-iteration cost <span class="math notranslate nohighlight">\(O(\mathrm{nnz}(A))\)</span>.</p>
-<p>On GPUs, these operations are mapped to custom CUDA kernels. Matrix–vector products use <strong><code class="docutils literal notranslate"><span class="pre">cusparseSpMV()</span></code></strong> with <strong><code class="docutils literal notranslate"><span class="pre">CUSPARSE_SPMV_CSR_ALG2</span></code></strong> for deterministic results.</p>
+\[\begin{split}\begin{aligned}
+\bar{w}_Q^{r,t+\frac{1}{2}}
+&amp;= \frac{1}{1+\sigma_r \lambda_Q}
+\Big(
+  \sigma_r \lambda_Q w_Q^{r,t}
+  + \bar{x}^{r,t+1}
+  + \sigma_r(-Qw_Q^{r,t} + A^*y^{r,t} + \bar{z}_Q^{r,t+1} - c)
+\Big),\\[4pt]
+\bar{w}_Q^{r,t+1}
+&amp;= \frac{1}{1+\sigma_r \lambda_Q}
+\Big(
+  \sigma_r \lambda_Q w_Q^{r,t}
+  + \bar{x}^{r,t+1}
+  + \sigma_r(-Qw_Q^{r,t} + A^*\bar{y}^{r,t+1} + \bar{z}_Q^{r,t+1} - c)
+\Big)\\[4pt]
+&amp;= \bar{w}_Q^{r,t+\frac{1}{2}}
+  + \frac{\sigma_r}{1+\sigma_r \lambda_Q}
+    A^*(\bar{y}^{r,t+1} - y^{r,t}).
+\end{aligned}\end{split}\]</div>
+<p>To simplify the subproblem with respect to <span class="math notranslate nohighlight">\(y\)</span>, we adopt the proximal operator</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{S}_y = \lambda_A I_m - A A^*,
+\qquad
+\lambda_A \ge \|A\|_2^2.\]</div>
+<p>With this choice, the <span class="math notranslate nohighlight">\(y\)</span>-update reduces to the projection</p>
+<div class="math notranslate nohighlight">
+\[\bar{y}^{r,t+1}
+= \frac{1}{\sigma_r \lambda_A}
+\Big(
+  \Pi_{\mathcal{K}}(R_y) - R_y
+\Big),
+\qquad
+R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}.\]</div>
+<p>Each step thus consists only of <strong>sparse matrix–vector products (SpMV)</strong>, vector additions, and simple proximal/projection operations, giving a per-iteration complexity of<br />
+<span class="math notranslate nohighlight">\(O(\mathrm{nnz}(A))\)</span>.</p>
+<p>On GPUs, these operations are fused into custom CUDA kernels.<br />
+Matrix–vector multiplications are implemented with <strong><code class="docutils literal notranslate"><span class="pre">cusparseSpMV()</span></code></strong> under the <strong><code class="docutils literal notranslate"><span class="pre">CUSPARSE_SPMV_CSR_ALG2</span></code></strong> algorithm for deterministic and high-throughput performance.</p>
 </section>
 </section>
 

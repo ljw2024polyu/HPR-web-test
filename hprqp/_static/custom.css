@@ -190,37 +190,3 @@ html, body { font-size: 16px; }
   font-size: 1rem;
   line-height: 1.65;
 }
-
-/* —— 让侧栏右侧整块区域是白色（去掉灰色背景） —— */
-.wy-body-for-nav,
-.wy-grid-for-nav,
-.wy-nav-content-wrap {
-  background: #fff !important;
-}
-
-/* 内容区保持窄一点左边距，形成“白色空隙”效果 */
-.wy-nav-content {
-  background: #fff;           /* 与外层一致 */
-  max-width: 1100px;          /* 比默认稍宽，可调 1000~1200 */
-  margin: 0 16px;             /* 左右留白 */
-  padding-left: 8px;          /* 靠近侧栏但留一点空隙 */
-}
-
-/* 避免出现横向滚动条；公式/代码正常换行展示 */
-.rst-content .math,
-.MathJax,
-.MathJax_Display,
-.rst-content pre,
-.rst-content code {
-  overflow: visible !important;
-  white-space: normal !important;
-  word-break: break-word;
-}
-
-@media (max-width: 1024px) {
-  .wy-nav-content {
-    max-width: none;
-    margin: 0 10px;
-    padding-left: 6px;
-  }
-}

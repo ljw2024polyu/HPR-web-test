@@ -228,116 +228,102 @@ h(\bar{y}^{k+1}, \bar{w}_Q^{k+1}, \bar{z}^{k+1})
 
 ### Restart strategy
 
-Restarting plays a central role in Halpern iterations. The complexity bound depends on the initial anchor distance $R_0$. As the iterates move closer to the solution, keeping a far-away anchor becomes inefficient. Resetting the anchor to the current iterate tightens the bound and improves late-stage progress.
 
+Inspired by the restart strategy proposed in PDLP, the HPR-QP method adopts an **adaptive restart mechanism** grounded in the $O(1/k)$ iteration complexity of the Halpern–Peaceman–Rachford (HPR) method.  
+This strategy has shown strong empirical performance on large-scale convex problems.  
+Motivated by this success, we extend the adaptive restart mechanism to the CCQP problem by defining a merit function consistent with the theoretical complexity bound.
 
-
-This motivates the merit function
-
-```{math}
-R_{r,t} := \| w^{r,t} - w^* \|_{\mathcal{M}}, 
-\quad \forall r \geq 0,\; t \geq 0,
-```
-
-where $w^*$ is any solution of the KKT system. Since $w^*$ is unknown, the practical surrogate
+Specifically, we define the following *idealized merit function*:
 
 ```{math}
-\tilde{R}_{r,t} := \| w^{r,t} - \hat{w}^{r,t+1} \|_{\mathcal{M}}
+R_{r,t} := \| u_Q^{r,t} - u^* \|_{\mathcal{M}}, 
+\qquad \forall\, r \ge 0,\ t \ge 0,
 ```
 
-is employed in defining restart rules. The following criteria are commonly adopted:
+where $u^*$ denotes any solution to the KKT system.  
+Note that $R_{r,0}$ corresponds to the upper bound implied by the complexity result at the beginning of the $r$-th outer iteration.  
+Since $u^*$ is unknown in practice, we use the following *computable surrogate*:
+
+```{math}
+\tilde{R}_{r,t} := \| u_Q^{r,t} - \hat{u}_Q^{r,t+1} \|_{\mathcal{M}}.
+```
+
+Based on this surrogate merit function, we introduce the following **adaptive restart criteria** for HPR-QP:
 
 1. **Sufficient decay:**
 
 ```{math}
-\tilde{R}_{r,t+1} \leq \alpha_1 \tilde{R}_{r,0},
+\tilde{R}_{r,t+1} \le \alpha_1\, \tilde{R}_{r,0};
 ```
 
-2. **Necessary decay + no local progress:**
+2. **Insufficient local progress despite overall decay:**
 
 ```{math}
-\tilde{R}_{r,t+1} \leq \alpha_2 \tilde{R}_{r,0}, 
-\quad \text{and} \quad
+\tilde{R}_{r,t+1} \le \alpha_2\, \tilde{R}_{r,0}, 
+\qquad
 \tilde{R}_{r,t+1} > \tilde{R}_{r,t};
 ```
 
-3. **Long inner loop:**
+3. **Excessively long inner loop:**
 
 ```{math}
-t \geq \alpha_3 k;
+t \ge \alpha_3\, k;
 ```
 
-where $0 < \alpha_1 < \alpha_2 < 1$ and $0 < \alpha_3 < 1$. When any criterion is met, the inner loop restarts with $w^{r+1,0}=\bar{w}^{r,\tau_r}$ and an updated $\sigma_{r+1}$.
+where $\alpha_1 \in (0, \alpha_2)$, $\alpha_2 \in (0,1)$, and $\alpha_3 \in (0,1)$ are user-defined parameters.  
+Whenever any of the above conditions is satisfied, the current inner loop is terminated, and a new outer iteration is started by setting  
+$u_Q^{r+1,0} = \bar{u}_Q^{r,\tau_r}$ and updating the penalty parameter $\sigma_{r+1}$ accordingly.
 
 
 
-### Update rules for $\sigma$
 
-The penalty parameter $\sigma$ is updated at restart points to tighten the bound and reduce residuals. Ideally, $\sigma$ is chosen to minimize the weighted distance to the solution:
+### Update strategy for the penalty parameter $\sigma$
 
-
+The penalty parameter $\sigma$ is dynamically updated at each restart to improve convergence stability and reduce the residual of the KKT system.  
+At the beginning of the $(r+1)$-th outer iteration, the ideal update rule is defined by
 
 ```{math}
-\sigma_{r+1} := \arg\min_\sigma \| w^{r+1,0} - w^* \|_{\mathcal{M}}^2,
+\sigma_{r+1}
+:= \operatorname*{arg\,min}_{\sigma > 0}
+\| u_Q^{r+1,0} - u^* \|_{\mathcal{M}}^2,
 ```
 
-where $w^*$ is any solution of the KKT system.  
-Substituting the definition of $\mathcal{M}$ leads to the closed-form expression
+where $u^*$ denotes any solution to the KKT system and $\|\cdot\|_{\mathcal{M}}$ is the weighted metric associated with the complexity bound.  
+Since $u^*$ is unknown in practice, we approximate the above rule by minimizing a computable surrogate function
 
 ```{math}
-\sigma_{r+1} =
-\sqrt{
-\frac{\| x^{r+1,0} - x^* \|^2}
-{\| y^{r+1,0} - y^* \|_{\mathcal{T}_1}^2 + \| A^*(y^{r+1,0} - y^*) \|^2}
-}.
+f(\sigma)
+= \tilde{\theta}_1\,\sigma
+  + \frac{\tilde{\theta}_2}{\sigma}
+  + \frac{\sigma^2 \tilde{\theta}_3}{1 + \lambda_Q \sigma},
 ```
 
-Since $(x^*,y^*)$ are unknown, observable progress is used instead:
+where the coefficients are estimated from observable quantities of the current and previous restarts:
+```{math}
+\tilde{\theta}_1 = \lambda_A \| \bar{y}^{r,\tau_r} - y^{r,0} \|^2
+                 + \lambda_Q \| \bar{w}_Q^{r,\tau_r} - w_Q^{r,0} \|_Q^2,
+\qquad
+\tilde{\theta}_2 = \| \bar{x}^{r,\tau_r} - x^{r,0} \|^2,
+\qquad
+\tilde{\theta}_3 = \| A^*\bar{y}^{r,\tau_r} - A^*y^{r,0} \|_Q^2.
+```
 
-
+This one-dimensional minimization problem can be efficiently solved using a **golden-section search** or other scalar optimization methods to obtain $\sigma_{\text{new}}$.  
+To stabilize the update, an exponential smoothing scheme is applied:
 
 ```{math}
-\Delta_x := \| \bar{x}^{r,\tau_r} - x^{r,0} \|, 
-\quad
-\Delta_y := \sqrt{ \| \bar{y}^{r,\tau_r} - y^{r,0} \|_{\mathcal{T}_1}^2 + \| A^*(\bar{y}^{r,\tau_r} - y^{r,0}) \|^2 },
+\sigma_{r+1}
+= \exp\!\big(
+  \beta \log(\sigma_{\text{new}})
+  + (1-\beta)\log(\sigma_r)
+\big),
+\qquad
+\beta = \exp\!\left(-\frac{\tilde{R}_{r,\tau_r-1}}{\tilde{R}_{r,0}-\tilde{R}_{r,\tau_r-1}}\right),
 ```
 
-which yields the implementable update rule
+where $\tilde{R}_{r,t}$ is the surrogate merit function defined in the restart criteria.  
+This adaptive update balances theoretical consistency and empirical stability, ensuring smooth adjustment of $\sigma$ throughout the optimization process.
 
-```{math}
-\sigma_{r+1} = \frac{\Delta_x}{\Delta_y}.
-```
-
-Several special cases of $\mathcal{T}_1$ are listed below:
-
-1. **Case $\mathcal{T}_1 = 0$.**  
-   This case occurs when $l_c = u_c = b$, which arises in applications with special structure in $A$. The $y$-update then reduces to solving the linear system
-
-   ```{math}
-   A A^* \bar{y}^{r,t+1} = \frac{1}{\sigma_r} \big( b - A(\bar{x}^{r,t+1} + \sigma_r(\bar{z}^{r,t+1} - c)) \big),
-   ```
-
-   which is computationally affordable in practice. In this case, the update rule simplifies to
-
-   ```{math}
-   \sigma_{r+1} = \frac{\| \bar{x}^{r,\tau_r} - x^{r,0} \|}{\| A^*(\bar{y}^{r,\tau_r} - y^{r,0}) \|}.
-   ```
-
-2. **Case $\mathcal{T}_1 = \lambda_A I_m - A A^*$ with $\lambda_A \geq \|A\|_2^2$.**  
-   This choice applies when $l_c \neq u_c$ or when solving the system in case 1 is too expensive. The $y$-update takes the form
-
-   ```{math}
-   \bar{y}^{r,t+1} = \frac{1}{\sigma_r \lambda_A} \Big( \Pi_{\mathcal{K}}(R_y) - R_y \Big),
-   ```
-
-   where $R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}$. In this setting, the update for $\sigma$ becomes
-
-   ```{math}
-   \sigma_{r+1} = \frac{\| \bar{x}^{r,\tau_r} - x^{r,0} \|}{\sqrt{\lambda_A} \; \| \bar{y}^{r,\tau_r} - y^{r,0} \|}.
-   ```
- 
-
-Note that $\Delta_x$ and $\Delta_y$ may deviate significantly from the true quantities.
 
 
 ## GPU Implementation

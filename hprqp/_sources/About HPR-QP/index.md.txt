@@ -229,26 +229,21 @@ h(\bar{y}^{k+1}, \bar{w}_Q^{k+1}, \bar{z}^{k+1})
 ### Restart strategy
 
 
-Inspired by the restart strategy proposed in PDLP, the HPR-QP method adopts an **adaptive restart mechanism** grounded in the $O(1/k)$ iteration complexity of the Halpern–Peaceman–Rachford (HPR) method.  
-This strategy has shown strong empirical performance on large-scale convex problems.  
-Motivated by this success, we extend the adaptive restart mechanism to the CCQP problem by defining a merit function consistent with the theoretical complexity bound.
-
-Specifically, we define the following *idealized merit function*:
+HPR-QP method adopts an adaptive restart mechanism strategy grounded in the $O(1/k)$ iteration complexity of the HPR method. This strategy has shown strong empirical performance on large-scale convex problems.  
+Motivated by this success, we extend the adaptive restart strategy to the CCQP problem by defining a merit function consistent with the theoretical complexity bound. Specifically, we define the following idealized merit function:
 
 ```{math}
 R_{r,t} := \| u_Q^{r,t} - u^* \|_{\mathcal{M}}, 
 \qquad \forall\, r \ge 0,\ t \ge 0,
 ```
 
-where $u^*$ denotes any solution to the KKT system.  
-Note that $R_{r,0}$ corresponds to the upper bound implied by the complexity result at the beginning of the $r$-th outer iteration.  
-Since $u^*$ is unknown in practice, we use the following *computable surrogate*:
+where $u^*$ denotes any solution to the KKT system. Note that $R_{r,0}$ corresponds to the upper bound implied by the complexity result at the beginning of the $r$-th outer iteration. Since $u^*$ is unknown in practice, we use the following computable surrogate:
 
 ```{math}
 \tilde{R}_{r,t} := \| u_Q^{r,t} - \hat{u}_Q^{r,t+1} \|_{\mathcal{M}}.
 ```
 
-Based on this surrogate merit function, we introduce the following **adaptive restart criteria** for HPR-QP:
+Based on this surrogate merit function, we introduce the following adaptive restart criteria for HPR-QP method:
 
 1. **Sufficient decay:**
 
@@ -270,14 +265,12 @@ Based on this surrogate merit function, we introduce the following **adaptive re
 t \ge \alpha_3\, k;
 ```
 
-where $\alpha_1 \in (0, \alpha_2)$, $\alpha_2 \in (0,1)$, and $\alpha_3 \in (0,1)$ are user-defined parameters.  
-Whenever any of the above conditions is satisfied, the current inner loop is terminated, and a new outer iteration is started by setting  
-$u_Q^{r+1,0} = \bar{u}_Q^{r,\tau_r}$ and updating the penalty parameter $\sigma_{r+1}$ accordingly.
+where $\alpha_1 \in (0, \alpha_2)$, $\alpha_2 \in (0,1)$, and $\alpha_3 \in (0,1)$ are user-defined parameters. Whenever any of the above conditions is satisfied, the current inner loop is terminated, and a new outer iteration is started by setting $u^{r+1,0} = \bar{u}^{r,\tau_r}$ and updating the penalty parameter $\sigma_{r+1}$ accordingly.
 
 
 
 
-### Update strategy for the penalty parameter $\sigma$
+### Update strategy for $\sigma$
 
 The penalty parameter $\sigma$ is dynamically updated at each restart to improve convergence stability and reduce the residual of the KKT system.  
 At the beginning of the $(r+1)$-th outer iteration, the ideal update rule is defined by

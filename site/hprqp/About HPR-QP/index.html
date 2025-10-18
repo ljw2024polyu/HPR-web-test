@@ -337,14 +337,12 @@ Motivated by this success, we extend the adaptive restart strategy to the CCQP p
 </section>
 <section id="update-strategy-for-sigma">
 <h3>Update strategy for <span class="math notranslate nohighlight">\(\sigma\)</span></h3>
-<p>The penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span> is dynamically updated at each restart to improve convergence stability and reduce the residual of the KKT system.<br />
-At the beginning of the <span class="math notranslate nohighlight">\((r+1)\)</span>-th outer iteration, the ideal update rule is defined by</p>
+<p>The penalty parameter <span class="math notranslate nohighlight">\(\sigma\)</span> is dynamically updated at each restart to improve convergence stability and reduce the residual of the KKT system. At the beginning of the <span class="math notranslate nohighlight">\((r+1)\)</span>-th outer iteration, the ideal update rule is defined by</p>
 <div class="math notranslate nohighlight">
 \[\sigma_{r+1}
 := \operatorname*{arg\,min}_{\sigma &gt; 0}
 \| u_Q^{r+1,0} - u^* \|_{\mathcal{M}}^2,\]</div>
-<p>where <span class="math notranslate nohighlight">\(u^*\)</span> denotes any solution to the KKT system and <span class="math notranslate nohighlight">\(\|\cdot\|_{\mathcal{M}}\)</span> is the weighted metric associated with the complexity bound.<br />
-Since <span class="math notranslate nohighlight">\(u^*\)</span> is unknown in practice, we approximate the above rule by minimizing a computable surrogate function</p>
+<p>where <span class="math notranslate nohighlight">\(u^*\)</span> denotes any solution to the KKT system and <span class="math notranslate nohighlight">\(\|u_Q^{r+1,0} - u^*\|_{\mathcal{M}}\)</span> corresponds to the upper bound. Since <span class="math notranslate nohighlight">\(u^*\)</span> is unknown in practice, we approximate the above rule by minimizing a computable surrogate function</p>
 <div class="math notranslate nohighlight">
 \[f(\sigma)
 = \tilde{\theta}_1\,\sigma
@@ -358,8 +356,7 @@ Since <span class="math notranslate nohighlight">\(u^*\)</span> is unknown in pr
 \tilde{\theta}_2 = \| \bar{x}^{r,\tau_r} - x^{r,0} \|^2,
 \qquad
 \tilde{\theta}_3 = \| A^*\bar{y}^{r,\tau_r} - A^*y^{r,0} \|_Q^2.\]</div>
-<p>This one-dimensional minimization problem can be efficiently solved using a <strong>golden-section search</strong> or other scalar optimization methods to obtain <span class="math notranslate nohighlight">\(\sigma_{\text{new}}\)</span>.<br />
-To stabilize the update, an exponential smoothing scheme is applied:</p>
+<p>This one-dimensional minimization problem can be efficiently solved using a golden-section search or other scalar optimization methods to obtain <span class="math notranslate nohighlight">\(\sigma_{\text{new}}\)</span>. To stabilize the update, an exponential smoothing scheme is applied:</p>
 <div class="math notranslate nohighlight">
 \[\sigma_{r+1}
 = \exp\!\big(
@@ -368,8 +365,7 @@ To stabilize the update, an exponential smoothing scheme is applied:</p>
 \big),
 \qquad
 \beta = \exp\!\left(-\frac{\tilde{R}_{r,\tau_r-1}}{\tilde{R}_{r,0}-\tilde{R}_{r,\tau_r-1}}\right),\]</div>
-<p>where <span class="math notranslate nohighlight">\(\tilde{R}_{r,t}\)</span> is the surrogate merit function defined in the restart criteria.<br />
-This adaptive update balances theoretical consistency and empirical stability, ensuring smooth adjustment of <span class="math notranslate nohighlight">\(\sigma\)</span> throughout the optimization process.</p>
+<p>where <span class="math notranslate nohighlight">\(\tilde{R}_{r,t}\)</span> is the surrogate merit function defined in the restart criteria. This adaptive update balances theoretical consistency and empirical stability, ensuring smooth adjustment of <span class="math notranslate nohighlight">\(\sigma\)</span> throughout the optimization process.</p>
 </section>
 </section>
 <section id="gpu-implementation">

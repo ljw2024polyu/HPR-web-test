@@ -186,44 +186,43 @@ h(\bar{y}^{k+1}, \bar{w}_Q^{k+1}, \bar{z}^{k+1})
 ```{math}
 \begin{array}{|l|}
 \hline
-\textbf{Algorithm 3: HPR-QP — A dual HPR method for the CCQP problem} \ \hline
+\textbf{Algorithm 3: HPR-QP — A dual HPR method for the CCQP problem} \\ \hline
 \textbf{Input: }
-\text{Let }\mathcal{S}_w\text{ be defined as in (2.8), and let }\mathcal{S}_y\text{ be a self-adjoint positive semidefinite linear operator on }\mathbb{R}^m,\
-\text{such that }\mathcal{S}_y + A A^*\text{ is positive definite. Let }u_Q=(y,w_Q,z,x),\ \bar{u}_Q=(\bar{y},\bar{w}_Q,\bar{z}*Q,\bar{x}),\
-\text{and initial point }u_Q^{0,0}=(y^{0,0},w_Q^{0,0},z^{0,0},x^{0,0})\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n\times\mathbb{R}^n.[0.4em]
+\text{Let }\mathcal{S}_w\text{ be defined as in (2.8), and let }\mathcal{S}_y\text{ be a self-adjoint positive semidefinite linear operator on }\mathbb{R}^m,\\
+\text{such that }\mathcal{S}_y + A A^*\text{ is positive definite. Let }u_Q=(y,w_Q,z,x),\ \bar{u}_Q=(\bar{y},\bar{w}_Q,\bar{z}_Q,\bar{x}),\\
+\text{and initial point }u_Q^{0,0}=(y^{0,0},w_Q^{0,0},z^{0,0},x^{0,0})\in\mathbb{R}^m\times\mathbb{R}^n\times\mathbb{R}^n\times\mathbb{R}^n.\\[0.4em]
 \textbf{Initialization: }
-\text{Set outer loop counter }r=0,\ \text{total iteration counter }k=0,\ \text{and initial penalty parameter }\sigma_0>0.[0.4em]
-\textbf{repeat} \
-\quad \text{Initialize inner loop: set inner counter }t=0;\
-\quad \textbf{repeat} \
-\quad\quad \bar{z}*Q^{r,t+1}
-= \mathop{\arg\min}\limits*{z\in\mathbb{R}^n} L*{\sigma_r}(y^{r,t}, w_Q^{r,t}, z;\ x^{r,t});\
+\text{Set outer loop counter }r=0,\ \text{total iteration counter }k=0,\ \text{and initial penalty parameter }\sigma_0>0.\\[0.4em]
+\textbf{repeat} \\
+\quad \text{Initialize inner loop: set inner counter }t=0;\\
+\quad \textbf{repeat} \\
+\quad\quad \bar{z}_Q^{r,t+1}
+= \operatorname*{arg\,min}_{z\in\mathbb{R}^n}\, L_{\sigma_r}(y^{r,t}, w_Q^{r,t}, z;\ x^{r,t});\\
 \quad\quad \bar{x}^{r,t+1}
-= x^{r,t} + \sigma_r!\left(-Q w_Q^{r,t} + A^* y^{r,t} + \bar{z}_Q^{r,t+1} - c\right);\
+= x^{r,t} + \sigma_r\!\left(-Q w_Q^{r,t} + A^* y^{r,t} + \bar{z}_Q^{r,t+1} - c\right);\\
 \quad\quad \bar{w}_Q^{r,t+\frac{1}{2}}
-= \frac{1}{1+\sigma_r \lambda_Q}!\left(\sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1}
-
-* \sigma_r!\left(-Q w_Q^{r,t} + A^* y^{r,t} + \bar{z}*Q^{r,t+1} - c\right)\right);\
-  \quad\quad \bar{y}^{r,t+1}
-  = \mathop{\arg\min}\limits*{y\in\mathbb{R}^m}
-  \Big{ L_{\sigma_r}!\left(y, \bar{w}_Q^{r,t+\frac{1}{2}}, \bar{z}_Q^{r,t+1};\ \bar{x}^{r,t+1}\right)
-* \tfrac{\sigma_r}{2},|y - y^{r,t}|_{\mathcal{S}_y}^2 \Big};\
-  \quad\quad \bar{w}_Q^{r,t+1}
-  = \frac{1}{1+\sigma_r \lambda_Q}!\left(\sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1}
-* \sigma_r!\left(-Q w_Q^{r,t} + A^* \bar{y}^{r,t+1} + \bar{z}_Q^{r,t+1} - c\right)\right);\
-  \quad\quad \hat{u}_Q^{r,t+1} = 2,\bar{u}_Q^{r,t+1} - u_Q^{r,t};\
-  \quad\quad u_Q^{r,t+1} = \tfrac{1}{t+2},u_Q^{r,0} + \tfrac{t+1}{t+2},\hat{u}_Q^{r,t+1};\
-  \quad\quad t = t + 1,\ \ k = k + 1;\
-  \quad \textbf{until restart or termination criteria are met;}[0.3em]
-  \quad \textbf{Restart: }
-  \text{Set }\tau_r = t,\ \ u_Q^{r+1,0} = \bar{u}*Q^{r,\tau_r};\
-  \quad \sigma*{r+1} = \textbf{SigmaUpdate}!\left(\bar{u}_Q^{r,\tau_r},\ u_Q^{r,0},\ \mathcal{S}_y,\ \mathcal{S}_w,\ A,\ Q\right);\
-  \quad r = r + 1;\
-  \textbf{until termination criteria are met;}\
-  \textbf{Output: }\ {\bar{u}_Q^{r,t}}.\ \hline
-  \end{array}
-
+= \frac{1}{1+\sigma_r \lambda_Q}\!\left(\sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1}
++ \sigma_r\!\left(-Q w_Q^{r,t} + A^* y^{r,t} + \bar{z}_Q^{r,t+1} - c\right)\right);\\
+\quad\quad \bar{y}^{r,t+1}
+= \operatorname*{arg\,min}_{y\in\mathbb{R}^m}
+\Big\{ L_{\sigma_r}\!\left(y, \bar{w}_Q^{r,t+\frac{1}{2}}, \bar{z}_Q^{r,t+1};\ \bar{x}^{r,t+1}\right)
++ \tfrac{\sigma_r}{2}\,\|y - y^{r,t}\|_{\mathcal{S}_y}^2 \Big\};\\
+\quad\quad \bar{w}_Q^{r,t+1}
+= \frac{1}{1+\sigma_r \lambda_Q}\!\left(\sigma_r \lambda_Q w_Q^{r,t} + \bar{x}^{r,t+1}
++ \sigma_r\!\left(-Q w_Q^{r,t} + A^* \bar{y}^{r,t+1} + \bar{z}_Q^{r,t+1} - c\right)\right);\\
+\quad\quad \hat{u}_Q^{r,t+1} = 2\,\bar{u}_Q^{r,t+1} - u_Q^{r,t};\\
+\quad\quad u_Q^{r,t+1} = \tfrac{1}{t+2}\,u_Q^{r,0} + \tfrac{t+1}{t+2}\,\hat{u}_Q^{r,t+1};\\
+\quad\quad t = t + 1,\ \ k = k + 1;\\
+\quad \textbf{until restart or termination criteria are met;}\\[0.3em]
+\quad \textbf{Restart: }
+\text{Set }\tau_r = t,\ \ u_Q^{r+1,0} = \bar{u}_Q^{r,\tau_r};\\
+\quad \sigma_{r+1} = \textbf{SigmaUpdate}\!\left(\bar{u}_Q^{r,\tau_r},\ u_Q^{r,0},\ \mathcal{S}_y,\ \mathcal{S}_w,\ A,\ Q\right);\\
+\quad r = r + 1;\\
+\textbf{until termination criteria are met;}\\
+\textbf{Output: } \{\bar{u}_Q^{r,t}\}.\\ \hline
+\end{array}
 ```
+
 
 
 

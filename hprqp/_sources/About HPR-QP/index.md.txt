@@ -272,8 +272,7 @@ where $\alpha_1 \in (0, \alpha_2)$, $\alpha_2 \in (0,1)$, and $\alpha_3 \in (0,1
 
 ### Update strategy for $\sigma$
 
-The penalty parameter $\sigma$ is dynamically updated at each restart to improve convergence stability and reduce the residual of the KKT system.  
-At the beginning of the $(r+1)$-th outer iteration, the ideal update rule is defined by
+The penalty parameter $\sigma$ is dynamically updated at each restart to improve convergence stability and reduce the residual of the KKT system. At the beginning of the $(r+1)$-th outer iteration, the ideal update rule is defined by
 
 ```{math}
 \sigma_{r+1}
@@ -281,8 +280,7 @@ At the beginning of the $(r+1)$-th outer iteration, the ideal update rule is def
 \| u_Q^{r+1,0} - u^* \|_{\mathcal{M}}^2,
 ```
 
-where $u^*$ denotes any solution to the KKT system and $\|\cdot\|_{\mathcal{M}}$ is the weighted metric associated with the complexity bound.  
-Since $u^*$ is unknown in practice, we approximate the above rule by minimizing a computable surrogate function
+where $u^*$ denotes any solution to the KKT system and $\|u_Q^{r+1,0} - u^*\|_{\mathcal{M}}$ corresponds to the upper bound. Since $u^*$ is unknown in practice, we approximate the above rule by minimizing a computable surrogate function
 
 ```{math}
 f(\sigma)
@@ -301,8 +299,7 @@ where the coefficients are estimated from observable quantities of the current a
 \tilde{\theta}_3 = \| A^*\bar{y}^{r,\tau_r} - A^*y^{r,0} \|_Q^2.
 ```
 
-This one-dimensional minimization problem can be efficiently solved using a **golden-section search** or other scalar optimization methods to obtain $\sigma_{\text{new}}$.  
-To stabilize the update, an exponential smoothing scheme is applied:
+This one-dimensional minimization problem can be efficiently solved using a golden-section search or other scalar optimization methods to obtain $\sigma_{\text{new}}$. To stabilize the update, an exponential smoothing scheme is applied:
 
 ```{math}
 \sigma_{r+1}
@@ -314,8 +311,7 @@ To stabilize the update, an exponential smoothing scheme is applied:
 \beta = \exp\!\left(-\frac{\tilde{R}_{r,\tau_r-1}}{\tilde{R}_{r,0}-\tilde{R}_{r,\tau_r-1}}\right),
 ```
 
-where $\tilde{R}_{r,t}$ is the surrogate merit function defined in the restart criteria.  
-This adaptive update balances theoretical consistency and empirical stability, ensuring smooth adjustment of $\sigma$ throughout the optimization process.
+where $\tilde{R}_{r,t}$ is the surrogate merit function defined in the restart criteria. This adaptive update balances theoretical consistency and empirical stability, ensuring smooth adjustment of $\sigma$ throughout the optimization process.
 
 
 

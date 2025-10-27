@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Releases &mdash; HPR-LP</title>
+  <title>Julia Releases &mdash; HPR-LP</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=efd90ad8" />
@@ -28,8 +28,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Julia Releases" href="Julia%20Releases.html" />
-    <link rel="prev" title="Benchmarks" href="../Benchmarks/index.html" /> 
+    <link rel="next" title="&lt;no title&gt;" href="C%20Releases.html" />
+    <link rel="prev" title="Releases" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -64,8 +64,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../Benchmarks/index.html">Benchmarks</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Releases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Julia%20Releases.html">Julia Releases</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Releases</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Julia Releases</a></li>
 </ul>
 </li>
 </ul>
@@ -90,7 +90,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Releases</li>
+          <li class="breadcrumb-item"><a href="index.html">Releases</a></li>
+      <li class="breadcrumb-item active">Julia Releases</li>
   <li class="wy-breadcrumbs-aside">
     <a href="https://github.com/PolyU-IOR/HPR-LP" target="_blank" rel="noopener">
       <svg class="gh-icon" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
@@ -120,22 +121,97 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="releases">
-<h1>Releases</h1>
-<p>HPR-LP offers several interfaces with examples, usage, settings, and results.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Julia%20Releases.html">Julia Releases</a></li>
+  <section class="tex2jax_ignore mathjax_ignore" id="julia-releases">
+<h1>Julia Releases</h1>
+<p>This page shows only the version tag and a one-line summary. Click any version to expand full notes and downloads.</p>
+<hr class="docutils" />
+<details id="v013">
+<summary><code>v0.1.3</code> — Stability-oriented tuning; up to 1e-9 KKT/duality gap; smoother JuMP modeling</summary>
+<p><strong>Release date</strong>: 2025-10-17</p>
+<p><strong>Highlights</strong></p>
+<ol class="arabic simple">
+<li><p>Enhanced parameter adjustment strategy for significantly improved stability, achieving relative KKT and duality gap accuracy up to <strong>1e-9</strong>.</p></li>
+<li><p>Improved LP modeling pipeline with seamless <strong>JuMP</strong> integration for a smoother modeling experience.</p></li>
+</ol>
+<p><strong>Benchmark results</strong></p>
+<ul class="simple">
+<li><p><strong>Platform</strong>: NVIDIA A100-SXM4-80GB</p></li>
+<li><p><strong>Dataset</strong>: Mittelmann’s LP benchmark (no presolve)</p></li>
+<li><p><strong>Performance</strong>: 47 / 49 instances solved (<strong>Tolerance</strong>: 1e-4, <strong>Time limit</strong>: 3600s)</p></li>
+<li><p><strong>Performance</strong>: 41 / 49 instances solved (<strong>Tolerance</strong>: 1e-9, <strong>Time limit</strong>: 3600s)</p></li>
 </ul>
-</div>
+<p><strong>Downloads</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.3.zip">Source code (zip)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.3.tar.gz">Source code (tar.gz)</a></p></li>
+</ul>
+</details>
+<hr class="docutils" />
+<details id="v012">
+<summary><code>v0.1.2</code> — SpMV & kernel rewrites; +11% Mittelmann, +7% MIP2017 (SGM10, 1e-8)</summary>
+<p><strong>Release date</strong>: 2025-09-27</p>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li><p>SpMV rewrites: added preprocessing and buffer preallocation to avoid redundant work between iterations.</p></li>
+<li><p>CUDA kernel refactors: reduced memory traffic and improved occupancy.</p></li>
+<li><p>Under SGM10 (1e-8 accuracy): +11% on Mittelmann’s LP benchmark set and +7% on MIP2017 large-scale LP relaxations (vs. v0.1.1).</p></li>
+</ul>
+<p><strong>Downloads</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/releases/download/v0.1.2/HPR-LP_v012_bug_fixed.zip">HPR-LP_v012_bug_fixed.zip</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.zip">Source code (zip)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.tar.gz">Source code (tar.gz)</a></p></li>
+</ul>
+</details>
+<hr class="docutils" />
+<details id="v011">
+<summary><code>v0.1.1</code> — Model reformulation + adaptive restart/penalty + fused kernels</summary>
+<p><strong>Release date</strong>: 2025-09-09</p>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li><p>Reformulated the problem model for better stability and consistency.</p></li>
+<li><p>Added adaptive restart and automatic penalty update.</p></li>
+<li><p>Fused several CUDA kernels to reduce memory traffic and improve performance.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">sigma</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma_fixed</span></code> for a cleaner interface.</p></li>
+</ul>
+<p><strong>Downloads</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.1.zip">Source code (zip)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.1.tar.gz">Source code (tar.gz)</a></p></li>
+</ul>
+</details>
+<hr class="docutils" />
+<details id="v010">
+<summary><code>v0.1.0</code> — First public release: Julia GPU-accelerated HPR-LP solver</summary>
+<p><strong>Release date</strong>: 2025-07-04</p>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li><p>First public release of <strong>HPR-LP</strong>.</p></li>
+<li><p>GPU-accelerated LP solver in Julia implementing the Halpern–Peaceman–Rachford (HPR) method.</p></li>
+<li><p>Supported model formulation:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\min_{x \in \mathbb{R}^n} \quad &amp; (c, x) \\
+\text{s.t.}\quad
+&amp; A_1 x = b_1, \\
+&amp; A_2 x \ge b_2, \\
+&amp; l \le x \le u.
+\end{aligned}\end{split}\]</div>
+<p><strong>Downloads</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.0.zip">Source code (zip)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.0.tar.gz">Source code (tar.gz)</a></p></li>
+</ul>
+</details>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../Benchmarks/index.html" class="btn btn-neutral float-left" title="Benchmarks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Julia%20Releases.html" class="btn btn-neutral float-right" title="Julia Releases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Releases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="C%20Releases.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -13,7 +13,7 @@ The first paper presents the GPU-based HPR-LP solver with adaptive restart and p
 
 ```
 
-The second paper develops accelerated variants of pADMM and proves $o(1/k)$ and $O(1/k)$ nonergodic convergence rates, supported by preliminary experiments.
+The second paper develops  an accelerated pADMM using Halpern iteration, which enjoys a nonergodic $O(1/k)$ convergence rate.
 ```bibtex
 @article{sun2025accelerating,
   title={Accelerating preconditioned ADMM via degenerate proximal point mappings},

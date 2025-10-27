@@ -125,10 +125,10 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="julia-releases">
 <h1>Julia Releases</h1>
-<p>This page shows only the version tag and a one-line summary. Click any version to expand full notes and downloads.</p>
+<p>A compact index of HPR-LP (Julia) releases—each entry shows the version tag and a one-line summary; click a version to view full notes, benchmarks, and downloads.</p>
 <hr class="docutils" />
 <details id="v013">
-<summary><code>v0.1.3</code> — Stability-oriented tuning; up to 1e-9 KKT/duality gap; smoother JuMP modeling</summary>
+<summary><code>v0.1.3</code> — Robustness upgrade: refined parameter schedule achieves 1e-9 KKT/duality gaps and streamlines JuMP modeling</summary>
 <p><strong>Release date</strong>: 2025-10-17</p>
 <p><strong>Highlights</strong></p>
 <ol class="arabic simple">
@@ -150,7 +150,7 @@
 </details>
 <hr class="docutils" />
 <details id="v012">
-<summary><code>v0.1.2</code> — SpMV & kernel rewrites; +11% Mittelmann, +7% MIP2017 (SGM10, 1e-8)</summary>
+<summary><code>v0.1.2</code> — SpMV & kernel rewrites</summary>
 <p><strong>Release date</strong>: 2025-09-27</p>
 <p><strong>Highlights</strong></p>
 <ul class="simple">
@@ -171,10 +171,11 @@
 <p><strong>Release date</strong>: 2025-09-09</p>
 <p><strong>Highlights</strong></p>
 <ul class="simple">
-<li><p>Reformulated the problem model for better stability and consistency.</p></li>
-<li><p>Added adaptive restart and automatic penalty update.</p></li>
-<li><p>Fused several CUDA kernels to reduce memory traffic and improve performance.</p></li>
-<li><p>Removed <code class="docutils literal notranslate"><span class="pre">sigma</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma_fixed</span></code> for a cleaner interface.</p></li>
+<li><p>Model reformulation. Updated the problem formulation to the new form for better stability and consistency across instances.</p></li>
+<li><p>Adaptive restarts &amp; penalty auto-tuning. A redesigned penalty parameter update rule to improve convergence speed and robustness.</p></li>
+<li><p>Kernel rewrites. Several CUDA kernels were refactored/fused to reduce memory traffic and improve occupancy.</p></li>
+<li><p>Simplified parameters. Removed sigma and sigma_fixed from the parameters.</p></li>
+<li><p>In terms of SGM10 (1e-8 accuracy), 14% faster for Mittelmann’s LP benchmark set and 95% faster for MIP2017 large-scale LP relaxations (compared to v0.1.0).</p></li>
 </ul>
 <p><strong>Downloads</strong></p>
 <ul class="simple">
@@ -184,13 +185,13 @@
 </details>
 <hr class="docutils" />
 <details id="v010">
-<summary><code>v0.1.0</code> — First public release: Julia GPU-accelerated HPR-LP solver</summary>
+<summary><code>v0.1.0</code> — A preliminary release: Julia GPU-accelerated HPR-LP solver</summary>
 <p><strong>Release date</strong>: 2025-07-04</p>
 <p><strong>Highlights</strong></p>
 <ul class="simple">
 <li><p>First public release of <strong>HPR-LP</strong>.</p></li>
 <li><p>GPU-accelerated LP solver in Julia implementing the Halpern–Peaceman–Rachford (HPR) method.</p></li>
-<li><p>Supported model formulation:</p></li>
+<li><p>Model formulation:</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
@@ -206,6 +207,7 @@
 <li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.0.tar.gz">Source code (tar.gz)</a></p></li>
 </ul>
 </details>
+<hr class="docutils" />
 </section>
 
 

@@ -1,12 +1,12 @@
 # Julia Releases
-This page shows only the version tag and a one-line summary. Click any version to expand full notes and downloads.
+A compact index of HPR-LP (Julia) releases—each entry shows the version tag and a one-line summary; click a version to view full notes, benchmarks, and downloads.
 
 ---
 
 
 
 <details id="v013">
-<summary><code>v0.1.3</code> — Stability-oriented tuning; up to 1e-9 KKT/duality gap; smoother JuMP modeling</summary>
+<summary><code>v0.1.3</code> — Robustness upgrade: refined parameter schedule achieves 1e-9 KKT/duality gaps and streamlines JuMP modeling</summary>
 
 **Release date**: 2025-10-17
 
@@ -29,7 +29,7 @@ This page shows only the version tag and a one-line summary. Click any version t
 ---
 
 <details id="v012">
-<summary><code>v0.1.2</code> — SpMV & kernel rewrites; +11% Mittelmann, +7% MIP2017 (SGM10, 1e-8)</summary>
+<summary><code>v0.1.2</code> — SpMV & kernel rewrites</summary>
 
 **Release date**: 2025-09-27
 
@@ -53,10 +53,11 @@ This page shows only the version tag and a one-line summary. Click any version t
 **Release date**: 2025-09-09
 
 **Highlights**
-- Reformulated the problem model for better stability and consistency.  
-- Added adaptive restart and automatic penalty update.  
-- Fused several CUDA kernels to reduce memory traffic and improve performance.  
-- Removed `sigma` and `sigma_fixed` for a cleaner interface.
+- Model reformulation. Updated the problem formulation to the new form for better stability and consistency across instances. 
+- Adaptive restarts & penalty auto-tuning. A redesigned penalty parameter update rule to improve convergence speed and robustness.
+- Kernel rewrites. Several CUDA kernels were refactored/fused to reduce memory traffic and improve occupancy.
+- Simplified parameters. Removed sigma and sigma_fixed from the parameters.
+- In terms of SGM10 (1e-8 accuracy), 14% faster for Mittelmann's LP benchmark set and 95% faster for MIP2017 large-scale LP relaxations (compared to v0.1.0).
 
 **Downloads**
 - [Source code (zip)](https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.1.zip)  
@@ -67,14 +68,14 @@ This page shows only the version tag and a one-line summary. Click any version t
 ---
 
 <details id="v010">
-<summary><code>v0.1.0</code> — First public release: Julia GPU-accelerated HPR-LP solver</summary>
+<summary><code>v0.1.0</code> — A preliminary release: Julia GPU-accelerated HPR-LP solver</summary>
 
 **Release date**: 2025-07-04
 
 **Highlights**
 - First public release of **HPR-LP**.  
 - GPU-accelerated LP solver in Julia implementing the Halpern–Peaceman–Rachford (HPR) method.  
-- Supported model formulation:
+- Model formulation:
 ```{math}
 \begin{aligned}
 \min_{x \in \mathbb{R}^n} \quad & (c, x) \\
@@ -90,3 +91,5 @@ This page shows only the version tag and a one-line summary. Click any version t
 - [Source code (tar.gz)](https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.0.tar.gz)
 
 </details>
+
+---

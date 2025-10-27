@@ -17,7 +17,7 @@
       root = DOCUMENTATION_OPTIONS.URL_ROOT;
     }
     if (root.slice(-1) !== '/') root += '/';
-    var target = root + 'index.html';  // ← 改成你的首页路径也可以（支持绝对 URL）
+    var target = 'https://ljw2024polyu.github.io/HPR-web-test/';  // 
 
     // -------- create button --------
     var btn = document.createElement('a');

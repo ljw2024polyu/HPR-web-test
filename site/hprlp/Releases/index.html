@@ -64,12 +64,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Benchmarks/index.html">Benchmarks</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Releases</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v0-1-2-2025-09-27">v0.1.2  (2025-09-27)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#v0-1-1-2025-09-09">v0.1.1  (2025-09-09)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#v0-1-0-2025-07-04">v0.1.0  (2025-07-04)</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Releases</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Contributing.html">Contributing</a></li>
@@ -124,15 +119,16 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="releases">
 <h1>Releases</h1>
-<p>This page lists all public releases of <strong>HPR-LP</strong>.</p>
+<p>This page shows only the version tag and a one-line summary. Click any version to expand full notes and downloads.</p>
 <hr class="docutils" />
-<section id="v0-1-2-2025-09-27">
-<h2>v0.1.2  (2025-09-27)</h2>
+<details id="v012">
+<summary><code>v0.1.2</code> — SpMV & kernel rewrites; +11% Mittelmann, +7% MIP2017 (SGM10, 1e-8)</summary>
+<p><strong>Release date</strong>: 2025-09-27</p>
 <p><strong>Highlights</strong></p>
 <ul class="simple">
-<li><p>SpMV rewrites. Add a preprocessing step and buffer preallocation to avoid redundant work between iterations.</p></li>
-<li><p>Kernel rewrites. Several CUDA kernels were refactored to reduce memory traffic and improve occupancy.</p></li>
-<li><p>In terms of SGM10 (1e-8 accuracy), 11% faster for Mittelmann’s LP benchmark set and 7% faster for MIP2017 large-scale LP relaxations (compared to v0.1.1).</p></li>
+<li><p>SpMV rewrites: added preprocessing and buffer preallocation to avoid redundant work between iterations.</p></li>
+<li><p>CUDA kernel refactors: reduced memory traffic and improved occupancy.</p></li>
+<li><p>Under SGM10 (1e-8 accuracy): +11% on Mittelmann’s LP benchmark set and +7% on MIP2017 large-scale LP relaxations (vs. v0.1.1).</p></li>
 </ul>
 <p><strong>Downloads</strong></p>
 <ul class="simple">
@@ -140,47 +136,48 @@
 <li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.zip">Source code (zip)</a></p></li>
 <li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.2.tar.gz">Source code (tar.gz)</a></p></li>
 </ul>
-</section>
-<section id="v0-1-1-2025-09-09">
-<h2>v0.1.1  (2025-09-09)</h2>
+</details>
+<hr class="docutils" />
+<details id="v011">
+<summary><code>v0.1.1</code> — Model reformulation + adaptive restart/penalty + fused kernels</summary>
+<p><strong>Release date</strong>: 2025-09-09</p>
 <p><strong>Highlights</strong></p>
 <ul class="simple">
 <li><p>Reformulated the problem model for better stability and consistency.</p></li>
 <li><p>Added adaptive restart and automatic penalty update.</p></li>
-<li><p>Rewritten and fused several CUDA kernels to reduce memory traffic and improve performance.</p></li>
-<li><p>Removed <code class="docutils literal notranslate"><span class="pre">sigma</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma_fixed</span></code> parameters for a cleaner interface.</p></li>
+<li><p>Fused several CUDA kernels to reduce memory traffic and improve performance.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">sigma</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma_fixed</span></code> for a cleaner interface.</p></li>
 </ul>
 <p><strong>Downloads</strong></p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.1.zip">Source code (zip)</a></p></li>
 <li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.1.tar.gz">Source code (tar.gz)</a></p></li>
 </ul>
-</section>
+</details>
 <hr class="docutils" />
-<section id="v0-1-0-2025-07-04">
-<h2>v0.1.0  (2025-07-04)</h2>
+<details id="v010">
+<summary><code>v0.1.0</code> — First public release: Julia GPU-accelerated HPR-LP solver</summary>
+<p><strong>Release date</strong>: 2025-07-04</p>
 <p><strong>Highlights</strong></p>
-<ul>
+<ul class="simple">
 <li><p>First public release of <strong>HPR-LP</strong>.</p></li>
 <li><p>GPU-accelerated LP solver in Julia implementing the Halpern–Peaceman–Rachford (HPR) method.</p></li>
-<li><p>Supported model formulation:</p>
+<li><p>Supported model formulation:</p></li>
+</ul>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \min_{x \in \mathbb{R}^n} \quad &amp; (c, x) \\
-\text{s.t.} \quad 
+\text{s.t.}\quad
 &amp; A_1 x = b_1, \\
 &amp; A_2 x \ge b_2, \\
 &amp; l \le x \le u.
 \end{aligned}\end{split}\]</div>
-</li>
-</ul>
 <p><strong>Downloads</strong></p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.0.zip">Source code (zip)</a></p></li>
 <li><p><a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP/archive/refs/tags/v0.1.0.tar.gz">Source code (tar.gz)</a></p></li>
 </ul>
-<hr class="docutils" />
-</section>
+</details>
 </section>
 
 

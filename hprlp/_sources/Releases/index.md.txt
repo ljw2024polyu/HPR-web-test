@@ -3,14 +3,6 @@ This page shows only the version tag and a one-line summary. Click any version t
 
 ---
 
-```{toctree}
-:caption: Versions
-:maxdepth: 1
-
-releases/v0.1.3
-releases/v0.1.2
-releases/v0.1.1
-releases/v0.1.0
 
 
 <details id="v013">

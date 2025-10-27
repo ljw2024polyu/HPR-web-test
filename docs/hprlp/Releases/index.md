@@ -1,6 +1,6 @@
 # Releases
 
-HPR-LP offers several interfaces with examples, usage, settings, and results.
+This page offers several releases for HPR-LP.
 
 
 ```{toctree}

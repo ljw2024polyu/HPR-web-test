@@ -22,7 +22,8 @@ nvidia-smi
 ## 2. Clone the Repository
 
 ```bash
-
+git clone https://github.com/PolyU-IOR/HPR-LP-python.git
+cd HPR-LP-python
 ```
 
 Or download and extract the ZIP file from GitHub.

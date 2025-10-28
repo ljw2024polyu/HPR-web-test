@@ -1,5 +1,5 @@
 param(
-  [string]$Message = "deploy 10.28",
+  [string]$Message = "deploy",
   [string]$CustomDomain = "hprtest.online"
 )
 
@@ -7,19 +7,17 @@ $ErrorActionPreference = "Stop"
 
 cmd /c build.bat
 
-$CnamePath = "site/CNAME"
-New-Item -ItemType File -Force -Path $CnamePath | Out-Null
-Set-Content -Path $CnamePath -NoNewline -Value $CustomDomain
+git fetch origin
+git worktree remove ..\gh-pages 2>$null
+git worktree add -B gh-pages ..\gh-pages origin/gh-pages
 
-if (!(Test-Path "site/.nojekyll")) {
-  New-Item -ItemType File -Path "site/.nojekyll" | Out-Null
-}
+robocopy site ..\gh-pages /MIR > $null
 
+Set-Content ..\gh-pages\CNAME -NoNewline -Value $CustomDomain
+if (!(Test-Path ..\gh-pages\.nojekyll)) { New-Item -ItemType File ..\gh-pages\.nojekyll | Out-Null }
+
+Push-Location ..\gh-pages
 git add -A
-git commit -m $Message
-git push origin main
-
-git branch -D gh-pages-tmp 2>$null
-git subtree split --prefix=site HEAD -b gh-pages-tmp
-git push -f origin gh-pages-tmp:gh-pages
-git branch -D gh-pages-tmp
+git commit -m $Message 2>$null
+git push origin gh-pages
+Pop-Location

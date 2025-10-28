@@ -6,8 +6,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 cmd /c build.bat
-
-robocopy assets ..\gh-pages\assets /MIR > $null
+robocopy assets site\assets /MIR > $null
 $CnamePath = "site/CNAME"
 New-Item -ItemType File -Force -Path $CnamePath | Out-Null
 Set-Content -Path $CnamePath -NoNewline -Value $CustomDomain

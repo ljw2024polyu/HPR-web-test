@@ -3,7 +3,7 @@ cmd /c build.bat
 
 # Commit to main
 git add -A
-git commit -m "10.27"
+git commit -m "10.28"
 git push origin main
 
 # Publish site/ to gh-pages

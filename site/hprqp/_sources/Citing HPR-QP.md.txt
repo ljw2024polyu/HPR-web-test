@@ -13,7 +13,7 @@ The first paper presents HPR-QP, a GPU-based dual Halpern–Peaceman–Rachford 
 
 ```
 
-The second paper develops accelerated variants of pADMM and proves $o(1/k)$ and $O(1/k)$ nonergodic convergence rates, supported by preliminary experiments.
+The second paper develops an accelerated pADMM using Halpern iteration, which enjoys a nonergodic $O(1/k)$ convergence rate.
 ```bibtex
 @article{sun2025accelerating,
   title={Accelerating preconditioned ADMM via degenerate proximal point mappings},

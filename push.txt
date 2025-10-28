@@ -1,12 +1,24 @@
-# Rebuild local site
+param(
+  [string]$Message = "deploy 10.28",
+  [string]$CustomDomain = "hprtest.online"
+)
+
+$ErrorActionPreference = "Stop"
+
 cmd /c build.bat
 
-# Commit to main
+$CnamePath = "site/CNAME"
+New-Item -ItemType File -Force -Path $CnamePath | Out-Null
+Set-Content -Path $CnamePath -NoNewline -Value $CustomDomain
+
+if (!(Test-Path "site/.nojekyll")) {
+  New-Item -ItemType File -Path "site/.nojekyll" | Out-Null
+}
+
 git add -A
-git commit -m "10.28"
+git commit -m $Message
 git push origin main
 
-# Publish site/ to gh-pages
 git branch -D gh-pages-tmp 2>$null
 git subtree split --prefix=site HEAD -b gh-pages-tmp
 git push -f origin gh-pages-tmp:gh-pages

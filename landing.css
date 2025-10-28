@@ -205,6 +205,14 @@ body.light .person .bullets{ color: #4a556d; }
   justify-items: center;
   margin-top: 36px;
 }
+.credits { display: grid; grid-template-columns: repeat(3, minmax(220px,1fr)); gap: 32px; }
+.credits-note {
+  grid-column: 1 / -1;           /* 跨越所有列 */
+  text-align: center;
+  margin-top: 8px;                /* 与上方卡片的距离 */
+  color: #6b7280;                 /* 可选：次要文本色 */
+  font-style: italic;             /* 可选 */
+}
 .credit{ text-align: center; }
 .credit img{
   width: 96px;            /* 80–120px recommended */

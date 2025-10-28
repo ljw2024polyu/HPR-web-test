@@ -123,7 +123,7 @@ Below is a list of the parameters in HPR-LP along with their default values and 
   - `3600`
   - Maximum allowed runtime (seconds) for the algorithm.
 * - `stoptol`
-  - `1e-6`
+  - `1e-4`
   - Stopping tolerance for convergence checks.
 * - `device_number`
   - `0`

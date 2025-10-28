@@ -1,3 +1,3 @@
 # C API
 
-How the C version is installed.
+How the C version is installed. Coming soon...

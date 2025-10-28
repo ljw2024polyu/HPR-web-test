@@ -13,7 +13,7 @@ The default demo problem we ship is a small linear program of the form
 
 $$
 \begin{aligned}
-\min \quad & 3 x_1 + 5 x_2\\
+\min \quad & - 3 x_1 - 5 x_2\\
 \text{s.t.} \quad & x_1 + 2 x_2 \le 10, \\
 & 3 x_1 + x_2 \le 12, \\
 & x_1 \ge 0, \\

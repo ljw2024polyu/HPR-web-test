@@ -1,6 +1,6 @@
 # C API
 
-This page explains how to install the **Julia version** of HPR-LP.
+This page explains how to install the **C version** of HPR-LP.
 
 ---
 

@@ -1,4 +1,4 @@
-# Julia API
+# C API
 
 This page explains how to install the **Julia version** of HPR-LP.
 
@@ -46,4 +46,4 @@ This creates:
 
 ## Next Steps
 
-- See the [Interfaces](../Interfaces/C interfaces.md) section for C usage.
+- See the [Interfaces](../Interfaces/C%20interfaces.md) section for C usage.

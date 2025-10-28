@@ -58,4 +58,4 @@ If no error appears, the installation is successful.
 
 ## Next Steps
 
-- See the [Interfaces](../Interfaces/Julia interfaces.md) section for Julia usage.
+- See the [Interfaces](../Interfaces/Julia%20interfaces.md) section for Julia usage.

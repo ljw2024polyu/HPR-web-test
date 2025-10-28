@@ -58,7 +58,17 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Interfaces</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="Julia%20interfaces.html">Julia interfaces</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">C interfaces</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">C interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#solving-from-mps-files">Solving from MPS Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-as-a-library">Using as a Library</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command-Line Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#language-interface-installation">Language Interface Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#language-interfaces">Language Interfaces</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Python%20interfaces.html">Python interfaces</a></li>
 </ul>
 </li>
@@ -123,7 +133,119 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="c-interfaces">
 <h1>C interfaces</h1>
-<p>This page explains how to use the <strong>C interface</strong> of HPR-LP.</p>
+<p>This page shows the <strong>C interface</strong> of HPR-LP with a minimal, task-oriented guide. Use the CLI to solve <code class="docutils literal notranslate"><span class="pre">.mps</span></code> files, or link your C/C++ program against <code class="docutils literal notranslate"><span class="pre">libhprlp</span></code> for programmatic access.</p>
+<hr class="docutils" />
+<section id="usage">
+<h2>Usage</h2>
+<section id="solving-from-mps-files">
+<h3>Solving from MPS Files</h3>
+<p>Use the prebuilt executable in <code class="docutils literal notranslate"><span class="pre">build/</span></code>. The default settings enable GPU, standard scalings, and a 3600-second time limit.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show help</span>
+./build/solve_mps_file<span class="w"> </span>-h
+
+<span class="c1"># Run with default settings</span>
+./build/solve_mps_file<span class="w"> </span>-i<span class="w"> </span>data/model.mps
+
+<span class="c1"># Run with custom settings</span>
+./build/solve_mps_file<span class="w"> </span>-i<span class="w"> </span>data/model.mps<span class="w"> </span>--tol<span class="w"> </span>1e-4<span class="w"> </span>--time-limit<span class="w"> </span><span class="m">3600</span>
+</pre></div>
+</div>
+</section>
+<section id="using-as-a-library">
+<h3>Using as a Library</h3>
+<p>Link against <code class="docutils literal notranslate"><span class="pre">libhprlp.a</span></code> (static) or <code class="docutils literal notranslate"><span class="pre">libhprlp.so</span></code> (shared) and include the public headers under <code class="docutils literal notranslate"><span class="pre">include/</span></code>.<br />
+See the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory for small, self-contained demos (C and C++) showing compilation flags and basic API calls.</p>
+<p>For more details, check <code class="docutils literal notranslate"><span class="pre">examples/c(cpp)/README.md</span></code> on integrating HPR-LP-C into external projects (include paths, link order, and CUDA libs).</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="command-line-options">
+<h2>Command-Line Options</h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-i,</span> <span class="pre">--input</span> <span class="pre">&lt;path&gt;</span></code></p></td>
+<td><p>Path to input MPS file</p></td>
+<td><p><em>required</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--device</span> <span class="pre">&lt;id&gt;</span></code></p></td>
+<td><p>CUDA device ID</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--max-iter</span> <span class="pre">&lt;N&gt;</span></code></p></td>
+<td><p>Maximum iterations</p></td>
+<td><p>unlimited</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--tol</span> <span class="pre">&lt;eps&gt;</span></code></p></td>
+<td><p>Stopping tolerance</p></td>
+<td><p>1e-4</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--time-limit</span> <span class="pre">&lt;sec&gt;</span></code></p></td>
+<td><p>Time limit in seconds</p></td>
+<td><p>3600</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--check-iter</span> <span class="pre">&lt;N&gt;</span></code></p></td>
+<td><p>Convergence check interval</p></td>
+<td><p>150</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ruiz</span> <span class="pre">&lt;true/false&gt;</span></code></p></td>
+<td><p>Ruiz scaling</p></td>
+<td><p>true</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--pock</span> <span class="pre">&lt;true/false&gt;</span></code></p></td>
+<td><p>Pock-Chambolle scaling</p></td>
+<td><p>true</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--bc</span> <span class="pre">&lt;true/false&gt;</span></code></p></td>
+<td><p>Bounds/cost scaling</p></td>
+<td><p>true</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-h,</span> <span class="pre">--help</span></code></p></td>
+<td><p>Show help message</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p>Tip: If the runtime can’t find <code class="docutils literal notranslate"><span class="pre">libhprlp.so</span></code>, set <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH=$PWD/lib:$LD_LIBRARY_PATH</span></code> (or install to a system path).</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="language-interface-installation">
+<h2>Language Interface Installation</h2>
+<p><strong>Python (pip only):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>HPR-LP-C/bindings/python
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>.<span class="w">         </span><span class="c1"># or: python -m pip install -e .</span>
+</pre></div>
+</div>
+<p><strong>Julia Interface:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>bindings/julia
+bash<span class="w"> </span>install.sh
+</pre></div>
+</div>
+<p><strong>MATLAB Interface:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>bindings/matlab
+bash<span class="w"> </span>install.sh
+</pre></div>
+</div>
+<p>See the respective README files in <code class="docutils literal notranslate"><span class="pre">bindings/</span></code> for usage, version notes, and troubleshooting.</p>
+</section>
+<hr class="docutils" />
+<section id="language-interfaces">
+<h2>Language Interfaces</h2>
+<p>HPR-LP-C provides native interfaces for multiple languages:</p>
+<ul class="simple">
+<li><p><strong>Python</strong>: pybind11 bindings (see <code class="docutils literal notranslate"><span class="pre">bindings/python/README.md</span></code>)</p></li>
+<li><p><strong>MATLAB</strong>: MEX interface with OOP wrapper (see <code class="docutils literal notranslate"><span class="pre">bindings/matlab/README.md</span></code>)</p></li>
+<li><p><strong>Julia</strong>: Native Julia wrapper (see <code class="docutils literal notranslate"><span class="pre">bindings/julia/README.md</span></code>)</p></li>
+<li><p><strong>C/C++</strong>: Direct API usage (see <code class="docutils literal notranslate"><span class="pre">examples/c/</span></code> and <code class="docutils literal notranslate"><span class="pre">examples/cpp/</span></code> for minimal build/run demos)</p></li>
+</ul>
+</section>
 </section>
 
 

@@ -5,13 +5,14 @@ A compact index of HPR-LP (Python) releases—each entry shows the version tag a
 <details id="v010">
 <summary><code>v0.1.0</code> — First version</summary>
 
-**Release date**: 2025-xx-xx
+Coming soon...
+<!-- **Release date**: 2025-xx-xx
 
 **Highlights**
 1. 
 
 
-**Downloads**
+**Downloads** -->
 
 
 </details>

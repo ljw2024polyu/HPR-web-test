@@ -6,7 +6,7 @@ This page reports numerical results of Julia version on an **NVIDIA A100-SXM4-80
 
 ## 1) Mittelmann LP benchmark set 
 
-Numerical performance of **HPR-LP.jl** and [<u>**cuPDLP.jl**</u>](https://github.com/jinwen-yang/cuPDLP.jl) (downloaded on July 24th, 2024) on 49 instances of [<u>Mittelmann’s LP benchmark set</u>](https://plato.asu.edu/ftp/lpfeas.html) without Gurobi’s presolve. Time limit **15,000 seconds**.
+Numerical performance of **HPR-LP.jl** and [<u>**cuPDLP.jl**</u>](https://github.com/jinwen-yang/cuPDLP.jl) (downloaded on July 24th, 2024) on 49 instances of [<u>Mittelmann’s LP benchmark set</u>](https://plato.asu.edu/ftp/lpfeas.html) with Gurobi’s presolve. Time limit **15,000 seconds**.
 
 | Tolerance | 1e-4 | 1e-4 | 1e-6 | 1e-6 | 1e-8 | 1e-8 |
 |:--|:--:|:--:|:--:|:--:|:--:|:--:|

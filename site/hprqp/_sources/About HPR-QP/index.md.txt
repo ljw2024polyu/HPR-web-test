@@ -36,7 +36,7 @@ In particular, CCQP includes the classical convex QP (CQP) as an important speci
 \end{aligned}
 ```
 
-Here, $\(\delta_{\mathcal{C}}(\cdot)\)$ is the indicator function of the box constraint set $\mathcal{C}$:
+Here, $\delta_{\mathcal{C}}(\cdot)$ is the indicator function of the box constraint set $\mathcal{C}$:
 
 ```{math}
 \mathcal{C} := \{\, x \in \mathbb{R}^n \mid L \le x \le U \,\},

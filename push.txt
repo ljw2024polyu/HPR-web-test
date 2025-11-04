@@ -1,5 +1,5 @@
 param(
-  [string]$Message = "deploy 10.28",
+  [string]$Message = "deploy 11.4",
   [string]$CustomDomain = "hprtest.online"
 )
 

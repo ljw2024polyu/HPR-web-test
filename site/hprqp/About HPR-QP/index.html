@@ -177,7 +177,7 @@ U \in (\mathbb{R} \cup \{+\infty\})^n.\]</div>
 <section id="base-algorithm">
 <h3>Base algorithm</h3>
 <p>Let <span class="math notranslate nohighlight">\(\sigma &gt; 0\)</span> be a given penalty parameter.<br />
-Define the augmented Lagrangian function <span class="math notranslate nohighlight">\(L_{\sigma}(y,w,z; x)\)</span> associated with problem (1.5) for any<br />
+Define the augmented Lagrangian function <span class="math notranslate nohighlight">\(L_{\sigma}(y,w,z; x)\)</span> associated with problem for any<br />
 <span class="math notranslate nohighlight">\((y,w,z,x) \in \mathbb{R}^m \times \mathcal{W} \times \mathbb{R}^n \times \mathbb{R}^n\)</span> as follows:</p>
 <div class="math notranslate nohighlight">
 \[L_{\sigma}(y,w,z; x)
@@ -422,8 +422,7 @@ r_{z}^{r,t} = x^{r,t} + \sigma_r(-Qw_Q^{r,t} + A^*y^{r,t} - c).\]</div>
 \Big),
 \qquad
 R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}.\]</div>
-<p>Each step thus consists only of <strong>sparse matrix–vector products (SpMV)</strong>, vector additions, and simple proximal/projection operations, giving a per-iteration complexity of<br />
-<span class="math notranslate nohighlight">\(O(\mathrm{nnz}(A))\)</span>.</p>
+<p>Each step thus consists only of <strong>sparse matrix–vector products (SpMV)</strong>, vector additions, and simple proximal/projection operations, giving a per-iteration complexity of <span class="math notranslate nohighlight">\(O(\mathrm{nnz}(A))\)</span>.</p>
 <p>On GPUs, these operations are fused into custom CUDA kernels.<br />
 Matrix–vector multiplications are implemented with <strong><code class="docutils literal notranslate"><span class="pre">cusparseSpMV()</span></code></strong> under the <strong><code class="docutils literal notranslate"><span class="pre">CUSPARSE_SPMV_CSR_ALG2</span></code></strong> algorithm for deterministic and high-throughput performance.</p>
 </section>

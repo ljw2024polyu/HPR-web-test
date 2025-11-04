@@ -71,7 +71,7 @@ HPR-QP is based on the Halpern–Peaceman–Rachford (HPR) method for convex com
 ### Base algorithm
 
 Let $\sigma > 0$ be a given penalty parameter.  
-Define the augmented Lagrangian function $L_{\sigma}(y,w,z; x)$ associated with problem (1.5) for any  
+Define the augmented Lagrangian function $L_{\sigma}(y,w,z; x)$ associated with problem for any  
 $(y,w,z,x) \in \mathbb{R}^m \times \mathcal{W} \times \mathbb{R}^n \times \mathbb{R}^n$ as follows:
 
 ```{math}
@@ -384,8 +384,7 @@ With this choice, the $y$-update reduces to the projection
 R_y := A(2\bar{x}^{r,t+1} - x^{r,t}) - \sigma_r \lambda_A y^{r,t}.
 ```
 
-Each step thus consists only of **sparse matrix–vector products (SpMV)**, vector additions, and simple proximal/projection operations, giving a per-iteration complexity of  
-$O(\mathrm{nnz}(A))$.  
+Each step thus consists only of **sparse matrix–vector products (SpMV)**, vector additions, and simple proximal/projection operations, giving a per-iteration complexity of $O(\mathrm{nnz}(A))$.  
 
 On GPUs, these operations are fused into custom CUDA kernels.  
 Matrix–vector multiplications are implemented with **`cusparseSpMV()`** under the **`CUSPARSE_SPMV_CSR_ALG2`** algorithm for deterministic and high-throughput performance.

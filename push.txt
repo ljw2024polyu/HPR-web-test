@@ -1,45 +1,24 @@
 param(
-  [string]$Message = "deploy 11.6"
+  [string]$Message = "deploy 11.6",
+  [string]$CustomDomain = "hprtest.online"
 )
 
 $ErrorActionPreference = "Stop"
 
-# 0) Guard: ensure 'site' is a worktree of branch 'gh-pages'
-#    (Run the one-time setup above if this fails)
-git -C site rev-parse --abbrev-ref HEAD | Out-Null
-
-# 1) Build the site into ./site (gh-pages worktree)
 cmd /c build.bat
-
-# 2) Optional: mirror extra assets
-if (Test-Path "assets") {
-  robocopy assets site\assets /MIR > $null
-}
-
-# 3) Pages housekeeping
-if (Test-Path "site/CNAME") { Remove-Item "site/CNAME" -Force }  # no custom domain for now
+robocopy assets site\assets /MIR > $null
+$CnamePath = "site/CNAME"
+New-Item -ItemType File -Force -Path $CnamePath | Out-Null
+Set-Content -Path $CnamePath -NoNewline -Value $CustomDomain
 if (!(Test-Path "site/.nojekyll")) { New-Item -ItemType File -Path "site/.nojekyll" | Out-Null }
 
-# 4) Commit & push gh-pages incrementally (fast)
-git -C site add -A
-git -C site diff --cached --quiet
-if ($LASTEXITCODE -ne 0) {
-  git -C site commit -m $Message
-  git -C site push origin gh-pages
-} else {
-  Write-Host "No changes in gh-pages (site/) — skip pushing gh-pages."
-}
-
-# 5) (Optional) also commit source changes on main
 git add -A
-git diff --cached --quiet
-if ($LASTEXITCODE -ne 0) {
-  git commit -m "src: $Message"
-  # pull --rebase to avoid rejected push
-  git pull --rebase origin main
-  git push origin main
-} else {
-  Write-Host "No source changes on main."
-}
+git commit -m $Message
+git push origin main
 
-Write-Host "✅ Deployed via gh-pages worktree."
+git show-ref --verify --quiet refs/heads/gh-pages-tmp
+if ($LASTEXITCODE -eq 0) { git branch -D gh-pages-tmp | Out-Null }
+
+git subtree split --prefix=site HEAD -b gh-pages-tmp
+git push -f origin gh-pages-tmp:gh-pages
+git branch -D gh-pages-tmp

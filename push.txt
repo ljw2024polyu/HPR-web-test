@@ -5,20 +5,26 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# 1) 对齐 main（避免 push 被拒绝）
+git fetch origin
+git checkout main
+git pull --rebase origin main
+
+# 2) 构建并写入站点文件
 cmd /c build.bat
 robocopy assets site\assets /MIR > $null
+
 $CnamePath = "site/CNAME"
 New-Item -ItemType File -Force -Path $CnamePath | Out-Null
 Set-Content -Path $CnamePath -NoNewline -Value $CustomDomain
 if (!(Test-Path "site/.nojekyll")) { New-Item -ItemType File -Path "site/.nojekyll" | Out-Null }
 
-git add -A
+# 3) 提交并推 main（若无改动，不中断）
+git add -A :/
 git commit -m $Message
-git push origin main
+if ($LASTEXITCODE -ne 0) { Write-Host "No changes to commit on main" }
+git push origin HEAD:main
 
-git show-ref --verify --quiet refs/heads/gh-pages-tmp
-if ($LASTEXITCODE -eq 0) { git branch -D gh-pages-tmp | Out-Null }
-
-git subtree split --prefix=site HEAD -b gh-pages-tmp
-git push -f origin gh-pages-tmp:gh-pages
-git branch -D gh-pages-tmp
+# 4) 发布到 gh-pages（简单粗暴、稳定）
+$sha = (git subtree split --prefix=site HEAD).Trim()
+git push -f origin "$sha`:gh-pages"

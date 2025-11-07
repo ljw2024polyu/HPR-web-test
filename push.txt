@@ -5,12 +5,10 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-# 1) 对齐 main（避免 push 被拒绝）
 git fetch origin
 git checkout main
 git pull --rebase origin main
 
-# 2) 构建并写入站点文件
 cmd /c build.bat
 robocopy assets site\assets /MIR > $null
 
@@ -19,12 +17,25 @@ New-Item -ItemType File -Force -Path $CnamePath | Out-Null
 Set-Content -Path $CnamePath -NoNewline -Value $CustomDomain
 if (!(Test-Path "site/.nojekyll")) { New-Item -ItemType File -Path "site/.nojekyll" | Out-Null }
 
-# 3) 提交并推 main（若无改动，不中断）
+# ==== 精简：删掉对网页没用的缓存，减少文件数 ====
+Get-ChildItem site -Recurse -Directory -Filter ".doctrees"         | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+Get-ChildItem site -Recurse -Directory -Filter "_sources"           | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+Get-ChildItem site -Recurse -File      -Filter "environment.pickle" | Remove-Item -Force           -ErrorAction SilentlyContinue
+Get-ChildItem site -Recurse -File      -Filter ".buildinfo"         | Remove-Item -Force           -ErrorAction SilentlyContinue
+# ===============================================
+
 git add -A :/
 git commit -m $Message
 if ($LASTEXITCODE -ne 0) { Write-Host "No changes to commit on main" }
 git push origin HEAD:main
 
-# 4) 发布到 gh-pages（简单粗暴、稳定）
+# ==== 仅在 site 发生变化时才推 gh-pages ====
 $sha = (git subtree split --prefix=site HEAD).Trim()
-git push -f origin "$sha`:gh-pages"
+git fetch origin gh-pages
+git diff --quiet $sha origin/gh-pages
+if ($LASTEXITCODE -eq 0) {
+  Write-Host "site unchanged; skip gh-pages push"
+} else {
+  git push -f origin "$sha`:gh-pages"
+}
+# ===============================================

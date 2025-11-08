@@ -1,6 +1,25 @@
 # Julia Interfaces of HPR-LP-C
 This page provides quick-start examples for using the Julia interfaces of HPR-LP-C to build and solve linear programs directly from matrices or MPS files.
 
+---
+
+## Test problem (LP)
+
+The default demo problem we ship is a small linear program of the form
+
+
+$$
+\begin{aligned}
+\min \quad & - 3 x_1 - 5 x_2\\
+\text{s.t.} \quad & x_1 + 2 x_2 \le 10, \\
+& 3 x_1 + x_2 \le 12, \\
+& x_1 \ge 0, \\
+& x_2 \ge 0.
+\end{aligned}
+$$
+
+---
+
 ## Example 1: Build model directly from matrices
 ```bash
 cd examples

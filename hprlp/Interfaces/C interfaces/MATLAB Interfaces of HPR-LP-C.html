@@ -22,6 +22,8 @@
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../../_static/back_to_hpr_fab.js?v=1776d9ad"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -136,6 +138,22 @@
   <section class="tex2jax_ignore mathjax_ignore" id="matlab-interfaces-of-hpr-lp-c">
 <h1>MATLAB Interfaces of HPR-LP-C</h1>
 <p>This page provides quick-start examples for using the MATLAB interfaces of HPR-LP-C to build and solve linear programs directly from matrices or MPS files.</p>
+<hr class="docutils" />
+<section id="test-problem-lp">
+<h2>Test problem (LP)</h2>
+<p>The default demo problem we ship is a small linear program of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\min \quad &amp; - 3 x_1 - 5 x_2\\
+\text{s.t.} \quad &amp; x_1 + 2 x_2 \le 10, \\
+&amp; 3 x_1 + x_2 \le 12, \\
+&amp; x_1 \ge 0, \\
+&amp; x_2 \ge 0.
+\end{aligned}
+\end{split}\]</div>
+</section>
+<hr class="docutils" />
 <section id="example-1-build-model-directly-from-matrices">
 <h2>Example 1: Build model directly from matrices</h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>examples

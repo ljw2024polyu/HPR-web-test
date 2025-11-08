@@ -6,8 +6,6 @@ param(
 $ErrorActionPreference = "Stop"
 
 git fetch origin
-git checkout main
-git pull --rebase origin main
 
 cmd /c build.bat
 robocopy assets site\assets /MIR > $null
@@ -23,4 +21,5 @@ if ($LASTEXITCODE -ne 0) { Write-Host "No changes to commit on main" }
 git push origin HEAD:main
 
 $sha = (git subtree split --prefix=site HEAD).Trim()
-git push -f origin "$sha`:gh-pages"
+git push -f origin "$sha:gh-pages"
+

@@ -22,6 +22,8 @@
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "displayMath": [["$$", "$$"], ["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <script src="../../_static/back_to_hpr_fab.js?v=1776d9ad"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -59,6 +61,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Interfaces</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../Julia%20interfaces.html">Julia interfaces</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">C interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-examples">Running examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#test-problem-lp">Test problem (LP)</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#solving-from-mps-files">Solving from MPS Files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-as-a-library">Using as a Library</a></li>
@@ -70,6 +76,7 @@
 <li class="toctree-l4"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html">Python Interfaces of HPR-LP-C</a></li>
 <li class="toctree-l4"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html">MATLAB Interfaces of HPR-LP-C</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Interfaces of HPR-LP-C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="C%20interfaces.html">Pure C examples from C programs</a></li>
 <li class="toctree-l4"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ examples from C++</a></li>
 </ul>
 </li>
@@ -137,6 +144,24 @@
   <section class="tex2jax_ignore mathjax_ignore" id="c-interfaces">
 <h1>C interfaces</h1>
 <p>This page shows the <strong>C interface</strong> of HPR-LP with a minimal, task-oriented guide. Use the CLI to solve <code class="docutils literal notranslate"><span class="pre">.mps</span></code> files, or link your C/C++ program against <code class="docutils literal notranslate"><span class="pre">libhprlp</span></code> for programmatic access.</p>
+<section id="running-examples">
+<h2>Running examples</h2>
+<p>The demo LP problem is:</p>
+<section id="test-problem-lp">
+<h3>Test problem (LP)</h3>
+<p>The default demo problem we ship is a small linear program of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\min \quad &amp; - 3 x_1 - 5 x_2\\
+\text{s.t.} \quad &amp; x_1 + 2 x_2 \le 10, \\
+&amp; 3 x_1 + x_2 \le 12, \\
+&amp; x_1 \ge 0, \\
+&amp; x_2 \ge 0.
+\end{aligned}
+\end{split}\]</div>
+</section>
+</section>
 <hr class="docutils" />
 <section id="usage">
 <h2>Usage</h2>
@@ -270,6 +295,10 @@ bash<span class="w"> </span>install.sh
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Interfaces of HPR-LP-C</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#running-examples">Running examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#test-problem-lp">Test problem (LP)</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#example-1-build-model-directly-from-matrices">Example 1: Build model directly from matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#example-2-read-model-from-an-mps-file">Example 2: Read model from an MPS file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#model-filename-string"><code class="docutils literal notranslate"><span class="pre">Model(filename::String)</span></code></a></li>
@@ -277,6 +306,12 @@ bash<span class="w"> </span>install.sh
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#example-3-use-jump-to-construct-and-solve-lps">Example 3: Use JuMP to construct and solve LPs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="C%20interfaces.html">Pure C examples from C programs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="C%20interfaces.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="C%20interfaces.html#building">Building</a></li>
+<li class="toctree-l2"><a class="reference internal" href="C%20interfaces.html#basic-usage">Basic Usage</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ examples from C++</a><ul>
@@ -601,9 +636,7 @@ Solve the given LP model.
 cd examples
 julia --project=../package example_jump.jl
 ``` -->
-<ul class="simple">
-<li><p><strong>C/C++</strong>: Direct API usage (see <a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP-C/tree/main/examples/c"><code class="docutils literal notranslate"><span class="pre">examples/c/</span></code></a> and <a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP-C/tree/main/examples/cpp"><code class="docutils literal notranslate"><span class="pre">examples/cpp/</span></code></a> for minimal build/run demos)</p></li>
-</ul>
+<!-- + -->
 </section>
 </section>
 

@@ -81,6 +81,8 @@ HPR-LP-C provides native interfaces for multiple languages:
 Python Interfaces of HPR-LP-C
 MATLAB Interfaces of HPR-LP-C
 Julia Interfaces of HPR-LP-C
+C interfaces
+C++ interfaces
 ```
 
 

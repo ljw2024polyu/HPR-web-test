@@ -60,6 +60,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Interfaces</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Julia interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-examples">Running examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#test-problem-lp">Test problem (LP)</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#usage-1-run-lp-instances-in-mps-format">Usage 1: Run LP instances in MPS format</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#setting-data-and-result-paths">Setting Data and Result Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#running-a-single-instance">Running a Single Instance</a></li>
@@ -139,6 +143,25 @@
   <section class="tex2jax_ignore mathjax_ignore" id="julia-interfaces">
 <h1>Julia interfaces</h1>
 <p>This page shows how to use the <strong>Julia interface</strong> of HPR-LP: run demos, build custom problems, adjust solver settings, and interpret results.</p>
+<hr class="docutils" />
+<section id="running-examples">
+<h2>Running examples</h2>
+<p>The demo LP problem is:</p>
+<section id="test-problem-lp">
+<h3>Test problem (LP)</h3>
+<p>The default demo problem we ship is a small linear program of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\min \quad &amp; - 3 x_1 - 5 x_2\\
+\text{s.t.} \quad &amp; x_1 + 2 x_2 \le 10, \\
+&amp; 3 x_1 + x_2 \le 12, \\
+&amp; x_1 \ge 0, \\
+&amp; x_2 \ge 0.
+\end{aligned}
+\end{split}\]</div>
+</section>
+</section>
 <hr class="docutils" />
 <section id="usage-1-run-lp-instances-in-mps-format">
 <h2>Usage 1: Run LP instances in MPS format</h2>

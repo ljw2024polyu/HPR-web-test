@@ -2,6 +2,24 @@
 
 This page shows the **C interface** of HPR-LP with a minimal, task-oriented guide. Use the CLI to solve `.mps` files, or link your C/C++ program against `libhprlp` for programmatic access.
 
+## Running examples
+The demo LP problem is:
+
+### Test problem (LP)
+
+The default demo problem we ship is a small linear program of the form
+
+
+$$
+\begin{aligned}
+\min \quad & - 3 x_1 - 5 x_2\\
+\text{s.t.} \quad & x_1 + 2 x_2 \le 10, \\
+& 3 x_1 + x_2 \le 12, \\
+& x_1 \ge 0, \\
+& x_2 \ge 0.
+\end{aligned}
+$$
+
 ---
 
 ## Usage
@@ -407,5 +425,5 @@ julia --project=../package example_jump.jl
 ``` -->
 
 
-- **C/C++**: Direct API usage (see [`examples/c/`](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/examples/c) and [`examples/cpp/`](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/examples/cpp) for minimal build/run demos)
+<!-- + -->
 

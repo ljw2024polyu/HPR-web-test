@@ -105,8 +105,6 @@ python scripts/run_single_file.py \
 
 ## Parameters
 
-## Parameters
-
 Below is a list of the parameters in HPR-LP along with their default values and usage:
 
 ```{list-table}

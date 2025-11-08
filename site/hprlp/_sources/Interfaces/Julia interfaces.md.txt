@@ -4,10 +4,7 @@ This page shows how to use the **Julia interface** of HPR-LP: run demos, build c
 
 ---
 
-## Running examples
-The demo LP problem is:
-
-### Test problem (LP)
+## Test problem (LP)
 
 The default demo problem we ship is a small linear program of the form
 
@@ -24,7 +21,7 @@ $$
 
 ---
 
-## Usage 1: Run LP instances in MPS format
+## Usage 1: Test Instances in MPS Format
 
 ### Setting Data and Result Paths
 Before running the scripts, please modify `run_single_file.jl` or `run_dataset.jl` in the scripts directory to specify the data path and result path according to your setup.
@@ -78,18 +75,6 @@ This example shows how to construct and solve a linear programming problem direc
 
 ```bash
 julia --project demo/demo_Abc.jl
-```
-
-The small LP instance demo_Abc is given by
-
-```{math}
-\begin{aligned}
-\min_{x_1, x_2} \quad & -3x_1 - 5x_2 \\
-\text{s.t.} \quad 
-& -x_1 - 2x_2 \;\ge -10, \\
-& -3x_1 - x_2 \;\ge -12, \\
-& x_1 \ge 0, \; x_2 \ge 0.
-\end{aligned}
 ```
 
 ## Note on First-Time Execution Performance

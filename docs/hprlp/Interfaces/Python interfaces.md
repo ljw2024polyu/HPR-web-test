@@ -2,6 +2,8 @@
 
 This page shows how to use the **Python interface** of HPR-LP: run demos, build custom problems, adjust solver settings, and interpret results.
 
+---
+
 ## Running examples
 
 The demo LP problem is:
@@ -21,6 +23,7 @@ $$
 \end{aligned}
 $$
 
+---
 
 After installing the environment, you can run the solver in two ways: **model-based API** or **`.mps` API**.
 

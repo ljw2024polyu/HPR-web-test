@@ -1,4 +1,5 @@
 # MATLAB Interfaces of HPR-LP-C
+This page provides quick-start examples for using the MATLAB interfaces of HPR-LP-C to build and solve linear programs directly from matrices or MPS files.
 
 ## Example 1: Build model directly from matrices
 

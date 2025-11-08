@@ -405,5 +405,5 @@ julia --project=../package example_jump.jl
 ``` -->
 
 
-- **C/C++**: Direct API usage (see `examples/c/` and `examples/cpp/` for minimal build/run demos)
+- **C/C++**: Direct API usage (see [`examples/c/`](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/examples/c) and [`examples/cpp/`](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/examples/cpp) for minimal build/run demos)
 

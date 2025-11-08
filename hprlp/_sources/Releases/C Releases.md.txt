@@ -18,7 +18,8 @@ A compact index of HPR-LP (C++/CUDA) releases—each entry shows the version tag
 
 **Downloads** -->
 
-
+**Downloads**
+- [Source code (zip)](https://github.com/PolyU-IOR/HPR-LP-C/archive/refs/heads/main.zip)  
 </details>
 
 ---

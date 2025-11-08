@@ -8,6 +8,6 @@ HPR-LP offers several interfaces with examples, usage, settings, and results.
 :glob:
 
 Julia interfaces
-C interfaces
+C interfaces/index
 Python interfaces
 ```

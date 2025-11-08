@@ -74,7 +74,17 @@ See the respective README files in `bindings/` for usage, version notes, and tro
 ## Language Interfaces
 HPR-LP-C provides native interfaces for multiple languages:
 
-### **Python**:  pybind11 bindings (see the [github](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/python) for more details)
+```{toctree}
+:maxdepth: 3
+:glob:
+
+Python Interfaces of HPR-LP-C
+MATLAB Interfaces of HPR-LP-C
+Julia Interfaces of HPR-LP-C
+```
+
+
+<!-- ### **Python**:  pybind11 bindings (see the [github](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/python) for more details)
 
 #### Example 1: Build model directly from matrices
 
@@ -167,12 +177,12 @@ Solve the LP model.
 **Arguments:**
 - `param` - (Optional) Parameters object
 
-**Returns:** Results object
+**Returns:** Results object -->
 
 
 
 
-### **MATLAB**: MEX interface with OOP wrapper (see the [github](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/matlab) for more details)  
+<!-- ### **MATLAB**: MEX interface with OOP wrapper (see the [github](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/matlab) for more details)  
 
 #### Example 1: Build model directly from matrices
 
@@ -287,9 +297,9 @@ Solver configuration:
 param = hprlp.Parameters();
 param.stop_tol = 1e-9;
 param.device_number = 0;
-```
+``` -->
 
-### **Julia**: Native Julia wrapper (see the [github](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/julia) for more details)  
+<!-- ### **Julia**: Native Julia wrapper (see the [github](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/julia) for more details)  
 
 #### Example 1: Build model directly from matrices
 ```bash
@@ -392,7 +402,7 @@ Solve the given LP model.
 ```
 cd examples
 julia --project=../package example_jump.jl
-```
+``` -->
 
 
 - **C/C++**: Direct API usage (see `examples/c/` and `examples/cpp/` for minimal build/run demos)

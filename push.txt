@@ -16,10 +16,9 @@ Set-Content -Path $CnamePath -NoNewline -Value $CustomDomain
 if (!(Test-Path "site/.nojekyll")) { New-Item -ItemType File -Path "site/.nojekyll" | Out-Null }
 
 git add -A :/
-git commit -m $Message
-if ($LASTEXITCODE -ne 0) { Write-Host "No changes to commit on main" }
-git push origin HEAD:main
+git add -f site/**       
+git commit -m $Message 2>$null
+git push origin main
 
-$sha = (git subtree split --prefix=site HEAD).Trim()
-git push -f origin "$sha:gh-pages"
-
+$sha = git subtree split --prefix=site HEAD
+& git push -f origin ("{0}:gh-pages" -f $sha)

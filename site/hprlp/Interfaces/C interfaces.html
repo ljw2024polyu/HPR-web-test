@@ -80,16 +80,8 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#hprlp-parameters"><code class="docutils literal notranslate"><span class="pre">hprlp.Parameters</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#julia-native-julia-wrapper-see-the-github-for-more-details"><strong>Julia</strong>: Native Julia wrapper (see the github for more details)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">Example 1: Build model directly from matrices</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#model-a-al-au-l-u-c"><code class="docutils literal notranslate"><span class="pre">Model(A,</span> <span class="pre">AL,</span> <span class="pre">AU,</span> <span class="pre">l,</span> <span class="pre">u,</span> <span class="pre">c)</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#example-2-read-model-from-an-mps-file">Example 2: Read model from an MPS file</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#model-filename-string"><code class="docutils literal notranslate"><span class="pre">Model(filename::String)</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#solve-model-model-params-nothing"><code class="docutils literal notranslate"><span class="pre">solve(model::Model,</span> <span class="pre">params=nothing)</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#example-3-use-jump-to-construct-and-solve-lps">Example 3: Use JuMP to construct and solve LPs</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Python%20interfaces.html">Python interfaces</a></li>
@@ -469,9 +461,8 @@ For a complete version with additional options, see example_mps_file.m.</p>
 </div>
 <section id="julia-native-julia-wrapper-see-the-github-for-more-details">
 <h3><strong>Julia</strong>: Native Julia wrapper (see the <a class="reference external" href="https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/julia">github</a> for more details)</h3>
-</section>
 <section id="id3">
-<h3>Example 1: Build model directly from matrices</h3>
+<h4>Example 1: Build model directly from matrices</h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>examples
 julia<span class="w"> </span>--project<span class="o">=</span>../package<span class="w"> </span>example_direct_lp.jl
 </pre></div>
@@ -508,11 +499,9 @@ For a complete version with additional options, see example_direct_lp.jl.</p>
 <span class="k">end</span>
 </pre></div>
 </div>
-</section>
 <hr class="docutils" />
-<section id="model-a-al-au-l-u-c">
-<h3><code class="docutils literal notranslate"><span class="pre">Model(A,</span> <span class="pre">AL,</span> <span class="pre">AU,</span> <span class="pre">l,</span> <span class="pre">u,</span> <span class="pre">c)</span></code></h3>
-<p>Create an LP model directly from matrices and vectors.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Model(A,</span> <span class="pre">AL,</span> <span class="pre">AU,</span> <span class="pre">l,</span> <span class="pre">u,</span> <span class="pre">c)</span></code></strong>
+Create an LP model directly from matrices and vectors.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Argument</p></th>
@@ -536,9 +525,8 @@ For a complete version with additional options, see example_direct_lp.jl.</p>
 </table>
 <p><strong>Returns:</strong> <code class="docutils literal notranslate"><span class="pre">Model</span></code> object</p>
 </section>
-</section>
 <section id="example-2-read-model-from-an-mps-file">
-<h2>Example 2: Read model from an MPS file</h2>
+<h4>Example 2: Read model from an MPS file</h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">examples</span>
 <span class="n">julia</span> <span class="o">--</span><span class="n">project</span><span class="o">=../</span><span class="n">package</span> <span class="n">example_mps_file</span><span class="o">.</span><span class="n">jl</span>
 </pre></div>
@@ -556,9 +544,8 @@ The following snippet demonstrates how to define and solve an LP problem directl
 </pre></div>
 </div>
 <hr class="docutils" />
-<section id="model-filename-string">
-<h3><code class="docutils literal notranslate"><span class="pre">Model(filename::String)</span></code></h3>
-<p>Create an LP model by reading an MPS file.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Model(filename::String)</span></code></strong>
+Create an LP model by reading an MPS file.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Argument</p></th>
@@ -572,11 +559,9 @@ The following snippet demonstrates how to define and solve an LP problem directl
 </tbody>
 </table>
 <p><strong>Returns:</strong> <code class="docutils literal notranslate"><span class="pre">Model</span></code> object</p>
-</section>
 <hr class="docutils" />
-<section id="solve-model-model-params-nothing">
-<h3><code class="docutils literal notranslate"><span class="pre">solve(model::Model,</span> <span class="pre">params=nothing)</span></code></h3>
-<p>Solve the given LP model.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">solve(model::Model,</span> <span class="pre">params=nothing)</span></code></strong>
+Solve the given LP model.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Argument</p></th>
@@ -596,10 +581,9 @@ The following snippet demonstrates how to define and solve an LP problem directl
 </tbody>
 </table>
 </section>
-</section>
 <hr class="docutils" />
 <section id="example-3-use-jump-to-construct-and-solve-lps">
-<h2>Example 3: Use JuMP to construct and solve LPs</h2>
+<h4>Example 3: Use JuMP to construct and solve LPs</h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">examples</span>
 <span class="n">julia</span> <span class="o">--</span><span class="n">project</span><span class="o">=../</span><span class="n">package</span> <span class="n">example_jump</span><span class="o">.</span><span class="n">jl</span>
 </pre></div>
@@ -607,6 +591,8 @@ The following snippet demonstrates how to define and solve an LP problem directl
 <ul class="simple">
 <li><p><strong>C/C++</strong>: Direct API usage (see <code class="docutils literal notranslate"><span class="pre">examples/c/</span></code> and <code class="docutils literal notranslate"><span class="pre">examples/cpp/</span></code> for minimal build/run demos)</p></li>
 </ul>
+</section>
+</section>
 </section>
 </section>
 

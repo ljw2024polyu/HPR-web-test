@@ -291,7 +291,7 @@ param.device_number = 0;
 
 ### **Julia**: Native Julia wrapper (see the [github](https://github.com/PolyU-IOR/HPR-LP-C/tree/main/bindings/julia) for more details)  
 
-### Example 1: Build model directly from matrices
+#### Example 1: Build model directly from matrices
 ```bash
 cd examples
 julia --project=../package example_direct_lp.jl
@@ -330,7 +330,7 @@ if is_optimal(result)
 end
 ```
 ---
-### `Model(A, AL, AU, l, u, c)`
+**`Model(A, AL, AU, l, u, c)`**
 Create an LP model directly from matrices and vectors.
 
 | Argument | Description |
@@ -342,7 +342,7 @@ Create an LP model directly from matrices and vectors.
 
 **Returns:** `Model` object
 
-## Example 2: Read model from an MPS file
+#### Example 2: Read model from an MPS file
 
 ```
 cd examples
@@ -364,7 +364,7 @@ println(result)
 
 ---
 
-### `Model(filename::String)`
+**`Model(filename::String)`**
 Create an LP model by reading an MPS file.
 
 | Argument | Description |
@@ -375,7 +375,7 @@ Create an LP model by reading an MPS file.
 
 ---
 
-### `solve(model::Model, params=nothing)`
+**`solve(model::Model, params=nothing)`**
 Solve the given LP model.
 
 | Argument | Description |
@@ -387,7 +387,7 @@ Solve the given LP model.
 ---
 
 
-## Example 3: Use JuMP to construct and solve LPs
+#### Example 3: Use JuMP to construct and solve LPs
 
 ```
 cd examples

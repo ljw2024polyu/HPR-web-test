@@ -60,11 +60,8 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Interfaces</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Julia interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#running-examples">Running examples</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#test-problem-lp">Test problem (LP)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#usage-1-run-lp-instances-in-mps-format">Usage 1: Run LP instances in MPS format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test-problem-lp">Test problem (LP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-1-test-instances-in-mps-format">Usage 1: Test Instances in MPS Format</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#setting-data-and-result-paths">Setting Data and Result Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#running-a-single-instance">Running a Single Instance</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#running-all-instances-in-a-directory">Running All Instances in a Directory</a></li>
@@ -144,11 +141,8 @@
 <h1>Julia interfaces</h1>
 <p>This page shows how to use the <strong>Julia interface</strong> of HPR-LP: run demos, build custom problems, adjust solver settings, and interpret results.</p>
 <hr class="docutils" />
-<section id="running-examples">
-<h2>Running examples</h2>
-<p>The demo LP problem is:</p>
 <section id="test-problem-lp">
-<h3>Test problem (LP)</h3>
+<h2>Test problem (LP)</h2>
 <p>The default demo problem we ship is a small linear program of the form</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -161,10 +155,9 @@
 \end{aligned}
 \end{split}\]</div>
 </section>
-</section>
 <hr class="docutils" />
-<section id="usage-1-run-lp-instances-in-mps-format">
-<h2>Usage 1: Run LP instances in MPS format</h2>
+<section id="usage-1-test-instances-in-mps-format">
+<h2>Usage 1: Test Instances in MPS Format</h2>
 <section id="setting-data-and-result-paths">
 <h3>Setting Data and Result Paths</h3>
 <p>Before running the scripts, please modify <code class="docutils literal notranslate"><span class="pre">run_single_file.jl</span></code> or <code class="docutils literal notranslate"><span class="pre">run_dataset.jl</span></code> in the scripts directory to specify the data path and result path according to your setup.</p>
@@ -218,15 +211,6 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>julia<span class="w"> </span>--project<span class="w"> </span>demo/demo_Abc.jl
 </pre></div>
 </div>
-<p>The small LP instance demo_Abc is given by</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\min_{x_1, x_2} \quad &amp; -3x_1 - 5x_2 \\
-\text{s.t.} \quad 
-&amp; -x_1 - 2x_2 \;\ge -10, \\
-&amp; -3x_1 - x_2 \;\ge -12, \\
-&amp; x_1 \ge 0, \; x_2 \ge 0.
-\end{aligned}\end{split}\]</div>
 </section>
 </section>
 <section id="note-on-first-time-execution-performance">

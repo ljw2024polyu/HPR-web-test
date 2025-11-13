@@ -8,7 +8,7 @@ The first paper presents the GPU-based HPR-LP solver with adaptive restart and p
   author  = {Chen, Kaihuang and Sun, Defeng and Yuan, Yancheng and Zhang, Guojun and Zhao, Xinyuan},
   title   = {HPR-LP: An implementation of an HPR method for solving linear programming},
   journal = {Mathematical Programming Computation},
-  year    = {2025}
+  year    = {2025},
   doi = {10.1007/s12532-025-00292-0}
 }
 

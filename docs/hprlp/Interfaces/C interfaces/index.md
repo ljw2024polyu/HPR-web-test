@@ -1,4 +1,4 @@
-# C interfaces
+# C Version
 
 This page shows the **C interface** of HPR-LP with a minimal, task-oriented guide. Use the CLI to solve `.mps` files, or link your C/C++ program against `libhprlp` for programmatic access.
 

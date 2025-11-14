@@ -1,4 +1,4 @@
-# Julia interfaces
+# Julia Version
 
 This page shows how to use the **Julia interface** of HPR-LP: run demos, build custom problems, adjust solver settings, and interpret results.
 

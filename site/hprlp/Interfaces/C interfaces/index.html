@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>C interfaces &mdash; HPR-LP</title>
+  <title>C Version &mdash; HPR-LP</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=efd90ad8" />
@@ -28,8 +28,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Python Interfaces of HPR-LP-C" href="Python%20Interfaces%20of%20HPR-LP-C.html" />
-    <link rel="prev" title="Julia interfaces" href="../Julia%20interfaces.html" /> 
+    <link rel="next" title="Python Binding of HPR-LP-C" href="Python%20Interfaces%20of%20HPR-LP-C.html" />
+    <link rel="prev" title="Julia Version" href="../Julia%20interfaces.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,8 +59,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Interfaces</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../Julia%20interfaces.html">Julia interfaces</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">C interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Julia%20interfaces.html">Julia Version</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">C Version</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-examples">Running examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#test-problem-lp">Test problem (LP)</a></li>
 </ul>
@@ -73,16 +73,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command-Line Options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#language-interface-installation">Language Interface Installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#language-interfaces">Language Interfaces</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html">Python Interfaces of HPR-LP-C</a></li>
-<li class="toctree-l4"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html">MATLAB Interfaces of HPR-LP-C</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Interfaces of HPR-LP-C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html">Python Binding of HPR-LP-C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html">MATLAB Binding of HPR-LP-C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Binding of HPR-LP-C</a></li>
 <li class="toctree-l4"><a class="reference internal" href="C%20interfaces.html">Pure C examples from C programs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ examples from C++</a></li>
+<li class="toctree-l4"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ Binding for HPR-LP-C</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../Python%20interfaces.html">Python interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Python%20interfaces.html">Python Version</a></li>
 </ul>
 </li>
 </ul>
@@ -111,7 +111,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Interfaces</a></li>
-      <li class="breadcrumb-item active">C interfaces</li>
+      <li class="breadcrumb-item active">C Version</li>
   <li class="wy-breadcrumbs-aside">
     <a href="https://github.com/PolyU-IOR/HPR-LP" target="_blank" rel="noopener">
       <svg class="gh-icon" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
@@ -141,8 +141,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="c-interfaces">
-<h1>C interfaces</h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="c-version">
+<h1>C Version</h1>
 <p>This page shows the <strong>C interface</strong> of HPR-LP with a minimal, task-oriented guide. Use the CLI to solve <code class="docutils literal notranslate"><span class="pre">.mps</span></code> files, or link your C/C++ program against <code class="docutils literal notranslate"><span class="pre">libhprlp</span></code> for programmatic access.</p>
 <hr class="docutils" />
 <section id="running-examples">
@@ -270,7 +270,7 @@ bash<span class="w"> </span>install.sh
 <p>HPR-LP-C provides native interfaces for multiple languages:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html">Python Interfaces of HPR-LP-C</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html">Python Binding of HPR-LP-C</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html#test-problem-lp">Test problem (LP)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html#example-1-build-model-directly-from-matrices">Example 1: Build model directly from matrices</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Python%20Interfaces%20of%20HPR-LP-C.html#model-from-arrays-a-al-au-l-u-c"><code class="docutils literal notranslate"><span class="pre">Model.from_arrays(A,</span> <span class="pre">AL,</span> <span class="pre">AU,</span> <span class="pre">l,</span> <span class="pre">u,</span> <span class="pre">c)</span></code></a></li>
@@ -283,7 +283,7 @@ bash<span class="w"> </span>install.sh
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html">MATLAB Interfaces of HPR-LP-C</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html">MATLAB Binding of HPR-LP-C</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html#test-problem-lp">Test problem (LP)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html#example-1-build-model-directly-from-matrices">Example 1: Build model directly from matrices</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html#hprlp-model-from-arrays-a-al-au-l-u-c"><code class="docutils literal notranslate"><span class="pre">hprlp.Model.from_arrays(A,</span> <span class="pre">AL,</span> <span class="pre">AU,</span> <span class="pre">l,</span> <span class="pre">u,</span> <span class="pre">c)</span></code></a></li>
@@ -297,7 +297,7 @@ bash<span class="w"> </span>install.sh
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Interfaces of HPR-LP-C</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Binding of HPR-LP-C</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#test-problem-lp">Test problem (LP)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#example-1-build-model-directly-from-matrices">Example 1: Build model directly from matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html#example-2-read-model-from-an-mps-file">Example 2: Read model from an MPS file</a><ul>
@@ -315,7 +315,7 @@ bash<span class="w"> </span>install.sh
 <li class="toctree-l2"><a class="reference internal" href="C%20interfaces.html#basic-usage">Basic Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ examples from C++</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ Binding for HPR-LP-C</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="C%2B%2B%20interfaces.html#test-problem-lp">Test problem (LP)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="C%2B%2B%20interfaces.html#examples">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="C%2B%2B%20interfaces.html#building">Building</a></li>
@@ -646,8 +646,8 @@ julia --project=../package example_jump.jl
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../Julia%20interfaces.html" class="btn btn-neutral float-left" title="Julia interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Python%20Interfaces%20of%20HPR-LP-C.html" class="btn btn-neutral float-right" title="Python Interfaces of HPR-LP-C" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../Julia%20interfaces.html" class="btn btn-neutral float-left" title="Julia Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Python%20Interfaces%20of%20HPR-LP-C.html" class="btn btn-neutral float-right" title="Python Binding of HPR-LP-C" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

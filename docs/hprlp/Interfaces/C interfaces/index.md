@@ -91,7 +91,7 @@ See the respective README files in `bindings/` for usage, version notes, and tro
 
 ---
 
-## Language Interfaces
+## Bindings for HPR-LP-C
 HPR-LP-C provides native interfaces for multiple languages:
 
 ```{toctree}

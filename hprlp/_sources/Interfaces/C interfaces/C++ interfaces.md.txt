@@ -1,4 +1,4 @@
-# C++ examples from C++
+# C++ Binding for HPR-LP-C
 
 C++ examples demonstrating how to use HPR-LP from C++
 

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python Interfaces of HPR-LP-C &mdash; HPR-LP</title>
+  <title>Python Binding of HPR-LP-C &mdash; HPR-LP</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=efd90ad8" />
@@ -28,8 +28,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="MATLAB Interfaces of HPR-LP-C" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html" />
-    <link rel="prev" title="C interfaces" href="index.html" /> 
+    <link rel="next" title="MATLAB Binding of HPR-LP-C" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html" />
+    <link rel="prev" title="C Version" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,23 +59,23 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Interfaces</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../Julia%20interfaces.html">Julia interfaces</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">C interfaces</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../Julia%20interfaces.html">Julia Version</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">C Version</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="index.html#running-examples">Running examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#usage">Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#command-line-options">Command-Line Options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="index.html#language-interface-installation">Language Interface Installation</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="index.html#language-interfaces">Language Interfaces</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Python Interfaces of HPR-LP-C</a></li>
-<li class="toctree-l4"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html">MATLAB Interfaces of HPR-LP-C</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Interfaces of HPR-LP-C</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Python Binding of HPR-LP-C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATLAB%20Interfaces%20of%20HPR-LP-C.html">MATLAB Binding of HPR-LP-C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Julia%20Interfaces%20of%20HPR-LP-C.html">Julia Binding of HPR-LP-C</a></li>
 <li class="toctree-l4"><a class="reference internal" href="C%20interfaces.html">Pure C examples from C programs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ examples from C++</a></li>
+<li class="toctree-l4"><a class="reference internal" href="C%2B%2B%20interfaces.html">C++ Binding for HPR-LP-C</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../Python%20interfaces.html">Python interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Python%20interfaces.html">Python Version</a></li>
 </ul>
 </li>
 </ul>
@@ -104,8 +104,8 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Interfaces</a></li>
-          <li class="breadcrumb-item"><a href="index.html">C interfaces</a></li>
-      <li class="breadcrumb-item active">Python Interfaces of HPR-LP-C</li>
+          <li class="breadcrumb-item"><a href="index.html">C Version</a></li>
+      <li class="breadcrumb-item active">Python Binding of HPR-LP-C</li>
   <li class="wy-breadcrumbs-aside">
     <a href="https://github.com/PolyU-IOR/HPR-LP" target="_blank" rel="noopener">
       <svg class="gh-icon" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
@@ -135,8 +135,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="python-interfaces-of-hpr-lp-c">
-<h1>Python Interfaces of HPR-LP-C</h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="python-binding-of-hpr-lp-c">
+<h1>Python Binding of HPR-LP-C</h1>
 <p>This page provides quick-start examples for using the Python interfaces of HPR-LP-C to build and solve linear programs directly from matrices or MPS files.</p>
 <hr class="docutils" />
 <section id="test-problem-lp">
@@ -250,8 +250,8 @@ The following snippet demonstrates how to define and solve an LP problem directl
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="C interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="MATLAB%20Interfaces%20of%20HPR-LP-C.html" class="btn btn-neutral float-right" title="MATLAB Interfaces of HPR-LP-C" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="C Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MATLAB%20Interfaces%20of%20HPR-LP-C.html" class="btn btn-neutral float-right" title="MATLAB Binding of HPR-LP-C" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
